@@ -1,12 +1,20 @@
-import express, { Request, Response } from "express"
-import client from "./db"
-const app = express();
+import express from "express";
+import db from "./db";
+import "dotenv/config";
 
+const app = express();
+const port = process.env.PORT || 5000;
 
 // middleware
-app.use(express.json())
+app.use(express.json());
 
-
-app.listen(5000, () => {
-	console.log("server listening in port 5000");
-}) 
+db.connect((err) => {
+	if (err) {
+		console.log("connection error", err.stack);
+	} else {
+		console.log("Connected to database");
+		app.listen(port, () => {
+			console.log(`Server is running on port ${port}`);
+		});
+	}
+});
