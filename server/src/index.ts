@@ -8,13 +8,14 @@ const port = process.env.PORT || 5000;
 // middleware
 app.use(express.json());
 
+// connect db
 db.connect((err) => {
-	if (err) {
-		console.log("connection error", err.stack);
-	} else {
-		console.log("Connected to database");
-		app.listen(port, () => {
-			console.log(`Server is running on port ${port}`);
-		});
-	}
+  if (err) {
+    console.log("connection error", err.stack);
+  } else {
+    console.log("Connected to database");
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  }
 });
