@@ -1,0 +1,31 @@
+@use "components/navbar";
+
+.truncate-overflow-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.truncate-overflow-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.active {
+  @apply rounded-md bg-gray-400 bg-opacity-60 transition-all duration-300 ease-in-out;
+}
+
+.icon {
+  @apply relative flex p-1;
+}
+
+.post-icon {
+  @apply cursor-pointer  rounded-full p-1 text-2xl transition-all duration-150 ease-in-out  hover:bg-gray-200 lg:text-4xl;
+}
+
+.counter {
+  @apply absolute right-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-400 text-[0.55rem] lg:h-5 lg:w-5 lg:text-[0.6rem];
+}
