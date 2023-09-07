@@ -10,14 +10,14 @@ app.use(express.json());
 
 // connect db
 db.connect((err) => {
-  if (err) {
-    console.log("connection error", err.stack);
-  } else {
-    console.log("Connected to database");
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-    });
-  }
+	if (err) {
+		console.log("connection error", err.stack);
+	} else {
+		console.log("Connected to database");
+		app.listen(port, () => {
+			console.log(`Server is running on port ${port}`);
+		});
+	}
 });
 
 app.post("/api/users", (req: Request, res: Response) => res.send("server is ready");
