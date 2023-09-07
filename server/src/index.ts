@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import db from "./db";
 import "dotenv/config";
 
@@ -18,3 +18,5 @@ db.connect((err) => {
 		});
 	}
 });
+
+app.post("/api/users", (req: Request, res: Response) => res.send("server is ready");
