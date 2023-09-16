@@ -1,5 +1,6 @@
 @use "styles/utils";
 @use "styles/variables";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600;700;800;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -85,5 +86,6 @@ html {
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Poppins", sans-serif;
   }
 }
