@@ -27,17 +27,23 @@ const Sidebar = () => {
       <ul className="mt-8 space-y-4">
         <li className="link">
           <Link href="/">
-            <Icon icon="octicon:goal-16" className="h-7 w-7" />
+            <Icon icon="octicon:goal-16" className="h-7 w-7 " />
             Goal
           </Link>
-          <Icon icon="typcn:plus" className="h-6 w-6" />
+          <Icon
+            icon="typcn:plus"
+            className="rounded-icon h-8 w-8  p-1 font-semibold"
+          />
         </li>
         <li className="link">
           <Link href="/sales">
             <Icon icon="ri:time-line" className="h-7 w-7" />
             Routine
           </Link>
-          <Icon icon="typcn:plus" className="h-6 w-6" />
+          <Icon
+            icon="typcn:plus"
+            className="rounded-icon h-8 w-8  p-1 font-semibold"
+          />
         </li>
 
         <li className="link">
@@ -45,7 +51,10 @@ const Sidebar = () => {
             <BiNotepad className="h-7 w-7" />
             Tasks
           </Link>
-          <Icon icon="typcn:plus" className="h-6 w-6" />
+          <Icon
+            icon="typcn:plus"
+            className="rounded-icon h-8 w-8  p-1 font-semibold"
+          />
         </li>
 
         <li>
