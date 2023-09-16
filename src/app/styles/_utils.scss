@@ -17,9 +17,20 @@
 .active {
   @apply rounded-md bg-gray-400 bg-opacity-60 transition-all duration-300 ease-in-out;
 }
+.link {
+  @apply flex items-center justify-between gap-2 rounded-sm px-2 py-2 text-xl font-semibold text-gray-700 text-primary transition-all duration-200 ease-in-out hover:bg-gray-300 hover:bg-opacity-10;
+
+  a {
+    @apply flex items-center gap-2;
+  }
+}
+
+.rounded-icon {
+  @apply cursor-pointer rounded-full p-2 hover:bg-gray-400 hover:bg-opacity-30;
+}
 
 .icon {
-  @apply relative flex p-1;
+  @apply cursor-pointer rounded-sm bg-gray-200 bg-opacity-20 p-2 text-2xl  transition-all duration-150 ease-in-out lg:text-5xl;
 }
 
 .post-icon {
