@@ -4,10 +4,10 @@ import Navbar from "../components/Navbar";
 
 const HomePage = () => {
   return (
-    <main className="w-full">
+    <main className="flex w-full">
       <Sidebar />
-      <div className="h-full w-[var(--container-width)] bg-secondary">
-        {/* <Navbar /> */}
+      <div className="h-full w-full bg-secondary">
+        <Navbar />
         hello world
       </div>
     </main>
