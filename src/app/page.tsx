@@ -1,10 +1,5 @@
-import { UserButton } from "@clerk/nextjs";
+import HomePage from "./home/page";
 
 export default function Home() {
-  return (
-    <div className="w-[var(--container-width)] bg-secondary">
-      hello world
-      <UserButton afterSignOutUrl="/sign-in " />
-    </div>
-  );
+  return <HomePage />;
 }

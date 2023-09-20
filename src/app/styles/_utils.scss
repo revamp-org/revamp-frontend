@@ -17,11 +17,33 @@
 .active {
   @apply rounded-md bg-gray-400 bg-opacity-60 transition-all duration-300 ease-in-out;
 }
-.link {
-  @apply flex items-center justify-between gap-2 rounded-sm px-2 py-2 text-xl font-semibold text-gray-700 text-primary transition-all duration-200 ease-in-out hover:bg-gray-300 hover:bg-opacity-10;
 
-  a {
-    @apply flex items-center gap-2;
+// for sidebar
+.link {
+  @apply flex cursor-pointer items-center justify-between gap-2 rounded-sm px-4 py-2 font-semibold text-gray-700 text-primary transition-all duration-200 ease-in-out hover:bg-gray-300 hover:bg-opacity-10;
+
+  a,
+  div {
+    @apply flex  items-center gap-2;
+    svg {
+      @apply h-9 w-9;
+    }
+    p {
+      @apply scale-100 text-xl  transition-all ease-linear;
+    }
+  }
+}
+
+.link-notext {
+  a,
+  div {
+    @apply p-0;
+    svg {
+      @apply h-9 w-9 duration-300;
+    }
+    p {
+      @apply scale-0;
+    }
   }
 }
 

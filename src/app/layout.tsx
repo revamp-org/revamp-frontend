@@ -2,6 +2,9 @@ import "./globals.scss";
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import Sidebar from "./components/Sidebar";
+import { Provider } from "react-redux";
+import { store } from "@/redux/store";
+import ReduxProvider from "@/redux/provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,8 +20,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className="dark flex">
-          <Sidebar />
-          {children}
+          <ReduxProvider>{children}</ReduxProvider>
         </body>
       </html>
     </ClerkProvider>
