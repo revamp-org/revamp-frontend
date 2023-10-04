@@ -13,7 +13,7 @@
     --bg-primary: 180, 26%, 95%;
 
     --primary: 0, 0%, 20%;
-    --text-appbar: 211, 35%, 67%;
+    --text-topbar: 211, 35%, 67%;
   }
 
   .dark {
@@ -22,7 +22,7 @@
     --bg-primary: 208, 34%, 32%;
 
     --primary: 0, 0%, 100%;
-    --text-appbar: 211, 35%, 67%;
+    --text-topbar: 211, 35%, 67%;
   }
 }
 
@@ -34,26 +34,6 @@ html {
   body {
     @apply bg-[hsl(var(--bg-primary))];
     font-family: "Poppins", sans-serif;
-  }
-
-  .bg-topbar {
-    @apply bg-[hsl(var(--bg-topbar))];
-  }
-
-  .bg-sidebar {
-    @apply bg-[hsl(var(--bg-sidebar))];
-  }
-
-  .bg-primary {
-    @apply bg-[hsl(var(--bg-primary))];
-  }
-
-  .text-primary {
-    @apply text-[hsl(var(--text-primary))];
-  }
-
-  .text-appbar {
-    @apply text-[hsl(var(--text-appbar))];
   }
 
   .btn {
