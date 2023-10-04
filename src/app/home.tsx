@@ -36,7 +36,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
         <UserButton />
       </section>
-      <aside className="bg-sidebar h-[calc(100dvh_-_4rem)] w-64 overflow-y-auto">
+      <aside className="bg-sidebar h-[calc(100dvh_-_4rem)] w-72 overflow-y-auto">
         <ul role="navigation">
           <Li icon="octicon:goal-16" text="Goal" />
         </ul>

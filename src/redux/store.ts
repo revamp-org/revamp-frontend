@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
+import navbarReducer from "./features/navbarSlice";
 
 export const store = configureStore({
-	reducer: {},
+	reducer: {
+		menu: navbarReducer,
+	},
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
