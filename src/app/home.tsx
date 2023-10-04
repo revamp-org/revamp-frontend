@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Li = ({ icon, text }: { icon: string; text: string }) => {
   return (
-    <li className="flex items-center justify-between text-primary">
+    <li className="flex items-center justify-between text-primary-foreground">
       <div className="flex items-center">
         <Icon icon={icon} className="text-3xl" />
         <span>{text}</span>
@@ -19,7 +19,7 @@ const Li = ({ icon, text }: { icon: string; text: string }) => {
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="grid-template-column grid w-full grid-cols-2">
-      <section className="text-appbar col-span-2 flex h-16 w-full items-center justify-between bg-[#213645] p-2">
+      <section className="text-topbar-foreground bg-topbar col-span-2 flex h-16 w-full items-center justify-between p-2">
         <div className="flex h-full items-center gap-4">
           <button>
             <Icon icon="eva:arrowhead-left-fill" className="text-5xl" />
@@ -41,7 +41,9 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
           <Li icon="octicon:goal-16" text="Goal" />
         </ul>
       </aside>
-      <section className="h-[100dvh_-_4rem]">{children}</section>
+      <section className="h-[100dvh_-_4rem] text-primary-foreground">
+        {children}
+      </section>
     </div>
   );
 };
