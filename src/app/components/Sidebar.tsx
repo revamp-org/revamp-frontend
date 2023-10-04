@@ -18,7 +18,7 @@ const Sidebar = () => {
       >
         <Icon
           icon="mingcute:right-line"
-          className={` h-8 w-8  cursor-pointer rounded-full border-2 border-card bg-secondary p-1 shadow-sm ${isOpen && "rotate-180 "
+          className={` border-card bg-secondary  h-8 w-8 cursor-pointer rounded-full border-2 p-1 shadow-sm ${isOpen && "rotate-180 "
             }`}
         />
       </button>

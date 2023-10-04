@@ -15,7 +15,7 @@
 
   //sidebar size
   --sidebar-bg: #115d53;
-  --sidebar-component-width: clamp(100px, 15vw, 280px);
+  --sidebar-width: 18rem;
 
   // content container
   --container-width: calc(100vw - var(--sidebar-width)); // navbar height
