@@ -1,13 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotepatterns: [
+  redirects: async () => {
+    return [
       {
-        protocol: "https",
-        hostname: "*",
+        source: "/sign-in" || "/sign-up",
+        destination: "/",
+        has: [{ type: "cookie", key: "__session" }],
+        permanent: true,
       },
-    ],
+    ];
   },
 };
 
 module.exports = nextConfig;
+
+// fuck next use sveltekit

@@ -1,5 +1,14 @@
-import HomePage from "./home/page";
+"use client";
+import { useAuth } from "@clerk/nextjs";
+import HomePage from "./home";
+import Landing from "./landing";
 
 export default function Home() {
-  return <HomePage />;
+  const { isSignedIn } = useAuth();
+
+  if (!isSignedIn) {
+    return <Landing />;
+  } else {
+    return <HomePage />;
+  }
 }
