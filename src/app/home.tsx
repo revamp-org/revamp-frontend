@@ -1,10 +1,11 @@
 import { UserButton } from "@clerk/nextjs";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Li = ({ icon, text }: { icon: string; text: string }) => {
   return (
-    <li className="flex items-center justify-between">
+    <li className="flex items-center justify-between text-primary">
       <div className="flex items-center">
         <Icon icon={icon} className="text-3xl" />
         <span>{text}</span>
@@ -17,28 +18,30 @@ const Li = ({ icon, text }: { icon: string; text: string }) => {
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="grid w-full">
-      <section className="flex h-16 w-full items-center justify-between bg-[#213645] p-2 text-[#8CA9C8]">
+    <div className="grid-template-column grid w-full grid-cols-2">
+      <section className="text-appbar col-span-2 flex h-16 w-full items-center justify-between bg-[#213645] p-2">
         <div className="flex h-full items-center gap-4">
           <button>
             <Icon icon="eva:arrowhead-left-fill" className="text-5xl" />
           </button>
-          <Image
-            src="/assets/logo3-dark.svg"
-            alt="REVAMP"
-            height={80}
-            width={280}
-            className="h-full w-full"
-          />
+          <Link href="/" className="h-full w-full">
+            <Image
+              src="/assets/logo3-dark.svg"
+              alt="REVAMP"
+              height={80}
+              width={280}
+              className="h-full w-full"
+            />
+          </Link>
         </div>
         <UserButton />
       </section>
-      <aside className="w-[var(--sidebar-width)]">
+      <aside className="bg-sidebar h-[calc(100dvh_-_4rem)] w-64 overflow-y-auto">
         <ul role="navigation">
           <Li icon="octicon:goal-16" text="Goal" />
         </ul>
       </aside>
-      {children}
+      <section className="h-[100dvh_-_4rem]">{children}</section>
     </div>
   );
 };
