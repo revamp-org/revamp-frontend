@@ -10,7 +10,7 @@ const Sidebar = () => {
   return (
     <aside
       className={`relative h-[100dvh] ${isOpen ? "w-[var(--sidebar-width)]" : "w-20"
-        }  shadow-md duration-300`}
+        }  bg-background shadow-md duration-300`}
     >
       <button
         className="absolute -right-3 top-9"
