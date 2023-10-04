@@ -19,7 +19,7 @@ const Li = ({ icon, text }: { icon: string; text: string }) => {
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="grid-template-column grid w-full grid-cols-2">
-      <section className="text-topbar-foreground bg-topbar col-span-2 flex h-16 w-full items-center justify-between p-2">
+      <section className="col-span-2 flex h-16 w-full items-center justify-between bg-topbar p-2 text-topbar-foreground">
         <div className="flex h-full items-center gap-4">
           <button>
             <Icon icon="eva:arrowhead-left-fill" className="text-5xl" />
@@ -34,9 +34,16 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
             />
           </Link>
         </div>
-        <UserButton />
+        <UserButton
+          afterSignOutUrl="/"
+          appearance={{
+            elements: {
+              avatarBox: "h-10 w-10",
+            },
+          }}
+        />
       </section>
-      <aside className="bg-sidebar h-[calc(100dvh_-_4rem)] w-72 overflow-y-auto">
+      <aside className="h-[calc(100dvh_-_4rem)] w-72 overflow-y-auto bg-sidebar">
         <ul role="navigation">
           <Li icon="octicon:goal-16" text="Goal" />
         </ul>
