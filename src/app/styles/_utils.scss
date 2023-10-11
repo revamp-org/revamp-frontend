@@ -13,6 +13,19 @@
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
+.truncate-overflow-5 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+}
+
+.truncate-overflow-7 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 7;
+  overflow: hidden;
+}
 
 .active {
   @apply rounded-md bg-gray-400 bg-opacity-60 transition-all duration-300 ease-in-out;

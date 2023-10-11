@@ -3,8 +3,9 @@ import { UserButton } from "@clerk/nextjs";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
+import GoalDetail from "./components/GoalDetail";
+import { useState } from "react";
 
 const Li = ({
   icon,
@@ -26,7 +27,7 @@ const Li = ({
     >
       <div className="flex w-full items-center gap-2">
         <Icon icon={icon} className="text-3xl" />
-        <span className="text-xl font-semibold">{text}</span>
+        <span className="text-xl ">{text}</span>
       </div>
 
       {canAdd && <Icon icon={"typcn:plus"} className="text-2xl" />}
@@ -42,7 +43,13 @@ const GoalItem = ({ goal, priority }: { goal: string; priority: string }) => {
         <p>{goal}</p>
       </div>
       <span className="flex items-center text-2xl font-semibold">
-        <Image src="/assets/fire.png" alt="streak" height={40} width={40} />
+        <Image
+          src="/assets/fire.png"
+          alt="streak"
+          height={36}
+          width={36}
+          className="p-2"
+        />
         12
       </span>
     </div>
@@ -94,7 +101,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
         </aside>
 
         {/* Main */}
-        <section className="grid h-[100dvh_-_4rem] w-[var(--container-width)] grid-cols-2 p-2  text-primary-foreground">
+        <section className="grid h-[100dvh_-_4rem] w-full grid-cols-2 gap-2  p-2 text-primary-foreground">
           {children}
         </section>
       </div>
@@ -105,9 +112,16 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
 const Home = () => {
   return (
     <HomeLayout>
-      <div className="">
-        <GoalItem goal="DO DE Practice set" />
-      </div>
+      <section className="space-y-2">
+        <GoalItem goal="DO DE Practice set" priority="high" />
+        <GoalItem goal="DO DE Practice set" priority="high" />
+      </section>
+      <GoalDetail
+        title="DO DE Practice set"
+        description="DO de practice set question for Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, officiis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam velit at ex placeat facere sapiente amet laboriosam sunt nostrum nemo! Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore itaque, ipsam numquam optio, perferendis culpa vel voluptates a fugit quas maxime dicta facilis odio velit fugiat deserunt ratione illo voluptate? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, assumenda sunt animi dolor, quis nostrum nisi autem consequatur reprehenderit corporis placeat culpa voluptas aliquam, alias voluptatem natus nobis aperiam cupiditate. "
+        date="2021-09-12"
+        goalId={1}
+      />
     </HomeLayout>
   );
 };
