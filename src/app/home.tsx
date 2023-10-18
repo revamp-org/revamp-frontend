@@ -62,6 +62,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className=" w-full ">
       {/* Appbar */}
+
       <section className="col-span-2 flex h-16 w-full items-center justify-between bg-topbar p-2 text-topbar-foreground">
         <div className="flex h-full items-center gap-4">
           <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
@@ -81,7 +82,14 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
             />
           </Link>
         </div>
-        <UserButton />
+        <UserButton
+          afterSignOutUrl="/"
+          appearance={{
+            elements: {
+              avatarBox: "h-10 w-10",
+            },
+          }}
+        />
       </section>
 
       <div className="flex">
@@ -105,6 +113,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
           {children}
         </section>
       </div>
+
     </div>
   );
 };
