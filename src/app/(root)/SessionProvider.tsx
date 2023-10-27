@@ -1,11 +1,11 @@
 "use client";
-import { UserButton } from "@clerk/nextjs";
-import { Icon } from "@iconify/react";
-import Image from "next/image";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
-import GoalDetail from "./components/GoalDetail";
+import { Icon } from "@iconify/react";
 import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { UserButton, useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const Li = ({
   icon,
@@ -25,40 +25,27 @@ const Li = ({
         className,
       )}
     >
-      <div className="flex w-full items-center gap-2">
+      <Link
+        href={text.toLowerCase()}
+        className="flex w-full items-center gap-2"
+      >
         <Icon icon={icon} className="text-3xl" />
         <span className="text-xl ">{text}</span>
-      </div>
+      </Link>
 
       {canAdd && <Icon icon={"typcn:plus"} className="text-2xl" />}
     </li>
   );
 };
 
-const GoalItem = ({ goal, priority }: { goal: string; priority: string }) => {
-  return (
-    <div className="flex h-12 cursor-pointer  items-center justify-between bg-topbar pr-4 text-xl font-semibold transition-all duration-300 ease-in-out hover:bg-[#446288]">
-      <div className="flex h-full items-center gap-4">
-        <span className="priority after:bg-white "></span>
-        <p>{goal}</p>
-      </div>
-      <span className="flex items-center text-2xl font-semibold">
-        <Image
-          src="/assets/fire.png"
-          alt="streak"
-          height={36}
-          width={36}
-          className="p-2"
-        />
-        12
-      </span>
-    </div>
-  );
-};
-
-const HomeLayout = ({ children }: { children: React.ReactNode }) => {
+const SessionProvider = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const { getToken, isLoaded, isSignedIn } = useAuth();
+  const router = useRouter();
 
+  if (!isLoaded && !isSignedIn) {
+    router.push("/landing");
+  }
   return (
     <div className=" w-full ">
       {/* Appbar */}
@@ -113,26 +100,8 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
           {children}
         </section>
       </div>
-
     </div>
   );
 };
 
-const Home = () => {
-  return (
-    <HomeLayout>
-      <section className="space-y-2">
-        <GoalItem goal="DO DE Practice set" priority="high" />
-        <GoalItem goal="DO DE Practice set" priority="high" />
-      </section>
-      <GoalDetail
-        title="DO DE Practice set"
-        description="DO de practice set question for Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, officiis! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam velit at ex placeat facere sapiente amet laboriosam sunt nostrum nemo! Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore itaque, ipsam numquam optio, perferendis culpa vel voluptates a fugit quas maxime dicta facilis odio velit fugiat deserunt ratione illo voluptate? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, assumenda sunt animi dolor, quis nostrum nisi autem consequatur reprehenderit corporis placeat culpa voluptas aliquam, alias voluptatem natus nobis aperiam cupiditate. "
-        date="2021-09-12"
-        goalId={1}
-      />
-    </HomeLayout>
-  );
-};
-
-export default Home;
+export default SessionProvider;
