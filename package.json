@@ -6,11 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migration:generate": "drizzle-kit generate:mysql --schema=./src/db/schema.ts",
+    "introspect": "drizzle-kit introspect:mysql",
+    "push": "drizzle-kit push:mysql"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.23.5",
     "@nextui-org/react": "^2.1.13",
+    "@planetscale/database": "^1.11.0",
     "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -37,10 +41,12 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
+    "drizzle-orm": "^0.28.6",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.272.0",
+    "mysql2": "^3.6.2",
     "next": "13.5",
     "postcss": "8.4.29",
     "react": "18.2.0",
@@ -59,6 +65,8 @@
   },
   "devDependencies": {
     "@iconify/react": "^4.1.1",
+    "dotenv": "^16.3.1",
+    "drizzle-kit": "^0.19.13",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.3"
   }

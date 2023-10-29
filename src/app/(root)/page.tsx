@@ -1,3 +1,4 @@
+import db from "@/db/config";
 import React from "react";
 
 const Home = () => {
