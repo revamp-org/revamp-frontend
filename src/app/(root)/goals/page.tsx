@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import GoalDetail from "@/app/components/GoalDetail";
 
@@ -23,7 +22,7 @@ const GoalItem = ({ goal, priority }: { goal: string; priority: string }) => {
   );
 };
 
-const Home = () => {
+const GoalsPage = () => {
   return (
     <>
       <section className="space-y-2">
@@ -40,4 +39,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default GoalsPage;

@@ -1,0 +1,1 @@
+ALTER TABLE `goals` ADD `user_id` int NOT NULL;

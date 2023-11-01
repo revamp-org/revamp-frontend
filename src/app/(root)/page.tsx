@@ -1,8 +1,7 @@
-import db from "@/db/config";
-import React from "react";
+import GoalsPage from "./goals/page";
 
 const Home = () => {
-  return <div>Home</div>;
+  return <GoalsPage />;
 };
 
 export default Home;

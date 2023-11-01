@@ -1,3 +1,4 @@
+"use client";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { CircularProgress } from "@nextui-org/react";
 import {

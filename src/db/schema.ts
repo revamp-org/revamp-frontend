@@ -16,6 +16,6 @@ export const goals = mysqlTable("goals", {
   description: text("description"),
   priority: text("priority"),
   deadline: date("deadline"),
-  createdAt: timestamp("created_at"),
+  createdAt: timestamp("created_at").notNull(),
   user_id: int("user_id").notNull(),
 });
