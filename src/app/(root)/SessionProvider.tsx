@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { UserButton, useAuth } from "@clerk/nextjs";
@@ -40,10 +40,30 @@ const Li = ({
 
 const SessionProvider = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
-  const { getToken, isLoaded, isSignedIn } = useAuth();
   const router = useRouter();
+  const { getToken } = useAuth();
+  const [tokens, setTokens] = useState<string>();
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (!isLoaded && !isSignedIn) {
+  useEffect(() => {
+    const gettoken = async () => {
+      setIsLoading(true);
+      const token = await getToken();
+      if (token) {
+        setTokens(token);
+        console.log(token);
+      }
+      setIsLoading(false);
+    };
+
+    gettoken();
+  }, [getToken]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!tokens) {
     router.push("/landing");
   }
   return (
@@ -55,8 +75,9 @@ const SessionProvider = ({ children }: { children: React.ReactNode }) => {
           <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             <Icon
               icon="eva:arrowhead-left-fill"
-              className={`text-5xl ${isSidebarOpen ? "" : "rotate-180"
-                } duration-300`}
+              className={`text-5xl ${
+                isSidebarOpen ? "" : "rotate-180"
+              } duration-300`}
             />
           </button>
           <Link href="/" className="h-full w-full">
@@ -70,7 +91,7 @@ const SessionProvider = ({ children }: { children: React.ReactNode }) => {
           </Link>
         </div>
         <UserButton
-          afterSignOutUrl="/"
+          afterSignOutUrl="/landing"
           appearance={{
             elements: {
               avatarBox: "h-10 w-10",
@@ -82,8 +103,9 @@ const SessionProvider = ({ children }: { children: React.ReactNode }) => {
       <div className="flex">
         {/* Sidebar */}
         <aside
-          className={`${isSidebarOpen ? "w-[var(--sidebar-width)]" : "w-0"
-            } h-[calc(100dvh_-_4rem)]  overflow-y-auto  bg-sidebar duration-300 ease-in-out  `}
+          className={`${
+            isSidebarOpen ? "w-[var(--sidebar-width)]" : "w-0"
+          } h-[calc(100dvh_-_4rem)]  overflow-y-auto  bg-sidebar duration-300 ease-in-out  `}
         >
           <ul role="navigation" className="relative h-full space-y-4 p-4">
             <Li icon="octicon:goal-16" text="Goals" canAdd={true} />
