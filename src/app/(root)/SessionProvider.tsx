@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { UserButton, useAuth } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
 
 const Li = ({
   icon,
@@ -40,32 +39,6 @@ const Li = ({
 
 const SessionProvider = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
-  const router = useRouter();
-  const { getToken } = useAuth();
-  const [tokens, setTokens] = useState<string>();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const gettoken = async () => {
-      setIsLoading(true);
-      const token = await getToken();
-      if (token) {
-        setTokens(token);
-        console.log(token);
-      }
-      setIsLoading(false);
-    };
-
-    gettoken();
-  }, [getToken]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!tokens) {
-    router.push("/landing");
-  }
   return (
     <div className=" w-full ">
       {/* Appbar */}
@@ -91,7 +64,7 @@ const SessionProvider = ({ children }: { children: React.ReactNode }) => {
           </Link>
         </div>
         <UserButton
-          afterSignOutUrl="/landing"
+          afterSignOutUrl="/"
           appearance={{
             elements: {
               avatarBox: "h-10 w-10",
