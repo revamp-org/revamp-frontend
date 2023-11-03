@@ -22,7 +22,7 @@ const GoalItem = ({ goal, priority }: { goal: string; priority: string }) => {
   );
 };
 
-const GoalsPage = () => {
+const HomePage = () => {
   return (
     <>
       <section className="space-y-2">
@@ -39,4 +39,4 @@ const GoalsPage = () => {
   );
 };
 
-export default GoalsPage;
+export default HomePage;

@@ -1,7 +1,6 @@
 import "@/app/globals.scss";
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import AuthProvider from "./AuthProvider";
 
 export const metadata: Metadata = {
   title: "Revamp",
