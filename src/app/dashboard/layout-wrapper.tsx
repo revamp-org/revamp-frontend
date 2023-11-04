@@ -26,7 +26,10 @@ const Li = ({
 				className,
 			)}
 		>
-			<Link href={`/dashboard/${path}`} className="flex w-full items-center gap-2">
+			<Link
+				href={`/dashboard/${path}`}
+				className="flex w-full items-center gap-2"
+			>
 				<Icon icon={icon} className="text-3xl" />
 				<span className="text-xl ">{text}</span>
 			</Link>
@@ -36,7 +39,7 @@ const Li = ({
 	);
 };
 
-const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
+const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 	return (
 		<div className=" w-full ">
@@ -46,7 +49,8 @@ const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
 					<button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
 						<Icon
 							icon="eva:arrowhead-left-fill"
-							className={`text-5xl ${isSidebarOpen ? "" : "rotate-180"} duration-300`}
+							className={`text-5xl ${isSidebarOpen ? "" : "rotate-180"
+								} duration-300`}
 						/>
 					</button>
 					<Link href="/" className="h-full w-full">
@@ -72,17 +76,37 @@ const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
 			<div className="flex">
 				{/* Sidebar */}
 				<aside
-					className={`${
-						isSidebarOpen ? "w-[var(--sidebar-width)]" : "w-0"
-					} h-[calc(100dvh_-_4rem)]  overflow-y-auto  bg-sidebar duration-300 ease-in-out  `}
+					className={`${isSidebarOpen ? "w-[var(--sidebar-width)]" : "w-0"
+						} h-[calc(100dvh_-_4rem)]  overflow-y-auto  bg-sidebar duration-300 ease-in-out  `}
 				>
 					<ul role="navigation" className="relative h-full space-y-4 p-4">
 						<Li path="/" icon="octicon:goal-16" text="Goals" canAdd={true} />
-						<Li path="/routines" icon="ri:time-line" text="Routines" canAdd={true} />
+						<Li
+							path="/routines"
+							icon="ri:time-line"
+							text="Routines"
+							canAdd={true}
+						/>
 						<Li path="/tasks" icon="ph:notepad" text="Tasks" canAdd={true} />
-						<Li path="/journals" icon="mdi:journal-outline" text="Journals" canAdd={false} />
-						<Li path="/analytics" icon="octicon:graph-24" text="Analytics" canAdd={false} />
-						<Li path="/community" icon="bi:people" text="Community" canAdd={false} className="" />
+						<Li
+							path="/journals"
+							icon="mdi:journal-outline"
+							text="Journals"
+							canAdd={false}
+						/>
+						<Li
+							path="/analytics"
+							icon="octicon:graph-24"
+							text="Analytics"
+							canAdd={false}
+						/>
+						<Li
+							path="/community"
+							icon="bi:people"
+							text="Community"
+							canAdd={false}
+							className=""
+						/>
 					</ul>
 				</aside>
 
@@ -95,4 +119,4 @@ const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
 	);
 };
 
-export default LayoutProvider;
+export default LayoutWrapper;

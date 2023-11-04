@@ -1,7 +1,7 @@
 import "@/app/globals.scss";
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import LayoutProvider from "./LayoutProvider";
+import LayoutProvider from "./layout-provider";
 
 export const metadata: Metadata = {
 	title: "Revamp",
@@ -9,12 +9,20 @@ export const metadata: Metadata = {
 		'Revamp is a goal setting app. Our main theme is "Transcending Physical, Mental and Emotional Health."',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
 	return (
 		<ClerkProvider>
 			<html lang="en">
 				<body className="dark flex ">
-					<link rel="shortcut icon" type="image/x-icon" href="/assets/logo.svg" />
+					<link
+						rel="shortcut icon"
+						type="image/x-icon"
+						href="/assets/logo.svg"
+					/>
 					<LayoutProvider>{children}</LayoutProvider>
 				</body>
 			</html>
