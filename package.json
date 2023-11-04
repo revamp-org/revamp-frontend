@@ -7,14 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migration:generate": "drizzle-kit generate:mysql --schema=./src/db/schema.ts",
-    "introspect": "drizzle-kit introspect:mysql",
-    "push": "drizzle-kit push:mysql"
+    "migration:generate": "drizzle-kit generate:pg --schema=./src/db/schema.ts",
+    "introspect": "drizzle-kit introspect:pg",
+    "push": "drizzle-kit push:pg"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.23.5",
     "@nextui-org/react": "^2.1.13",
-    "@planetscale/database": "^1.11.0",
     "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -48,6 +47,7 @@
     "lucide-react": "^0.272.0",
     "mysql2": "^3.6.2",
     "next": "13.5.6",
+    "pg": "^8.11.3",
     "postcss": "8.4.29",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -65,6 +65,7 @@
   },
   "devDependencies": {
     "@iconify/react": "^4.1.1",
+    "@types/pg": "^8.10.7",
     "dotenv": "^16.3.1",
     "drizzle-kit": "^0.19.13",
     "prettier": "^3.0.3",
