@@ -1,7 +1,7 @@
 import "@/app/globals.scss";
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import SessionProvider from "./SessionProvider";
+import LayoutProvider from "./LayoutProvider";
 
 export const metadata: Metadata = {
   title: "Revamp",
@@ -17,7 +17,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className="dark flex ">
-          <SessionProvider>{children}</SessionProvider>
+          <LayoutProvider>{children}</LayoutProvider>
         </body>
       </html>
     </ClerkProvider>

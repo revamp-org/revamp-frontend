@@ -1,13 +1,18 @@
-import { drizzle } from "drizzle-orm/planetscale-serverless";
-import { connect } from "@planetscale/database";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Client } from "pg";
 
-// create the connection
-const connection = connect({
-  host: process.env.DATABASE_HOST,
-  username: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
+const client = new Client({
+  connectionString: process.env.DATABASE_URL!,
 });
 
-const db = drizzle(connection);
+client.connect((err) => {
+  if (err) {
+    console.log("connection error", err.stack);
+  } else {
+    console.log("connected");
+  }
+});
+
+const db = drizzle(client);
 
 export default db;

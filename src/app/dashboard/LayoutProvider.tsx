@@ -1,20 +1,22 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { UserButton, useAuth } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 
 const Li = ({
   icon,
   text,
   canAdd,
   className,
+  path,
 }: {
   icon: string;
   text: string;
   canAdd: boolean;
+  path: string;
   className?: string;
 }) => {
   return (
@@ -25,7 +27,7 @@ const Li = ({
       )}
     >
       <Link
-        href={text.toLowerCase()}
+        href={`/dashboard/${path}`}
         className="flex w-full items-center gap-2"
       >
         <Icon icon={icon} className="text-3xl" />
@@ -37,12 +39,11 @@ const Li = ({
   );
 };
 
-const SessionProvider = ({ children }: { children: React.ReactNode }) => {
+const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   return (
     <div className=" w-full ">
       {/* Appbar */}
-
       <section className="col-span-2 flex h-16 w-full items-center justify-between bg-topbar p-2 text-topbar-foreground">
         <div className="flex h-full items-center gap-4">
           <button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
@@ -81,12 +82,33 @@ const SessionProvider = ({ children }: { children: React.ReactNode }) => {
           } h-[calc(100dvh_-_4rem)]  overflow-y-auto  bg-sidebar duration-300 ease-in-out  `}
         >
           <ul role="navigation" className="relative h-full space-y-4 p-4">
-            <Li icon="octicon:goal-16" text="Goals" canAdd={true} />
-            <Li icon="ri:time-line" text="Routines" canAdd={true} />
-            <Li icon="ph:notepad" text="Tasks" canAdd={true} />
-            <Li icon="mdi:journal-outline" text="Journals" canAdd={false} />
-            <Li icon="octicon:graph-24" text="Analytics" canAdd={false} />
-            <Li icon="bi:people" text="Community" canAdd={false} className="" />
+            <Li path="/" icon="octicon:goal-16" text="Goals" canAdd={true} />
+            <Li
+              path="/routines"
+              icon="ri:time-line"
+              text="Routines"
+              canAdd={true}
+            />
+            <Li path="/tasks" icon="ph:notepad" text="Tasks" canAdd={true} />
+            <Li
+              path="/journals"
+              icon="mdi:journal-outline"
+              text="Journals"
+              canAdd={false}
+            />
+            <Li
+              path="/analytics"
+              icon="octicon:graph-24"
+              text="Analytics"
+              canAdd={false}
+            />
+            <Li
+              path="/community"
+              icon="bi:people"
+              text="Community"
+              canAdd={false}
+              className=""
+            />
           </ul>
         </aside>
 
@@ -99,4 +121,4 @@ const SessionProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default SessionProvider;
+export default LayoutProvider;

@@ -1,7 +1,7 @@
-import { int, text, mysqlTable, timestamp, date } from "drizzle-orm/mysql-core";
+import { date, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
-export const users = mysqlTable("users", {
-  id: int("id").primaryKey().autoincrement(),
+export const users = pgTable("users", {
+  id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull(),
   password: text("password").notNull(),
@@ -10,12 +10,12 @@ export const users = mysqlTable("users", {
   updatedAt: timestamp("updated_at"),
 });
 
-export const goals = mysqlTable("goals", {
-  id: int("id").primaryKey().autoincrement(),
+export const goals = pgTable("goals", {
+  id: serial("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description"),
   priority: text("priority"),
   deadline: date("deadline"),
   createdAt: timestamp("created_at"),
-  user_id: int("user_id").notNull(),
+  user_id: text("user_id").notNull(),
 });

@@ -1,19 +1,12 @@
 {
   "version": "5",
-  "dialect": "mysql",
+  "dialect": "pg",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1698594636398,
-      "tag": "0000_nappy_wallow",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1698595092512,
-      "tag": "0001_cloudy_magma",
+      "when": 1699098245148,
+      "tag": "0000_lean_bromley",
       "breakpoints": true
     }
   ]
