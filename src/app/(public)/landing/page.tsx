@@ -14,7 +14,7 @@ const Landing = () => {
         </div>
       </SignedOut>
       <SignedIn>
-        <Link href="/goals">Go To Dashboard</Link>
+        <Link href="/dashboard">Go To Dashboard</Link>
         <UserButton afterSignOutUrl="/" />
       </SignedIn>
     </div>
