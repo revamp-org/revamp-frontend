@@ -1,7 +1,6 @@
 import "@/app/globals.scss";
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import AuthProvider from "./AuthProvider";
 
 export const metadata: Metadata = {
   title: "Revamp",
@@ -16,6 +15,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <link rel="shortcut icon" type="image/x-icon" href="/assets/logo.svg" />
         <body className="dark">{children}</body>
       </html>
     </ClerkProvider>

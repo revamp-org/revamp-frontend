@@ -13,6 +13,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <link rel="shortcut icon" type="image/x-icon" href="/assets/logo.svg" />
         <body>{children}</body>
       </html>
     </ClerkProvider>

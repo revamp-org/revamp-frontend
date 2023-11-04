@@ -17,6 +17,11 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className="dark flex ">
+          <link
+            rel="shortcut icon"
+            type="image/x-icon"
+            href="/assets/logo.svg"
+          />
           <LayoutProvider>{children}</LayoutProvider>
         </body>
       </html>
