@@ -1,92 +1,92 @@
 @use "components/navbar";
 
 .truncate-overflow-2 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
 }
 
 .truncate-overflow-3 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
 }
 .truncate-overflow-5 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
-  overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 5;
+	overflow: hidden;
 }
 
 .truncate-overflow-7 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 7;
-  overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 7;
+	overflow: hidden;
 }
 
 .active {
-  @apply rounded-md bg-gray-400 bg-opacity-60 transition-all duration-300 ease-in-out;
+	@apply rounded-md bg-gray-400 bg-opacity-60 transition-all duration-300 ease-in-out;
 }
 
 // for small bg part
 .priority {
-  position: relative;
-  height: 100%;
+	position: relative;
+	height: 100%;
 
-  &:after {
-    content: "";
-    position: absolute;
-    width: 8px;
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
+	&:after {
+		content: "";
+		position: absolute;
+		width: 8px;
+		height: 100%;
+		left: 0;
+		top: 0;
+	}
 }
 
 // for sidebar
 .link {
-  @apply flex cursor-pointer items-center justify-between gap-2 rounded-sm px-4 py-2 font-semibold text-gray-700 text-primary transition-all duration-200 ease-in-out hover:bg-gray-300 hover:bg-opacity-10;
+	@apply flex cursor-pointer items-center justify-between gap-2 rounded-sm px-4 py-2 font-semibold text-gray-700 text-primary transition-all duration-200 ease-in-out hover:bg-gray-300 hover:bg-opacity-10;
 
-  a,
-  div {
-    @apply flex  items-center gap-2;
-    svg {
-      @apply h-9 w-9;
-    }
-    p {
-      @apply scale-100 text-xl  transition-all ease-linear;
-    }
-  }
+	a,
+	div {
+		@apply flex  items-center gap-2;
+		svg {
+			@apply h-9 w-9;
+		}
+		p {
+			@apply scale-100 text-xl  transition-all ease-linear;
+		}
+	}
 }
 
 .link-notext {
-  a,
-  div {
-    @apply p-0;
-    svg {
-      @apply h-9 w-9 duration-300;
-    }
-    p {
-      @apply scale-0;
-    }
-  }
+	a,
+	div {
+		@apply p-0;
+		svg {
+			@apply h-9 w-9 duration-300;
+		}
+		p {
+			@apply scale-0;
+		}
+	}
 }
 
 .rounded-icon {
-  @apply cursor-pointer rounded-full p-2 hover:bg-gray-400 hover:bg-opacity-30;
+	@apply cursor-pointer rounded-full p-2 hover:bg-gray-400 hover:bg-opacity-30;
 }
 
 .icon {
-  @apply cursor-pointer rounded-sm bg-gray-200 bg-opacity-20 p-2 text-2xl  transition-all duration-150 ease-in-out lg:text-5xl;
+	@apply cursor-pointer rounded-sm bg-gray-200 bg-opacity-20 p-2 text-2xl  transition-all duration-150 ease-in-out lg:text-5xl;
 }
 
 .post-icon {
-  @apply cursor-pointer  rounded-full p-1 text-2xl transition-all duration-150 ease-in-out  hover:bg-gray-200 lg:text-4xl;
+	@apply cursor-pointer  rounded-full p-1 text-2xl transition-all duration-150 ease-in-out  hover:bg-gray-200 lg:text-4xl;
 }
 
 .counter {
-  @apply absolute right-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-400 text-[0.55rem] lg:h-5 lg:w-5 lg:text-[0.6rem];
+	@apply absolute right-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-400 text-[0.55rem] lg:h-5 lg:w-5 lg:text-[0.6rem];
 }
