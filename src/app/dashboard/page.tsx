@@ -1,6 +1,9 @@
 "use client";
 import Image from "next/image";
 import GoalDetail from "@/app/components/GoalDetail";
+import gqlClient from "@/lib/graphql";
+import { gql } from "@apollo/client";
+import { useEffect } from "react";
 
 const GoalItem = ({ goal, priority }: { goal: string; priority: string }) => {
 	return (
@@ -18,6 +21,24 @@ const GoalItem = ({ goal, priority }: { goal: string; priority: string }) => {
 };
 
 const HomePage = () => {
+	useEffect(() => {
+		(async function () {
+			const query = await gqlClient.query({
+				query: gql`
+					query {
+						post(id: 1) {
+							id
+							title
+							body
+						}
+					}
+				`,
+			});
+
+			console.log(query);
+		})();
+	}, []);
+
 	return (
 		<>
 			<section className="space-y-2">
