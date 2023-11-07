@@ -12,6 +12,7 @@
     "push": "drizzle-kit push:pg"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.7",
     "@clerk/nextjs": "^4.23.5",
     "@nextui-org/react": "^2.1.13",
     "@radix-ui/react-alert-dialog": "^1.0.4",
@@ -44,6 +45,8 @@
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "framer-motion": "^10.16.4",
+    "graphql": "^16.8.1",
+    "graphql-yoga": "^5.0.0",
     "lucide-react": "^0.272.0",
     "mysql2": "^3.6.2",
     "next": "13.5.6",

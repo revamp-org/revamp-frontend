@@ -1,35 +1,35 @@
 :root {
-  /* // background color pallete */
-  --bg-primary: #02315e;
-  --bg-secondary: #dfdfe5;
-  --bg-utils: #00457e;
+	/* // background color pallete */
+	--bg-primary: #02315e;
+	--bg-secondary: #dfdfe5;
+	--bg-utils: #00457e;
 
-  /* // text color */
-  --text-primary: #eeeeee;
-  --text-secondary: #1a2902;
-  --text-thin: #333333;
+	/* // text color */
+	--text-primary: #eeeeee;
+	--text-secondary: #1a2902;
+	--text-thin: #333333;
 
-  // product page background color
-  --bg-product-primary: #ffffff;
-  --bg-product-secondary: #f4f5f9;
+	// product page background color
+	--bg-product-primary: #ffffff;
+	--bg-product-secondary: #f4f5f9;
 
-  //sidebar size
-  --sidebar-bg: #115d53;
-  --sidebar-width: 18rem;
+	//sidebar size
+	--sidebar-bg: #115d53;
+	--sidebar-width: 18rem;
 
-  // content container
-  --container-width: calc(100vw - var(--sidebar-width)); // navbar height
-  --navbar-height: 3.5rem;
+	// content container
+	--container-width: calc(100vw - var(--sidebar-width)); // navbar height
+	--navbar-height: 3.5rem;
 
-  // screen size maximum size
-  --screen-max: 1536px;
-  --screen-sidebar-max: 440px;
-  --screen-padding: 100vw - 1536px;
+	// screen size maximum size
+	--screen-max: 1536px;
+	--screen-sidebar-max: 440px;
+	--screen-padding: 100vw - 1536px;
 
-  // dashboard color
-  --card-color: #226d53;
-  --small-card-bg: #6db06d;
-  --card-height: 12rem;
-  --overview-height: 6rem;
-  --bottom-card-height: calc(100vh - 31rem);
+	// dashboard color
+	--card-color: #226d53;
+	--small-card-bg: #6db06d;
+	--card-height: 12rem;
+	--overview-height: 6rem;
+	--bottom-card-height: calc(100vh - 31rem);
 }

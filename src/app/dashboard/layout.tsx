@@ -1,7 +1,7 @@
 import "@/app/globals.scss";
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import LayoutProvider from "./LayoutProvider";
+import LayoutWrapper from "./layout-wrapper";
 
 export const metadata: Metadata = {
   title: "Revamp",
@@ -23,7 +23,7 @@ export default function RootLayout({
             type="image/x-icon"
             href="/assets/logo.svg"
           />
-          <LayoutProvider>{children}</LayoutProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
         </body>
       </html>
     </ClerkProvider>
