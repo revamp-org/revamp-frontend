@@ -26,10 +26,7 @@ const Li = ({
 				className,
 			)}
 		>
-			<Link
-				href={`/dashboard/${path}`}
-				className="flex w-full items-center gap-2"
-			>
+			<Link href={`/dashboard/${path}`} className="flex w-full items-center gap-2">
 				<Icon icon={icon} className="text-3xl" />
 				<span className="text-xl ">{text}</span>
 			</Link>
@@ -42,15 +39,14 @@ const Li = ({
 const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 	return (
-		<div className=" w-full ">
+		<div className=" w-full text-primary-foreground ">
 			{/* Appbar */}
 			<section className="col-span-2 flex h-16 w-full items-center justify-between bg-topbar p-2 text-topbar-foreground">
 				<div className="flex h-full items-center gap-4">
 					<button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
 						<Icon
 							icon="eva:arrowhead-left-fill"
-							className={`text-5xl ${isSidebarOpen ? "" : "rotate-180"
-								} duration-300`}
+							className={`text-5xl ${isSidebarOpen ? "" : "rotate-180"} duration-300`}
 						/>
 					</button>
 					<Link href="/" className="h-full w-full">
@@ -80,40 +76,17 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 						} h-[calc(100dvh_-_4rem)]  overflow-y-auto  bg-sidebar duration-300 ease-in-out  `}
 				>
 					<ul role="navigation" className="relative h-full space-y-4 p-4">
-						<Li path="/" icon="octicon:goal-16" text="Goals" canAdd={true} />
-						<Li
-							path="/routines"
-							icon="ri:time-line"
-							text="Routines"
-							canAdd={true}
-						/>
+						<Li path="/" icon="radix-icons:dashboard" text="Overview" canAdd={false} />
+						<Li path="/goals" icon="octicon:goal-16" text="Goals" canAdd={true} />
 						<Li path="/tasks" icon="ph:notepad" text="Tasks" canAdd={true} />
-						<Li
-							path="/journals"
-							icon="mdi:journal-outline"
-							text="Journals"
-							canAdd={false}
-						/>
-						<Li
-							path="/analytics"
-							icon="octicon:graph-24"
-							text="Analytics"
-							canAdd={false}
-						/>
-						<Li
-							path="/community"
-							icon="bi:people"
-							text="Community"
-							canAdd={false}
-							className=""
-						/>
+						<Li path="/journals" icon="mdi:journal-outline" text="Journals" canAdd={false} />
+						<Li path="/analytics" icon="octicon:graph-24" text="Analytics" canAdd={false} />
+						<Li path="/community" icon="bi:people" text="Community" canAdd={false} className="" />
 					</ul>
 				</aside>
 
 				{/* Main */}
-				<section className="grid h-[100dvh_-_4rem] w-full grid-cols-2 gap-2  p-2 text-primary-foreground">
-					{children}
-				</section>
+				{children}
 			</div>
 		</div>
 	);
