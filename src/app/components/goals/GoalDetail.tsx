@@ -1,10 +1,14 @@
+"use client";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { CircularProgress } from "@nextui-org/react";
 import { addDays, eachDayOfInterval, format, startOfWeek, subDays } from "date-fns";
-import SmallIcon from "./styled-components/SmallIcon";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
+import SmallIcon from "../styled-components/SmallIcon";
+import { useSearchParams } from "next/navigation";
+import { goalData } from "@/lib/data";
+import { Goal } from "@/lib/types";
 
 const RoutineItem = ({ title, repitation }: { title: string; repitation: string }) => {
 	return (
@@ -76,26 +80,21 @@ const WeeklyActivity = () => {
 	);
 };
 
-const GoalDetail = ({
-	goalId,
-	title,
-	description,
-	date,
-}: {
-	goalId: number;
-	title: string;
-	description: string;
-	date: string;
-}) => {
+const GoalDetail = () => {
+	const searchParams = useSearchParams();
+	const selectedGoal = searchParams.get("goalid");
+
+	const data = goalData.find((goal: Goal) => goal.goalId.toString() === selectedGoal);
+
 	return (
 		<div className="bg-topbar p-2">
 			<div className="flex items-center justify-between">
-				<p className="text-2xl font-semibold">{title}</p>
-				<p className="text-sm font-semibold">{date}</p>
+				<p className="text-2xl font-semibold">{data?.title}</p>
+				<p className="text-sm font-semibold">{data?.date}</p>
 			</div>
 
 			<div className="grid grid-cols-3">
-				<p className="truncate-overflow-7 col-span-2  text-sm">{description}</p>
+				<p className="truncate-overflow-7 col-span-2  text-sm">{data?.description}</p>
 				<CircularProgress
 					classNames={{
 						svg: "w-36 h-36 drop-shadow-md",
