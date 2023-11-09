@@ -5,11 +5,12 @@ import { useState } from "react";
 import CreateTaskDialog from "./CreateTask";
 import ListItem from "../ListItem";
 
-const TaskList = ({ isDashboardPage }: { isDasboardPage: boolean }) => {
+const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const [createTask, setCreateTask] = useState<boolean>(false);
 	return (
 		<section className="space-y-2">
 			<CreateTaskDialog />
+
 			{tasksData.map((task: Task) => (
 				<ListItem
 					key={task.taskId}
