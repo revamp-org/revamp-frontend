@@ -1,26 +1,39 @@
-export type Goal = {
+type Goal = {
 	goalId: number;
 	title: string;
-	description: string;
-	date: string;
+	description?: string;
 	priority: string;
+	relatedArea?: string;
+	streak: number;
+	status: string;
+	deadline?: string;
+	createdAt: string;
+	order: number;
+	userId: string;
 };
 
-export type Task = {
+type Task = {
 	taskId: number;
 	title: string;
-	description: string;
-	priority: string;
-	deadline: string;
-	isActive: boolean;
+	description?: string;
+	priority?: string;
+	deadline?: string;
 	createdAt: string;
+	order: number;
 	goalId: number;
 };
 
-export type Todo = {
+type Milestone = {
+	milestoneId: number;
+	milestone: string;
+	taskId: number;
+};
+
+type Todo = {
 	todoId: number;
-	title: string;
-	priority: string;
+	todo: string;
+	isDone: string;
 	createdAt: string;
+	order: number;
 	taskId: number;
 };
