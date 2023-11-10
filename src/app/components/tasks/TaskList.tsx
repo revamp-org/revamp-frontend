@@ -3,7 +3,7 @@ import { tasksData } from "@/lib/data";
 import { Task } from "@/lib/types";
 import { useState } from "react";
 import CreateTaskDialog from "./CreateTask";
-import ListItem from "../ListItem";
+import TaskListItem from "./TaskListItem";
 
 const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const [createTask, setCreateTask] = useState<boolean>(false);
@@ -12,15 +12,12 @@ const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 			<CreateTaskDialog />
 
 			{tasksData.map((task: Task) => (
-				<ListItem
+				<TaskListItem
 					key={task.taskId}
 					id={task.taskId}
 					title={task.title}
-					queryKey="taskid"
 					href={
-						isDashboardPage
-							? `/dashboard/tasks?taskid=${task.taskId}`
-							: `/tasks?taskid=${task.taskId}`
+						isDashboardPage ? `/dashboard/tasks?id=${task.taskId}` : `/tasks?taskid=${task.taskId}`
 					}
 				/>
 			))}

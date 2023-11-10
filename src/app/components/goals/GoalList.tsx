@@ -3,8 +3,8 @@ import { goalData } from "@/lib/data";
 import { Goal } from "@/lib/types";
 import { useState } from "react";
 import CreateGoalDialog from "./CreateGoalDialog";
-import ListItem from "../ListItem";
 import { SortableContext } from "@dnd-kit/sortable";
+import GoalListItem from "./GoalListItem";
 
 const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const [createGoal, setCreateGoal] = useState<boolean>(false);
@@ -15,7 +15,7 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 				<p className="">Active</p>
 				<SortableContext items={goalData.map((goal: Goal) => goal.goalId)}>
 					{goalData.map((goal: Goal) => (
-						<ListItem
+						<GoalListItem
 							key={goal.goalId}
 							id={goal.goalId}
 							title={goal.title}
@@ -24,7 +24,6 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 									? `dashboard/goals?goalid=${goal.goalId}`
 									: `goals?goalid=${goal.goalId}`
 							}
-							queryKey="goalid"
 							streak={12}
 						/>
 					))}
@@ -34,7 +33,7 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 			<section className="space-y-2">
 				<p className="">InActive</p>
 				{goalData.map((goal: Goal) => (
-					<ListItem
+					<GoalListItem
 						key={goal.goalId}
 						id={goal.goalId}
 						title={goal.title}
@@ -43,7 +42,6 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 								? `dashboard/goals?goalid=${goal.goalId}`
 								: `goals?goalid=${goal.goalId}`
 						}
-						queryKey="goalid"
 						streak={12}
 					/>
 				))}

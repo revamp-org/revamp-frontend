@@ -1,3 +1,4 @@
+import TaskListItem from "@/app/components/tasks/TaskListItem";
 import { tasksData } from "@/lib/data";
 import { Task } from "@/lib/types";
 import React from "react";
@@ -5,17 +6,21 @@ import React from "react";
 const Tasks = () => {
 	const tasks = tasksData;
 
+	const isDashboardPage = true;
+
 	return (
 		<section className="grid h-[100dvh_-_4rem] w-full grid-cols-2 gap-2   p-2 text-primary-foreground">
-			<div>
+			<div className="space-y-2">
 				<h1>Tasks list</h1>
 
 				{tasks.map((task: Task) => {
 					return (
-						<div key={task.taskId}>
-							<h3>{task.title}</h3>
-							<p>{task.description}</p>
-						</div>
+						<TaskListItem
+							key={task.taskId}
+							id={task.taskId}
+							title={task.title}
+							href={isDashboardPage ? `dashboard/task?id=${task.taskId}` : `task?id=${task.taskId}`}
+						/>
 					);
 				})}
 			</div>

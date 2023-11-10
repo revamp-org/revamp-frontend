@@ -4,6 +4,7 @@ import { Todo } from "@/lib/types";
 import { useState } from "react";
 import ListItem from "../ListItem";
 import CreateTodoDialog from "./CreateTodoDialog";
+import TodoListItem from "./TodoListItem";
 
 const TodoList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const [createTodo, setCreateTask] = useState<boolean>(false);
@@ -11,11 +12,10 @@ const TodoList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		<section className="space-y-2">
 			<CreateTodoDialog />
 			{todosData.map((todo: Todo) => (
-				<ListItem
+				<TodoListItem
 					key={todo.todoId}
 					id={todo.todoId}
 					title={todo.title}
-					queryKey="todoid"
 					href={
 						isDashboardPage
 							? `/dashboard/tasks?todoid=${todo.todoId}`
