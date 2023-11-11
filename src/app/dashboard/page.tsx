@@ -19,11 +19,11 @@ const HomePage = ({
 			{/* Task section */}
 
 			<section>
-				<TaskList />
+				<TaskList isDashboardPage={true} />
 			</section>
 
 			<section>
-				<TodoList />
+				<TodoList isDashboardPage={true} />
 			</section>
 		</div>
 	);
