@@ -1,10 +1,9 @@
 import TaskListItem from "@/app/components/tasks/TaskListItem";
-import { tasksData } from "@/lib/data";
-import { Task } from "@/lib/types";
+import { taskData } from "@/lib/data";
 import React from "react";
 
 const Tasks = () => {
-	const tasks = tasksData;
+	const tasks = taskData;
 
 	const isDashboardPage = true;
 

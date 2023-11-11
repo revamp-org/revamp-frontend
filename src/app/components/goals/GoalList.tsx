@@ -1,6 +1,5 @@
 "use client";
 import { goalData } from "@/lib/data";
-import { Goal } from "@/lib/types";
 import { useState } from "react";
 import CreateGoalDialog from "./CreateGoalDialog";
 import { SortableContext } from "@dnd-kit/sortable";

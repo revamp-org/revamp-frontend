@@ -6,7 +6,7 @@ type Goal = {
 	relatedArea?: string;
 	streak: number;
 	status: string;
-	deadline?: string;
+	deadline?: string | null;
 	createdAt: string;
 	order: number;
 	userId: string;
@@ -17,7 +17,7 @@ type Task = {
 	title: string;
 	description?: string;
 	priority?: string;
-	deadline?: string;
+	deadline?: string | null;
 	createdAt: string;
 	order: number;
 	goalId: number;

@@ -1,4 +1,4 @@
-const GoalData = [
+export const goalData = [
 	{
 		goalId: 1,
 		title: "Learn a New Instrument",
@@ -66,7 +66,7 @@ const GoalData = [
 	},
 ];
 
-const TaskData = [
+export const taskData = [
 	{
 		taskId: 1,
 		title: "Practice Guitar Scales",
@@ -119,7 +119,7 @@ const TaskData = [
 	},
 ];
 
-const MilestoneData = [
+export const milestoneData = [
 	{
 		milestoneId: 1,
 		milestone: "Finish Basics 1",
@@ -147,7 +147,7 @@ const MilestoneData = [
 	},
 ];
 
-const TodoData = [
+export const todoData = [
 	{
 		todoId: 1,
 		todo: "Complete Lesson 1",

@@ -1,9 +1,8 @@
 "use client";
-import { tasksData } from "@/lib/data";
-import { Task } from "@/lib/types";
 import { useState } from "react";
 import CreateTaskDialog from "./CreateTask";
 import TaskListItem from "./TaskListItem";
+import { taskData } from "@/lib/data";
 
 const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const [createTask, setCreateTask] = useState<boolean>(false);
@@ -11,7 +10,7 @@ const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		<section className="space-y-2">
 			<CreateTaskDialog />
 
-			{tasksData.map((task: Task) => (
+			{taskData.map((task: Task) => (
 				<TaskListItem
 					key={task.taskId}
 					id={task.taskId}
