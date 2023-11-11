@@ -26,10 +26,7 @@ const Li = ({
 				className,
 			)}
 		>
-			<Link
-				href={`/dashboard/${path}`}
-				className="flex w-full items-center gap-2"
-			>
+			<Link href={`/dashboard/${path}`} className="flex w-full items-center gap-2">
 				<Icon icon={icon} className="text-3xl" />
 				<span className="text-xl ">{text}</span>
 			</Link>
@@ -49,8 +46,7 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 					<button onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
 						<Icon
 							icon="eva:arrowhead-left-fill"
-							className={`text-5xl ${isSidebarOpen ? "" : "rotate-180"
-								} duration-300`}
+							className={`text-5xl ${isSidebarOpen ? "" : "rotate-180"} duration-300`}
 						/>
 					</button>
 					<Link href="/" className="h-full w-full">
@@ -81,32 +77,11 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 				>
 					<ul role="navigation" className="relative h-full space-y-4 p-4">
 						<Li path="/" icon="octicon:goal-16" text="Goals" canAdd={true} />
-						<Li
-							path="/routines"
-							icon="ri:time-line"
-							text="Routines"
-							canAdd={true}
-						/>
+						<Li path="/routines" icon="ri:time-line" text="Routines" canAdd={true} />
 						<Li path="/tasks" icon="ph:notepad" text="Tasks" canAdd={true} />
-						<Li
-							path="/journals"
-							icon="mdi:journal-outline"
-							text="Journals"
-							canAdd={false}
-						/>
-						<Li
-							path="/analytics"
-							icon="octicon:graph-24"
-							text="Analytics"
-							canAdd={false}
-						/>
-						<Li
-							path="/community"
-							icon="bi:people"
-							text="Community"
-							canAdd={false}
-							className=""
-						/>
+						<Li path="/journals" icon="mdi:journal-outline" text="Journals" canAdd={false} />
+						<Li path="/analytics" icon="octicon:graph-24" text="Analytics" canAdd={false} />
+						<Li path="/community" icon="bi:people" text="Community" canAdd={false} className="" />
 					</ul>
 				</aside>
 
