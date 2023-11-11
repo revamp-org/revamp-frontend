@@ -7,7 +7,6 @@ import { SortableContext } from "@dnd-kit/sortable";
 import TaskDndContextProvider from "@/lib/providers/TaskDndContextProvider";
 
 const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
-	const [createTask, setCreateTask] = useState<boolean>(false);
 	const [tasks, setTasks] = useState<Task[]>(taskData);
 
 	useEffect(() => {
