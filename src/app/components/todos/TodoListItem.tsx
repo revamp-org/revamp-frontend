@@ -31,8 +31,8 @@ const TodoListItem = ({ todo, href }: { todo: Todo; href: string }) => {
 	return (
 		<div ref={setNodeRef} style={style} className="flex h-12 items-center">
 			<Link
-				href={href || ""}
-				className={`flex h-full  w-full cursor-pointer  items-center justify-between bg-topbar pr-4 text-xl  transition-all duration-300 ease-in-out hover:bg-[#446288] ${selectedTodo === todo.todoId.toString() ? "bg-[#546287]" : "bg-topbar"
+				href={href}
+				className={`flex h-full  w-full cursor-pointer  items-center justify-between  pr-4 text-xl  transition-all duration-300 ease-in-out hover:bg-[#446288] ${selectedTodo === todo.todoId.toString() ? "bg-[#446288]" : "bg-topbar"
 					}`}
 			>
 				<div className="flex h-full items-center gap-4">

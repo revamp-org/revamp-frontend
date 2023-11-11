@@ -19,10 +19,6 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		setGoals(goalData);
 	}, []);
 
-	useEffect(() => {
-		console.log(goals);
-	}, [goals]);
-
 	const column: Column[] = [
 		{
 			id: "active",
