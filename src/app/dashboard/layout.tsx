@@ -2,7 +2,7 @@ import "@/app/globals.scss";
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import LayoutWrapper from "./layout-wrapper";
-import DndContextProvider from "@/lib/providers/DndContextProvider";
+import ReduxProvider from "@/lib/providers/ReduxProvider";
 
 export const metadata: Metadata = {
   title: "Revamp",
@@ -16,7 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html lang="en">
         <body className="dark flex ">
           <link rel="shortcut icon" type="image/x-icon" href="/assets/logo.svg" />
-          <LayoutWrapper>{children}</LayoutWrapper>
+          <ReduxProvider>
+            <LayoutWrapper>{children}</LayoutWrapper>
+          </ReduxProvider>
         </body>
       </html>
     </ClerkProvider>

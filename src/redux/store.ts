@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import navbarReducer from "./features/navbarSlice";
+import goalReducer from "./features/goalSlice";
 
 export const store = configureStore({
 	reducer: {
 		menu: navbarReducer,
+		goal: goalReducer,
 	},
 });
 
