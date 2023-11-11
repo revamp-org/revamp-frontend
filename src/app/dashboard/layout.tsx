@@ -16,9 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html lang="en">
         <body className="dark flex ">
           <link rel="shortcut icon" type="image/x-icon" href="/assets/logo.svg" />
-          <DndContextProvider>
-            <LayoutWrapper>{children}</LayoutWrapper>
-          </DndContextProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
         </body>
       </html>
     </ClerkProvider>
