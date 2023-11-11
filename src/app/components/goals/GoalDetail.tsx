@@ -19,7 +19,7 @@ const RoutineItem = ({ title, repitation }: { title: string; repitation: string 
 					<p className="text-xs">{repitation}</p>
 				</div>
 
-				<button className="rounded-sm bg-green-400 ">
+				<button aria-label="Add a routine" className="rounded-sm bg-green-400 ">
 					<Icon icon="ic:round-plus" className="text-xl" />
 				</button>
 			</div>
@@ -28,6 +28,7 @@ const RoutineItem = ({ title, repitation }: { title: string; repitation: string 
 			<WeeklyActivity />
 			<div className="flex items-center justify-between">
 				<CircularProgress
+					aria-label="progres bar"
 					classNames={{
 						svg: "w-3 h-4 drop-shadow-md",
 						indicator: "stroke-white",
@@ -96,6 +97,7 @@ const GoalDetail = () => {
 			<div className="grid grid-cols-3">
 				<p className="truncate-overflow-7 col-span-2  text-sm">{data?.description}</p>
 				<CircularProgress
+					aria-label="progres bar"
 					classNames={{
 						svg: "w-36 h-36 drop-shadow-md",
 						indicator: "stroke-white",
@@ -124,7 +126,13 @@ const GoalDetail = () => {
 					{/* Streak and stats */}
 					<div className="">
 						<div className="flex h-40 w-40 items-center rounded-full bg-gray-300 bg-opacity-10 p-8">
-							<Image src="/assets/fire.png" alt="fire image" height={60} width={60} />
+							<Image
+								src="/assets/fire.png"
+								alt="fire image"
+								height={60}
+								width={60}
+								className="h-auto w-auto"
+							/>
 							<p className="text-4xl font-bold">20</p>
 						</div>
 					</div>

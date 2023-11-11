@@ -21,6 +21,7 @@ const ListItem = ({
 
 	return (
 		<Link
+			aria-label={title}
 			href={href || ""}
 			className={`flex h-12 cursor-pointer  items-center justify-between bg-topbar pr-4 text-xl font-semibold transition-all duration-300 ease-in-out hover:bg-[#446288] ${selectedGoal === id.toString() ? "bg-[#546287]" : "bg-topbar"
 				}`}
