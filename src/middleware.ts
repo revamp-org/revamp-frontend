@@ -1,10 +1,17 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
 
-// This example protects all routes including api/trpc routes
-// Please edit this to allow other routes to be public as needed.
-// See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 export default authMiddleware({
-	publicRoutes: ["/landing", "/", "/app/(api.*)", "/api/(.*)"],
+	afterAuth(auth, req, _evt) {
+		if (!auth.userId && !auth.isPublicRoute) {
+			return redirectToSignIn({ returnBackUrl: req.url });
+		}
+
+		if (auth.sessionId && req.nextUrl.pathname === "/dashboard") {
+			console.log(auth.sessionId);
+		}
+	},
+
+	publicRoutes: ["/"],
 });
 
 export const config = {

@@ -76,8 +76,13 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 						} h-[calc(100dvh_-_4rem)]  overflow-y-auto  bg-sidebar duration-300 ease-in-out  `}
 				>
 					<ul role="navigation" className="relative h-full space-y-4 p-4">
+<<<<<<< HEAD
 						<Li path="/" icon="radix-icons:dashboard" text="Overview" canAdd={false} />
 						<Li path="/goals" icon="octicon:goal-16" text="Goals" canAdd={true} />
+=======
+						<Li path="/" icon="octicon:goal-16" text="Goals" canAdd={true} />
+						<Li path="/routines" icon="ri:time-line" text="Routines" canAdd={true} />
+>>>>>>> origin/main
 						<Li path="/tasks" icon="ph:notepad" text="Tasks" canAdd={true} />
 						<Li path="/journals" icon="mdi:journal-outline" text="Journals" canAdd={false} />
 						<Li path="/analytics" icon="octicon:graph-24" text="Analytics" canAdd={false} />
