@@ -5,6 +5,7 @@ import React from "react";
 const SmallIcon = ({ icon, className }: { icon: string; className?: string }) => {
 	return (
 		<Icon
+			aria-label={icon}
 			icon={icon}
 			className={cn(
 				"cursor-pointer rounded-sm p-1 text-2xl transition-all ease-in-out hover:bg-gray-300 hover:bg-opacity-10 ",
