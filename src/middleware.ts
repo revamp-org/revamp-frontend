@@ -7,7 +7,8 @@ export default authMiddleware({
 		}
 
 		if (auth.sessionId && req.nextUrl.pathname === "/dashboard") {
-			console.log(auth.sessionId);
+			console.log(`sessionId: ${auth.sessionId}`);
+			console.log(`userId: ${auth.userId}`);
 		}
 	},
 
