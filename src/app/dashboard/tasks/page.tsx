@@ -1,23 +1,12 @@
-import { tasksData } from "@/lib/data";
-import { Task } from "@/lib/types";
-import React from "react";
+import TaskList from "@/app/components/tasks/TaskList";
 
 const Tasks = () => {
-	const tasks = tasksData;
-
 	return (
 		<section className="grid h-[100dvh_-_4rem] w-full grid-cols-2 gap-2   p-2 text-primary-foreground">
-			<div>
+			<div className="space-y-2">
 				<h1>Tasks list</h1>
 
-				{tasks.map((task: Task) => {
-					return (
-						<div key={task.taskId}>
-							<h3>{task.title}</h3>
-							<p>{task.description}</p>
-						</div>
-					);
-				})}
+				<TaskList isDashboardPage={false} />
 			</div>
 
 			<section className="boreder-gray-100 border">

@@ -8,7 +8,6 @@ import Image from "next/image";
 import SmallIcon from "../styled-components/SmallIcon";
 import { useSearchParams } from "next/navigation";
 import { goalData } from "@/lib/data";
-import { Goal } from "@/lib/types";
 
 const RoutineItem = ({ title, repitation }: { title: string; repitation: string }) => {
 	return (
@@ -91,7 +90,7 @@ const GoalDetail = () => {
 		<div className="bg-topbar p-2">
 			<div className="flex items-center justify-between">
 				<p className="text-2xl font-semibold">{data?.title}</p>
-				<p className="text-sm font-semibold">{data?.date}</p>
+				<p className="text-sm font-semibold">{data?.createdAt}</p>
 			</div>
 
 			<div className="grid grid-cols-3">

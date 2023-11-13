@@ -72,8 +72,9 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 			<div className="flex">
 				{/* Sidebar */}
 				<aside
-					className={`${isSidebarOpen ? "w-[var(--sidebar-width)]" : "w-0"
-						} h-[calc(100dvh_-_4rem)]  overflow-y-auto  bg-sidebar duration-300 ease-in-out  `}
+					className={`${
+						isSidebarOpen ? "w-[var(--sidebar-width)]" : "w-0"
+					} h-[calc(100dvh_-_4rem)]  overflow-y-auto  bg-sidebar duration-300 ease-in-out  `}
 				>
 					<ul role="navigation" className="relative h-full space-y-4 p-4">
 						<Li path="/" icon="radix-icons:dashboard" text="Overview" canAdd={false} />

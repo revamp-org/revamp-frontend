@@ -15,7 +15,7 @@ const CreateTaskDialog = () => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="outline">Create Goal</Button>
+				<Button variant="outline">Create Task</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>

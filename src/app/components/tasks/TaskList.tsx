@@ -1,29 +1,38 @@
 "use client";
-import { tasksData } from "@/lib/data";
-import { Task } from "@/lib/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateTaskDialog from "./CreateTask";
-import ListItem from "../ListItem";
+import TaskListItem from "./TaskListItem";
+import { taskData } from "@/lib/data";
+import { SortableContext } from "@dnd-kit/sortable";
+import TaskDndContextProvider from "@/lib/providers/TaskDndContextProvider";
 
 const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
-	const [createTask, setCreateTask] = useState<boolean>(false);
+	const [tasks, setTasks] = useState<Task[]>(taskData);
+
+	useEffect(() => {
+		setTasks(taskData);
+	}, []);
+
 	return (
-		<section className="space-y-2">
-			<CreateTaskDialog />
-			{tasksData.map((task: Task) => (
-				<ListItem
-					key={task.taskId}
-					id={task.taskId}
-					title={task.title}
-					queryKey="taskid"
-					href={
-						isDashboardPage
-							? `/dashboard/tasks?taskid=${task.taskId}`
-							: `/tasks?taskid=${task.taskId}`
-					}
-				/>
-			))}
-		</section>
+		<TaskDndContextProvider setTasks={setTasks}>
+			<section className="space-y-2">
+				<CreateTaskDialog />
+
+				<SortableContext items={tasks.map((task: Task) => task.taskId)}>
+					{tasks.map((task: Task) => (
+						<TaskListItem
+							key={task.taskId}
+							task={task}
+							href={
+								isDashboardPage
+									? `/dashboard/tasks?taskid=${task.taskId}`
+									: `tasks?taskid=${task.taskId}`
+							}
+						/>
+					))}
+				</SortableContext>
+			</section>
+		</TaskDndContextProvider>
 	);
 };
 
