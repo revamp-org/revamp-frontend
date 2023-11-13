@@ -5,8 +5,17 @@ import { useSearchParams } from "next/navigation";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
+import { cn } from "@/lib/utils";
 
-const GoalListItem = ({ goal, href }: { goal: Goal; href: string }) => {
+const GoalListItem = ({
+	goal,
+	href,
+	dragBtnStyle,
+}: {
+	goal: Goal;
+	href: string;
+	dragBtnStyle?: string;
+}) => {
 	const searchParams = useSearchParams();
 
 	const selectedGoal = searchParams.get("goalid");
@@ -39,8 +48,9 @@ const GoalListItem = ({ goal, href }: { goal: Goal; href: string }) => {
 			<Link
 				aria-label="Goal tag"
 				href={href}
-				className={`flex h-full  w-full cursor-pointer  items-center justify-between  pr-4 text-xl  transition-all duration-300 ease-in-out hover:bg-[#446288] ${selectedGoal === goal?.goalId.toString() ? "bg-[#446288]" : "bg-topbar"
-					}`}
+				className={`flex h-full  w-full cursor-pointer  items-center justify-between  pr-4 text-xl  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
+					selectedGoal === goal?.goalId.toString() ? "bg-[#446288]" : "bg-topbar"
+				}`}
 			>
 				<div className="flex h-full items-center gap-4">
 					<span className="priority after:bg-white "></span>
@@ -53,12 +63,11 @@ const GoalListItem = ({ goal, href }: { goal: Goal; href: string }) => {
 				</span>
 			</Link>
 			<span
-				aria-label=""
 				{...attributes}
 				{...listeners}
-				className="h-full bg-gray-400 bg-opacity-20 px-1  "
+				className={cn("h-full bg-gray-400 bg-opacity-20 px-1  ", dragBtnStyle)}
 			>
-				<Icon icon="grommet-icons:drag" className=" h-full text-2xl" />
+				<Icon icon="iconamoon:menu-burger-horizontal-thin" className="h-full text-2xl  " />
 			</span>
 		</div>
 	);

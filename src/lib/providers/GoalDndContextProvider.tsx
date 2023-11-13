@@ -28,17 +28,19 @@ const GoalDndContextProvider = ({
 		>
 			{children}
 
-			{createPortal(
-				<DragOverlay>
-					{activeGoalCard && (
-						<GoalListItem
-							goal={activeGoalCard}
-							href={`/dashboard/goals?goalid=${activeGoalCard.goalId}`}
-						/>
-					)}
-				</DragOverlay>,
-				document.body,
-			)}
+			{typeof window !== "undefined"
+				? createPortal(
+						<DragOverlay>
+							{activeGoalCard && (
+								<GoalListItem
+									goal={activeGoalCard}
+									href={`/dashboard/goals?goalid=${activeGoalCard.goalId}`}
+								/>
+							)}
+						</DragOverlay>,
+						window.document.body,
+				  )
+				: null}
 		</DndContext>
 	);
 

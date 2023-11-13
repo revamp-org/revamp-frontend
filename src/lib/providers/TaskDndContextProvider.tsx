@@ -1,12 +1,6 @@
 "use client";
 import React, { SetStateAction } from "react";
-import {
-	DndContext,
-	DragEndEvent,
-	DragOverEvent,
-	DragOverlay,
-	DragStartEvent,
-} from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/core";
 import TaskListItem from "@/app/components/tasks/TaskListItem";
 import { createPortal } from "react-dom";
 import { arrayMove } from "@dnd-kit/sortable";
@@ -23,14 +17,19 @@ const TaskDndContextProvider = ({
 		<DndContext id="unique-dnd-context-id" onDragStart={onDragStart} onDragEnd={onDragEnd}>
 			{children}
 
-			{createPortal(
-				<DragOverlay>
-					{activeCard && (
-						<TaskListItem task={activeCard} href={`/dashboard/tasks?taskid=${activeCard.taskId}`} />
-					)}
-				</DragOverlay>,
-				document.body,
-			)}
+			{typeof window !== "undefined"
+				? createPortal(
+						<DragOverlay>
+							{activeCard && (
+								<TaskListItem
+									task={activeCard}
+									href={`/dashboard/tasks?taskid=${activeCard.taskId}`}
+								/>
+							)}
+						</DragOverlay>,
+						window.document.body,
+				  )
+				: null}
 		</DndContext>
 	);
 
