@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
@@ -11,14 +11,16 @@ const TodoListItem = ({
 	todo,
 	href,
 	dragBtnStyle,
+	className,
 }: {
 	todo: Todo;
 	href: string;
 	dragBtnStyle?: string;
+	className?: string;
 }) => {
 	const searchParams = useSearchParams();
-
 	const selectedTodo = searchParams.get("todoid");
+	const router = useRouter();
 
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: todo.todoId,
@@ -38,24 +40,41 @@ const TodoListItem = ({
 			<div
 				ref={setNodeRef}
 				style={style}
-				className="flex h-12 items-center border-2 border-topbar bg-topbar opacity-60"
+				className={cn(
+					"flex h-12 items-center border-2 border-topbar bg-topbar opacity-60",
+					className,
+				)}
 			></div>
 		);
 	}
 
 	return (
 		<div ref={setNodeRef} style={style} className="flex h-12 items-center">
-			<Link
-				href={href}
-				className={`flex h-full w-full  cursor-pointer items-center  justify-between pr-4  text-xl text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
-					selectedTodo === todo.todoId.toString() ? "bg-[#446288]" : "bg-topbar"
-				}`}
+			<div
+				className={cn(
+					`flex h-full w-full   items-center  justify-between pr-4  text-xl text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${selectedTodo === todo.todoId.toString() ? "bg-[#446288]" : "bg-topbar"
+					}`,
+					className,
+				)}
 			>
-				<div className="flex h-full items-center gap-4">
+				<Link
+					href={href}
+					className="group flex h-full w-full cursor-pointer  items-center space-x-4 "
+				>
 					<span className="priority after:bg-white "></span>
 					<p>{todo.todo}</p>
+				</Link>
+
+				<div>
+					<button
+						className="btn h-full  px-1"
+						title="Timer"
+						onClick={() => router.push(`/timer?taskid=${todo.todoId}`)}
+					>
+						<Icon icon="material-symbols:timer-outline" className="h-full text-2xl  " />
+					</button>
 				</div>
-			</Link>
+			</div>
 			<span
 				{...attributes}
 				{...listeners}

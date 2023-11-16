@@ -75,6 +75,7 @@ export const taskData = [
 		deadline: "2023-12-15T18:00:00.000Z",
 		createdAt: "2023-11-10T15:00:00.000Z",
 		order: 1,
+		streak: 64,
 		goalId: 1,
 	},
 	{
@@ -85,6 +86,7 @@ export const taskData = [
 		deadline: "2024-01-31T19:30:00.000Z",
 		createdAt: "2023-11-10T16:30:00.000Z",
 		order: 2,
+		streak: 54,
 		goalId: 2,
 	},
 	{
@@ -95,6 +97,7 @@ export const taskData = [
 		deadline: "2023-11-30T23:59:59.999Z",
 		createdAt: "2023-11-10T17:15:00.000Z",
 		order: 3,
+		streak: 12,
 		goalId: 3,
 	},
 	{
@@ -105,6 +108,7 @@ export const taskData = [
 		deadline: "2024-12-31T23:59:59.999Z",
 		createdAt: "2023-11-10T18:45:00.000Z",
 		order: 4,
+		streak: 5,
 		goalId: 4,
 	},
 	{
@@ -115,6 +119,7 @@ export const taskData = [
 		deadline: null,
 		createdAt: "2023-11-10T19:30:00.000Z",
 		order: 5,
+		streak: 10,
 		goalId: 5,
 	},
 ];

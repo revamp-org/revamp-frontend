@@ -95,6 +95,6 @@ html {
 	}
 
 	.btn {
-		@apply text-foreground rounded-md bg-slate-600 px-4 py-2 shadow-md;
+		@apply rounded-md bg-slate-600 px-4 py-2 text-foreground shadow-md transition-all duration-300 hover:opacity-80;
 	}
 }

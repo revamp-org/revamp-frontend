@@ -19,6 +19,7 @@ type Task = {
 	priority?: string;
 	deadline?: string | null;
 	createdAt: string;
+	streak: number;
 	order: number;
 	goalId: number;
 };

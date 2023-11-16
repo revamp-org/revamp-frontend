@@ -5,6 +5,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const TaskListItem = ({
 	task,
@@ -46,14 +47,18 @@ const TaskListItem = ({
 		<div ref={setNodeRef} style={style} className="flex h-12 items-center text-foreground">
 			<Link
 				href={href || ""}
-				className={`flex h-full  w-full cursor-pointer  items-center justify-between  pr-4 text-xl  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
-					selectedTask === task.taskId.toString() ? "bg-[#446288]" : "bg-topbar"
-				}`}
+				className={`flex h-full  w-full cursor-pointer  items-center justify-between  pr-4 text-xl  transition-all duration-300 ease-in-out hover:bg-[#446288] ${selectedTask === task.taskId.toString() ? "bg-[#446288]" : "bg-topbar"
+					}`}
 			>
 				<div className="flex h-full items-center gap-4">
 					<span className="priority after:bg-white "></span>
 					<p>{task.title}</p>
 				</div>
+
+				<span className="flex items-center gap-1  text-xl font-semibold ">
+					<Image src="/assets/fire.png" alt="streak" height={24} width={24} />
+					{task?.streak}
+				</span>
 			</Link>
 			<span
 				{...attributes}
