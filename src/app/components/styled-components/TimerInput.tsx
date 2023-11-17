@@ -1,7 +1,15 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 
-const TimerInput = ({ labelName }: { labelName: string }) => {
-	const [inputValue, setInputValue] = useState("");
+const TimerInput = ({
+	labelName,
+	timer,
+	setTimer,
+}: {
+	labelName: string;
+	timer: string;
+	setTimer: Dispatch<SetStateAction<string>>;
+}) => {
+	const [inputValue, setInputValue] = useState(timer);
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const numericValue = e.target.value.replace(/\D/, "");
@@ -18,6 +26,13 @@ const TimerInput = ({ labelName }: { labelName: string }) => {
 			}, 1000);
 		}
 	};
+
+	useEffect(() => {
+		if (inputValue) {
+			setTimer(inputValue);
+		}
+	}, [setTimer, inputValue]);
+
 	return (
 		<span className="relative">
 			<input

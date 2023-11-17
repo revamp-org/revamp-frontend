@@ -4,17 +4,9 @@ import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 import TimerInput from "../components/styled-components/TimerInput";
 import { useState } from "react";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Button, Input } from "@nextui-org/react";
+import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { Button } from "@/components/ui/button";
 
 const TimerPage = ({
 	searchParams,
@@ -24,6 +16,10 @@ const TimerPage = ({
 	const params = searchParams?.goalid || searchParams?.taskid || searchParams?.todoid;
 	const router = useRouter();
 	const todo = todoData.filter((todo: Todo) => todo.todoId.toString() === params)[0];
+
+	const [hours, setHours] = useState<string>("00");
+	const [minutes, setMinutes] = useState<string>("00");
+	const [seconds, setSeconds] = useState<string>("00");
 
 	return (
 		<div className="grid h-[100dvh] w-[100dvw] place-content-center bg-primary text-foreground">
@@ -41,23 +37,28 @@ const TimerPage = ({
 			<Dialog>
 				<DialogTrigger asChild>
 					<p className="text-[10rem] text-foreground">
-						<span>00</span>
+						<span>{hours}</span>
 						<span>:</span>
-						<span>00</span>
+						<span>{minutes}</span>
 						<span>:</span>
-						<span>00</span>
+						<span>{seconds}</span>
 					</p>
 				</DialogTrigger>
 				<DialogContent className="flex max-w-3xl justify-center">
 					<form action="" className="text-foreground">
 						<fieldset className="">
-							<TimerInput labelName="Hour" />
+							<TimerInput labelName="Hour" timer={hours} setTimer={setHours} />
 							<span className="text-[10rem]">:</span>
-							<TimerInput labelName="Minutes" />
+							<TimerInput labelName="Minutes" timer={minutes} setTimer={setMinutes} />
 							<span className="text-[10rem]">:</span>
-							<TimerInput labelName="Seconds" />
+							<TimerInput labelName="Seconds" timer={seconds} setTimer={setSeconds} />
 						</fieldset>
 					</form>
+					<DialogClose asChild className="absolute bottom-4  ">
+						<Button type="button" variant="secondary">
+							Start
+						</Button>
+					</DialogClose>
 				</DialogContent>
 			</Dialog>
 		</div>
