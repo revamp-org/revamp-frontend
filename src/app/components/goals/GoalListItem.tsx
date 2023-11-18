@@ -6,6 +6,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
+import SmallIcon from "../styled-components/SmallIcon";
 
 const GoalListItem = ({
 	goal,
@@ -38,13 +39,13 @@ const GoalListItem = ({
 			<div
 				ref={setNodeRef}
 				style={style}
-				className="flex h-12 items-center border-2 border-topbar bg-topbar opacity-60 "
+				className="flex h-16 items-center border-2 border-topbar bg-topbar opacity-60 "
 			></div>
 		);
 	}
 
 	return (
-		<div ref={setNodeRef} style={style} className="flex h-12 items-center text-foreground">
+		<div ref={setNodeRef} style={style} className="flex h-16 items-center text-foreground">
 			<Link
 				aria-label="Goal tag"
 				href={href}
@@ -54,7 +55,13 @@ const GoalListItem = ({
 			>
 				<div className="flex h-full items-center gap-4">
 					<span className="priority after:bg-white "></span>
-					<p>{goal?.title}</p>
+					<div>
+						<p>{goal?.title}</p>
+						<span className="flex items-center gap-1  text-xs">
+							<Icon icon="uil:calender" />
+							<p className="text-xs">{goal?.createdAt}</p>
+						</span>
+					</div>
 				</div>
 
 				<span className="flex items-center gap-1  text-xl font-semibold ">

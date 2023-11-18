@@ -7,7 +7,9 @@ import { Separator } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
 import SmallIcon from "../styled-components/SmallIcon";
 import { useSearchParams } from "next/navigation";
-import { goalData } from "@/lib/data";
+import { goalData, taskData } from "@/lib/data";
+import { useEffect, useState } from "react";
+import TaskListItem from "../tasks/TaskListItem";
 
 const RoutineItem = ({ title, repitation }: { title: string; repitation: string }) => {
 	return (
@@ -85,6 +87,11 @@ const GoalDetail = () => {
 	const selectedGoal = searchParams.get("goalid");
 
 	const data = goalData.find((goal: Goal) => goal.goalId.toString() === selectedGoal);
+	const [relevantTasks, setRelevantTasks] = useState<Task[]>([]);
+
+	useEffect(() => {
+		setRelevantTasks(taskData.filter((task: Task) => task.goalId.toString() === selectedGoal));
+	}, [selectedGoal]);
 
 	return (
 		<div className="bg-topbar p-2">
@@ -95,46 +102,43 @@ const GoalDetail = () => {
 
 			<div className="grid grid-cols-3">
 				<p className="truncate-overflow-7 col-span-2  text-sm">{data?.description}</p>
-				<CircularProgress
-					aria-label="progres bar"
-					classNames={{
-						svg: "w-36 h-36 drop-shadow-md",
-						indicator: "stroke-white",
-						track: "stroke-white/10",
-						value: "text-3xl font-semibold text-white",
-					}}
-					value={70}
-					strokeWidth={12}
-					showValueLabel={true}
-				/>
+
+				{/* Streak and stats */}
+				<div className="">
+					<div className="flex h-40 w-40 items-center rounded-full bg-gray-300 bg-opacity-10 p-8">
+						<Image
+							src="/assets/fire.png"
+							alt="fire image"
+							height={60}
+							width={60}
+							className="h-auto w-auto"
+						/>
+						<p className="text-4xl font-bold">20</p>
+					</div>
+				</div>
+				{/* <CircularProgress */}
+				{/* 	aria-label="progres bar" */}
+				{/* 	classNames={{ */}
+				{/* 		svg: "w-36 h-36 drop-shadow-md", */}
+				{/* 		indicator: "stroke-white", */}
+				{/* 		track: "stroke-white/10", */}
+				{/* 		value: "text-3xl font-semibold text-white", */}
+				{/* 	}} */}
+				{/* 	value={70} */}
+				{/* 	strokeWidth={12} */}
+				{/* 	showValueLabel={true} */}
+				{/* /> */}
 			</div>
 
 			<section className="py-4">
-				<div className="grid grid-cols-2 place-items-center  gap-2">
-					<div className="w-full">
-						<h1 className="text-lg font-medium">Routines</h1>
-						{/* Routine section */}
-						<ScrollArea className="h-[16rem] ">
-							<RoutineItem title="Do exercise" repitation="Everyday" />
-							<Separator className="my-2" />
-							<RoutineItem title="Do exercise" repitation="Everyday" />
-							<Separator className="my-2" />
-							<RoutineItem title="Do exercise" repitation="Everyday" />
-						</ScrollArea>
-					</div>
-					{/* Streak and stats */}
-					<div className="">
-						<div className="flex h-40 w-40 items-center rounded-full bg-gray-300 bg-opacity-10 p-8">
-							<Image
-								src="/assets/fire.png"
-								alt="fire image"
-								height={60}
-								width={60}
-								className="h-auto w-auto"
-							/>
-							<p className="text-4xl font-bold">20</p>
-						</div>
-					</div>
+				<div className="w-full">
+					<h1 className="text-lg font-medium">Tasks</h1>
+					{/* Routine section */}
+					<ScrollArea className="h-[16rem] ">
+						{relevantTasks.map((task: Task) => (
+							<TaskListItem key={task.taskId} task={task} href={`/tasks?taskid=${task.taskId}`} />
+						))}
+					</ScrollArea>
 				</div>
 			</section>
 		</div>

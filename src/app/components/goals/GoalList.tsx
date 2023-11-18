@@ -39,20 +39,24 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 			<GoalDndContextProvider setGoals={setGoals}>
 				{column.map((column: Column) => (
 					<section key={column.id} className="space-y-2">
-						<p className="">{column.title}</p>
-						<SortableContext items={column.goals.map((goal: Goal) => goal.goalId)}>
-							{column.goals.map((goal: Goal) => (
-								<GoalListItem
-									key={goal.goalId}
-									goal={goal}
-									href={
-										isDashboardPage
-											? `dashboard/goals?goalid=${goal.goalId}`
-											: `goals?goalid=${goal.goalId}`
-									}
-								/>
-							))}
-						</SortableContext>
+						{column.id === "active" || !isDashboardPage ? (
+							<>
+								<p className="">{column.title}</p>
+								<SortableContext items={column.goals.map((goal: Goal) => goal.goalId)}>
+									{column.goals.map((goal: Goal) => (
+										<GoalListItem
+											key={goal.goalId}
+											goal={goal}
+											href={
+												isDashboardPage
+													? `dashboard/goals?goalid=${goal.goalId}`
+													: `goals?goalid=${goal.goalId}`
+											}
+										/>
+									))}
+								</SortableContext>
+							</>
+						) : null}
 					</section>
 				))}
 			</GoalDndContextProvider>
