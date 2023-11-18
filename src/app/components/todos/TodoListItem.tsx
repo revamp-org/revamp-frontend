@@ -7,6 +7,8 @@ import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
 import { taskData } from "@/lib/data";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
 
 const TodoListItem = ({
 	todo,
@@ -23,6 +25,7 @@ const TodoListItem = ({
 	const selectedTodo = searchParams.get("todoid");
 	const router = useRouter();
 	const relevantTask = taskData.find((task: Task) => task.taskId === todo.taskId);
+	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(false);
 
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: todo.todoId,
@@ -50,11 +53,21 @@ const TodoListItem = ({
 		);
 	}
 
+	const handleChecked = () => {
+		if (!isCheckboxChecked) {
+			const audio = new Audio("/assets/completion-sound.mp3");
+			audio.play();
+		}
+		setIsCheckboxChecked(!isCheckboxChecked);
+	};
+
 	return (
 		<div ref={setNodeRef} style={style} className="flex h-16 items-center">
 			<div
 				className={cn(
-					`flex h-full w-full   items-center  justify-between pr-4  text-xl text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
+					`flex h-full ${
+						isCheckboxChecked ? "opacity-20" : "opacity-100"
+					} w-full   items-center  justify-between   text-xl text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
 						selectedTodo === todo.todoId.toString() ? "bg-[#446288]" : "bg-topbar"
 					}`,
 					className,
@@ -66,13 +79,13 @@ const TodoListItem = ({
 				>
 					<span className="priority after:bg-white "></span>
 					<div>
-						<p>{todo.todo}</p>
+						<p className={`${isCheckboxChecked ? "line-through" : "no-underline"}`}>{todo.todo}</p>
 
 						<p className="text-xs">From {relevantTask?.title}</p>
 					</div>
 				</Link>
 
-				<div>
+				<div className="mr-2 flex items-center gap-1">
 					<button
 						className="btn h-full  px-1"
 						title="Timer"
@@ -80,6 +93,7 @@ const TodoListItem = ({
 					>
 						<Icon icon="material-symbols:timer-outline" className="h-full text-2xl  " />
 					</button>
+					<Checkbox onCheckedChange={handleChecked} />
 				</div>
 			</div>
 			<span

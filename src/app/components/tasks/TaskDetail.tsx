@@ -1,11 +1,11 @@
 "use client";
-import { CircularProgress } from "@nextui-org/react";
-import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { goalData, taskData, todoData } from "@/lib/data";
+import { taskData, todoData } from "@/lib/data";
 import { useEffect, useState } from "react";
 import TodoListItem from "../todos/TodoListItem";
 import CreateTaskDialog from "./CreateTask";
+import Image from "next/image";
+import { Icon } from "@iconify/react";
 
 const TaskDetail = () => {
 	const searchParams = useSearchParams();
@@ -13,7 +13,6 @@ const TaskDetail = () => {
 
 	const [todoList, setTodoList] = useState<Todo[]>([]);
 	const [relevantTask, setRelevantTask] = useState<Task>();
-	const [relevantGoal, setRelevantGoal] = useState<Goal>();
 	const data = taskData.find((task: Task) => task.taskId.toString() === selectedTask);
 
 	useEffect(() => {
@@ -24,8 +23,13 @@ const TaskDetail = () => {
 	return (
 		<div className="bg-topbar p-2">
 			<div className="flex items-center justify-between">
-				<p className="text-2xl font-semibold">{data?.title}</p>
-				<p className="text-sm font-semibold">{data?.createdAt}</p>
+				<div>
+					<p className="text-2xl font-semibold">{data?.title}</p>
+					<p className="text-sm font-semibold">{data?.createdAt}</p>
+				</div>
+				<button title="Add Milestone">
+					<Icon icon="mdi:milestone-add" className="h-full text-3xl  " />
+				</button>
 			</div>
 
 			<p className="truncate-overflow-7 col-span-2  text-sm">{data?.description}</p>
@@ -33,7 +37,7 @@ const TaskDetail = () => {
 			<section className=" py-4 ">
 				{todoList.length !== 0 ? (
 					<div className="space-y-2">
-						<div className="flex items-center justify-between bg-primary ">
+						<div className="flex items-center justify-between  ">
 							<p className="text-xl">Todos</p>
 							<CreateTaskDialog />
 						</div>
@@ -44,7 +48,7 @@ const TaskDetail = () => {
 										key={todo.todoId}
 										todo={todo}
 										href={`/tasks?todoid=${todo.todoId}`}
-										className="bg-primary"
+										className="bg-sidebar"
 										dragBtnStyle="hidden"
 									/>
 								</div>
@@ -57,6 +61,39 @@ const TaskDetail = () => {
 						<CreateTaskDialog />
 					</div>
 				)}
+			</section>
+
+			<section className="grid grid-cols-2 place-items-center">
+				<div>
+					<p className="text-lg">Commitment Streak</p>
+
+					{data?.streak === 0 ? (
+						<span className="bg-red-500">
+							{data.streak}
+							<p>{`It's the start of greatness`}</p>
+						</span>
+					) : (
+						<span className=" bg-red-500">
+							<p className=" font-[Tourney] text-[length:--streak-font-size]">{data?.streak}</p>
+							<p className="text-3xl">day streak!</p>
+						</span>
+					)}
+				</div>
+				<div>
+					<Image
+						src="/assets/fire.png"
+						alt="fire image"
+						height={120}
+						width={120}
+						className="grayscale"
+					/>
+				</div>
+				<div className="col-span-2">
+					<p>
+						Complete all todos or create a checkpoint for your todo using milestone to prevent your
+						streak being lost
+					</p>
+				</div>
 			</section>
 		</div>
 	);
