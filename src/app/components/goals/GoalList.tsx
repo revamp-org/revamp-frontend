@@ -34,7 +34,10 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 
 	return (
 		<div className="space-y-2">
-			<CreateGoalDialog />
+			<div className="flex items-center justify-between">
+				<p className="text-lg">Goals</p>
+				{!isDashboardPage ? <CreateGoalDialog /> : null}
+			</div>
 
 			<GoalDndContextProvider setGoals={setGoals}>
 				{column.map((column: Column) => (

@@ -6,7 +6,6 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
-import SmallIcon from "../styled-components/SmallIcon";
 
 const GoalListItem = ({
 	goal,
@@ -57,7 +56,7 @@ const GoalListItem = ({
 					<span className="priority after:bg-white "></span>
 					<div>
 						<p>{goal?.title}</p>
-						<span className="flex items-center gap-1  text-xs">
+						<span className="flex items-center gap-1  text-xs font-extralight">
 							<Icon icon="uil:calender" />
 							<p className="text-xs">{goal?.createdAt}</p>
 						</span>

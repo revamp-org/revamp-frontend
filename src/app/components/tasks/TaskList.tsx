@@ -16,7 +16,9 @@ const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	return (
 		<TaskDndContextProvider setTasks={setTasks}>
 			<section className="space-y-2">
-				<CreateTaskDialog />
+				<div className="flex items-center justify-between">
+					<p className="text-lg">Tasks</p>
+				</div>
 
 				<SortableContext items={tasks.map((task: Task) => task.taskId)}>
 					{tasks.map((task: Task) => (

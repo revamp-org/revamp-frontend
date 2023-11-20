@@ -16,7 +16,9 @@ const TodoList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	return (
 		<TodoDndContextProvider setTodos={setTodos}>
 			<section className="space-y-2">
-				<CreateTodoDialog />
+				<div>
+					<p className="text-lg">Todos</p>
+				</div>
 				<SortableContext items={todos.map((todo: Todo) => todo.todoId)}>
 					{todos.map((todo: Todo) => (
 						<TodoListItem

@@ -58,7 +58,7 @@ const TaskListItem = ({
 					<div className="">
 						<p>{task.title}</p>
 
-						<p className="text-xs">From {relevantGoal?.title}</p>
+						<p className="text-xs font-extralight">From {relevantGoal?.title}</p>
 					</div>
 				</div>
 

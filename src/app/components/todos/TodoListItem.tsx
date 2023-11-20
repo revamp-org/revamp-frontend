@@ -87,7 +87,7 @@ const TodoListItem = ({
 					<div>
 						<p className={`${isCheckboxChecked ? "line-through" : "no-underline"}`}>{todo.todo}</p>
 
-						<p className="text-xs">From {relevantTask?.title}</p>
+						<p className="text-xs font-extralight">From {relevantTask?.title}</p>
 					</div>
 				</Link>
 
