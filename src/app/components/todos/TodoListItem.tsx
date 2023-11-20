@@ -9,6 +9,9 @@ import { cn } from "@/lib/utils";
 import { taskData } from "@/lib/data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { toggleCheckbox } from "@/redux/features/taskSlice";
 
 const TodoListItem = ({
 	todo,
@@ -25,7 +28,8 @@ const TodoListItem = ({
 	const selectedTodo = searchParams.get("todoid");
 	const router = useRouter();
 	const relevantTask = taskData.find((task: Task) => task.taskId === todo.taskId);
-	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(false);
+	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(todo.isDone);
+	const dispatch = useDispatch<AppDispatch>();
 
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: todo.todoId,
@@ -58,7 +62,9 @@ const TodoListItem = ({
 			const audio = new Audio("/assets/completion-sound.mp3");
 			audio.play();
 		}
+		todo.isDone = !isCheckboxChecked;
 		setIsCheckboxChecked(!isCheckboxChecked);
+		dispatch(toggleCheckbox());
 	};
 
 	return (
@@ -93,7 +99,7 @@ const TodoListItem = ({
 					>
 						<Icon icon="material-symbols:timer-outline" className="h-full text-2xl  " />
 					</button>
-					<Checkbox onCheckedChange={handleChecked} />
+					<Checkbox checked={todo.isDone} onCheckedChange={handleChecked} />
 				</div>
 			</div>
 			<span

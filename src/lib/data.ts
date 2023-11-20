@@ -156,7 +156,7 @@ export const todoData = [
 	{
 		todoId: 1,
 		todo: "Complete Lesson 1",
-		isDone: "false",
+		isDone: false,
 		createdAt: "2023-11-10T14:00:00.000Z",
 		order: 1,
 		taskId: 1,
@@ -164,7 +164,7 @@ export const todoData = [
 	{
 		todoId: 2,
 		todo: "Practice Fingerpicking",
-		isDone: "true",
+		isDone: true,
 		createdAt: "2023-11-10T15:30:00.000Z",
 		order: 2,
 		taskId: 1,
@@ -172,7 +172,7 @@ export const todoData = [
 	{
 		todoId: 3,
 		todo: "Find Book Recommendations",
-		isDone: "false",
+		isDone: false,
 		createdAt: "2023-11-10T17:00:00.000Z",
 		order: 1,
 		taskId: 3,
@@ -180,7 +180,7 @@ export const todoData = [
 	{
 		todoId: 4,
 		todo: "Book Accommodation",
-		isDone: "false",
+		isDone: false,
 		createdAt: "2023-11-10T19:00:00.000Z",
 		order: 2,
 		taskId: 4,
@@ -188,7 +188,7 @@ export const todoData = [
 	{
 		todoId: 5,
 		todo: "Design Contact Form",
-		isDone: "true",
+		isDone: true,
 		createdAt: "2023-11-10T20:30:00.000Z",
 		order: 3,
 		taskId: 5,

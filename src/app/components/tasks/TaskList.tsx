@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import CreateTaskDialog from "./CreateTask";
 import TaskListItem from "./TaskListItem";
-import { taskData } from "@/lib/data";
+import { taskData, todoData } from "@/lib/data";
 import { SortableContext } from "@dnd-kit/sortable";
 import TaskDndContextProvider from "@/lib/providers/TaskDndContextProvider";
 

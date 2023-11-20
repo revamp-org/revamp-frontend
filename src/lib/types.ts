@@ -33,7 +33,7 @@ type Milestone = {
 type Todo = {
 	todoId: number;
 	todo: string;
-	isDone: string;
+	isDone: boolean;
 	createdAt: string;
 	order: number;
 	taskId: number;

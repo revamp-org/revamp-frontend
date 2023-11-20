@@ -6,19 +6,26 @@ import TodoListItem from "../todos/TodoListItem";
 import CreateTaskDialog from "./CreateTask";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
+import { useAppSelector } from "@/redux/store";
 
 const TaskDetail = () => {
 	const searchParams = useSearchParams();
 	const selectedTask = searchParams.get("taskid");
 
 	const [todoList, setTodoList] = useState<Todo[]>([]);
-	const [relevantTask, setRelevantTask] = useState<Task>();
-	const data = taskData.find((task: Task) => task.taskId.toString() === selectedTask);
+	const [tasks, setTasks] = useState<Task[]>(taskData);
+	const data = tasks.find((task: Task) => task.taskId.toString() === selectedTask);
+	const [allTodosCompleted, setAllTodosCompleted] = useState<boolean>(false);
+	const isCheckboxChecked = useAppSelector((state) => state.task.isCheckboxChecked);
 
 	useEffect(() => {
 		setTodoList(todoData.filter((todo: Todo) => todo.taskId.toString() === selectedTask));
-		setRelevantTask(taskData.find((task: Task) => task.taskId.toString() === selectedTask));
 	}, [selectedTask]);
+
+	useEffect(() => {
+		const areAllTodosCompleted = todoList.every((todo: Todo) => todo.isDone);
+		setAllTodosCompleted(areAllTodosCompleted);
+	}, [todoList, isCheckboxChecked]);
 
 	return (
 		<div className="bg-topbar p-2">
@@ -85,11 +92,11 @@ const TaskDetail = () => {
 						alt="fire image"
 						height={120}
 						width={120}
-						className="grayscale"
+						className={`${allTodosCompleted ? "filter-none" : "grayscale"}`}
 					/>
 				</div>
 				<div className="col-span-2">
-					<p>
+					<p className="text-sm font-extralight">
 						Complete all todos or create a checkpoint for your todo using milestone to prevent your
 						streak being lost
 					</p>

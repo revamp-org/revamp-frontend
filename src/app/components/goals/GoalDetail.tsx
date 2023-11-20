@@ -116,18 +116,6 @@ const GoalDetail = () => {
 						<p className="text-4xl font-bold">20</p>
 					</div>
 				</div>
-				{/* <CircularProgress */}
-				{/* 	aria-label="progres bar" */}
-				{/* 	classNames={{ */}
-				{/* 		svg: "w-36 h-36 drop-shadow-md", */}
-				{/* 		indicator: "stroke-white", */}
-				{/* 		track: "stroke-white/10", */}
-				{/* 		value: "text-3xl font-semibold text-white", */}
-				{/* 	}} */}
-				{/* 	value={70} */}
-				{/* 	strokeWidth={12} */}
-				{/* 	showValueLabel={true} */}
-				{/* /> */}
 			</div>
 
 			<section className="py-4">
@@ -136,7 +124,7 @@ const GoalDetail = () => {
 					{/* Routine section */}
 					<ScrollArea className="h-[16rem] ">
 						{relevantTasks.map((task: Task) => (
-							<TaskListItem key={task.taskId} task={task} href={`/tasks?taskid=${task.taskId}`} />
+							<TaskListItem key={task.taskId} task={task} href={`tasks?taskid=${task.taskId}`} />
 						))}
 					</ScrollArea>
 				</div>
