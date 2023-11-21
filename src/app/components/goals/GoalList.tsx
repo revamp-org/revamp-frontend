@@ -1,10 +1,12 @@
 "use client";
-import { goalData } from "@/lib/data";
 import { useEffect, useState } from "react";
 import CreateGoalDialog from "./CreateGoalDialog";
 import { SortableContext } from "@dnd-kit/sortable";
 import GoalListItem from "./GoalListItem";
 import GoalDndContextProvider from "@/lib/providers/GoalDndContextProvider";
+import { useQuery } from "@apollo/client";
+import { useUser } from "@clerk/nextjs";
+import { GET_GOALS } from "../../../../graphql/queries";
 
 type Column = {
 	id: string;
@@ -13,11 +15,32 @@ type Column = {
 };
 
 const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
-	const [goals, setGoals] = useState<Goal[]>(goalData);
+	const [goals, setGoals] = useState<Goal[]>([]);
+	const { user } = useUser();
+
+	const { loading, error, data } = useQuery(GET_GOALS, {
+		variables: { userId: user?.id },
+	});
 
 	useEffect(() => {
-		setGoals(goalData);
-	}, []);
+		if (data) {
+			console.log("Data:", data);
+			const fetchedGoals = data.getGoals;
+			setGoals(fetchedGoals || []);
+		}
+	}, [data]);
+
+	if (loading) {
+		return <p>Loading...</p>;
+	}
+
+	if (error) {
+		return <p>Error: {error.message}</p>;
+	}
+
+	const handleOnClick = () => {
+		console.log("clicked", data?.getGoals);
+	};
 
 	const column: Column[] = [
 		{
@@ -28,14 +51,16 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		{
 			id: "inactive",
 			title: "Inactive",
-			goals: goals.filter((goal: Goal) => goal.status === "inactive"),
+			goals: goals?.filter((goal: Goal) => goal.status === "inactive"),
 		},
 	];
 
 	return (
 		<div className="space-y-2">
 			<div className="flex items-center justify-between">
-				<p className="text-lg">Goals</p>
+				<p className="text-lg" onClick={handleOnClick}>
+					Goals
+				</p>
 				{!isDashboardPage ? <CreateGoalDialog /> : null}
 			</div>
 

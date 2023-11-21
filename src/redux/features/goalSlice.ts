@@ -1,27 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface GoalState {
-	activeGoal: Goal[];
-	inActiveGoal: Goal[];
+	goals: Goal[];
 }
 
 const initialState: GoalState = {
-	activeGoal: [],
-	inActiveGoal: [],
+	goals: [],
 };
 
 export const goalSlice = createSlice({
 	name: "goal",
 	initialState,
 	reducers: {
-		setActiveGoal: (state, action: PayloadAction<Goal[]>) => {
-			state.activeGoal = action.payload;
-		},
-		setInActiveGoal: (state, action: PayloadAction<Goal[]>) => {
-			state.inActiveGoal = action.payload;
+		setGoals: (state, action: PayloadAction<Goal[]>) => {
+			state.goals = action.payload;
 		},
 	},
 });
 
-export const { setActiveGoal, setInActiveGoal } = goalSlice.actions;
+export const { setGoals } = goalSlice.actions;
 export default goalSlice.reducer;
