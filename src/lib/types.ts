@@ -1,3 +1,5 @@
+declare module "*.graphql";
+
 type Goal = {
 	goalId: number;
 	title: string;

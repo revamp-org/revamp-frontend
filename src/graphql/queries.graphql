@@ -1,0 +1,16 @@
+query GetGoals($userId: ID!) {
+	getGoals(userId: $userId) {
+		goalId
+		title
+		description
+		priority
+		relatedArea
+		order
+		streak
+		isActive
+		deadline
+		isDone
+		createdAt
+		updatedAt
+	}
+}

@@ -6,7 +6,7 @@ import GoalListItem from "./GoalListItem";
 import GoalDndContextProvider from "@/lib/providers/GoalDndContextProvider";
 import { useQuery } from "@apollo/client";
 import { useUser } from "@clerk/nextjs";
-import { GET_GOALS } from "../../../../graphql/queries";
+import { GetGoals } from "@/graphql/queries.graphql";
 
 type Column = {
 	id: string;
@@ -19,7 +19,7 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const { user } = useUser();
 	const [loading, setLoading] = useState(true);
 
-	const { error, data } = useQuery(GET_GOALS, {
+	const { error, data } = useQuery(GetGoals, {
 		variables: { userId: user?.id },
 	});
 
