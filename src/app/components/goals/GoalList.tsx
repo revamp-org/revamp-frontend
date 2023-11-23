@@ -17,8 +17,9 @@ type Column = {
 const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const [goals, setGoals] = useState<Goal[]>([]);
 	const { user } = useUser();
+	const [loading, setLoading] = useState(true);
 
-	const { loading, error, data } = useQuery(GET_GOALS, {
+	const { error, data } = useQuery(GET_GOALS, {
 		variables: { userId: user?.id },
 	});
 
@@ -26,7 +27,8 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		if (data) {
 			console.log("Data:", data);
 			const fetchedGoals = data.getGoals;
-			setGoals(fetchedGoals || []);
+			setGoals(fetchedGoals);
+			setLoading(false);
 		}
 	}, [data]);
 
@@ -46,12 +48,12 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		{
 			id: "active",
 			title: "Active",
-			goals: goals.filter((goal: Goal) => goal.status === "active"),
+			goals: goals.filter((goal: Goal) => goal.isActive),
 		},
 		{
 			id: "inactive",
 			title: "Inactive",
-			goals: goals?.filter((goal: Goal) => goal.status === "inactive"),
+			goals: goals.filter((goal: Goal) => goal.isActive),
 		},
 	];
 

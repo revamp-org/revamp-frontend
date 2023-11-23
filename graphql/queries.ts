@@ -10,7 +10,7 @@ export const GET_GOALS = gql`
 			relatedArea
 			order
 			streak
-			status
+			isActive
 			deadline
 			isDone
 			createdAt

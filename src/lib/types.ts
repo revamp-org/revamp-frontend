@@ -5,9 +5,10 @@ type Goal = {
 	priority: string;
 	relatedArea?: string;
 	streak: number;
-	status: string;
+	isActive: boolean;
 	deadline?: string | null;
 	createdAt: string;
+	updatedAt: string;
 	order: number;
 	userId: string;
 };

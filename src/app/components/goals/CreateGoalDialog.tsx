@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { DatePicker } from "../datePicker";
 
 const CreateGoalDialog = () => {
 	return (
@@ -36,6 +37,18 @@ const CreateGoalDialog = () => {
 							Description
 						</Label>
 						<Input id="username" placeholder="Description..." className="col-span-3" />
+					</div>
+					<div className="grid grid-cols-4 items-center gap-4">
+						<Label htmlFor="username" className="text-right text-foreground">
+							priority
+						</Label>
+						<Input id="username" placeholder="priority..." className="col-span-3" />
+					</div>
+					<div className="grid grid-cols-4 items-center gap-4">
+						<Label htmlFor="username" className="text-right text-foreground">
+							deadline
+						</Label>
+						<DatePicker />
 					</div>
 				</div>
 				<DialogFooter>
