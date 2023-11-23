@@ -1,31 +1,47 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { taskData, todoData } from "@/lib/data";
 import { useEffect, useState } from "react";
 import TodoListItem from "../todos/TodoListItem";
 import CreateTaskDialog from "./CreateTask";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { useAppSelector } from "@/redux/store";
+import { Todo } from "@/generated/graphql";
+import { GetTodosOfTask } from "@/graphql/queries.graphql";
+import { useQuery } from "@apollo/client";
 
 const TaskDetail = () => {
 	const searchParams = useSearchParams();
 	const selectedTask = searchParams.get("taskid");
-
-	const [todoList, setTodoList] = useState<Todo[]>([]);
-	const [tasks, setTasks] = useState<Task[]>(taskData);
-	const data = tasks.find((task: Task) => task.taskId.toString() === selectedTask);
+	const [todos, setTodos] = useState<Todo[]>([]);
 	const [allTodosCompleted, setAllTodosCompleted] = useState<boolean>(false);
 	const isCheckboxChecked = useAppSelector((state) => state.task.isCheckboxChecked);
+	const [loading, setLoading] = useState<boolean>(true);
+
+	const { error, data } = useQuery(GetTodosOfTask, {
+		variables: { taskId: selectedTask },
+	});
 
 	useEffect(() => {
-		setTodoList(todoData.filter((todo: Todo) => todo.taskId.toString() === selectedTask));
-	}, [selectedTask]);
+		if (data) {
+			const fetchedTodos: Todo[] = data.getTodosOfTask;
+			setTodos(fetchedTodos);
+			setLoading(false);
+		}
+	}, [data]);
 
 	useEffect(() => {
-		const areAllTodosCompleted = todoList.every((todo: Todo) => todo.isDone);
+		const areAllTodosCompleted = todos.every((todo: Todo) => todo.isDone);
 		setAllTodosCompleted(areAllTodosCompleted);
-	}, [todoList, isCheckboxChecked]);
+	}, [todos, isCheckboxChecked]);
+
+	if (loading) {
+		return <p>Loading...</p>;
+	}
+
+	if (error) {
+		return <p>Error: {error.message}</p>;
+	}
 
 	return (
 		<div className="bg-topbar p-2">
@@ -42,13 +58,13 @@ const TaskDetail = () => {
 			<p className="truncate-overflow-7 col-span-2  text-sm">{data?.description}</p>
 
 			<section className=" py-4 ">
-				{todoList.length !== 0 ? (
+				{todos.length !== 0 ? (
 					<div className="space-y-2">
 						<div className="flex items-center justify-between  ">
 							<p className="text-xl">Todos</p>
 							<CreateTaskDialog />
 						</div>
-						{todoList.map((todo: Todo) => {
+						{todos.map((todo: Todo) => {
 							return (
 								<div key={todo.todoId}>
 									<TodoListItem
