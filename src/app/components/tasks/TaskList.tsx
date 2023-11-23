@@ -2,16 +2,38 @@
 import { useEffect, useState } from "react";
 import CreateTaskDialog from "./CreateTask";
 import TaskListItem from "./TaskListItem";
-import { taskData, todoData } from "@/lib/data";
 import { SortableContext } from "@dnd-kit/sortable";
 import TaskDndContextProvider from "@/lib/providers/TaskDndContextProvider";
+import { Task } from "@/generated/graphql";
+import { useQuery } from "@apollo/client";
+import { GetTasksOfUser } from "@/graphql/queries.graphql";
+import { useUser } from "@clerk/nextjs";
 
 const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
-	const [tasks, setTasks] = useState<Task[]>(taskData);
+	const [tasks, setTasks] = useState<Task[]>([]);
+	const { user } = useUser();
+	const [loading, setLoading] = useState<boolean>(true);
+
+	const { error, data } = useQuery(GetTasksOfUser, {
+		variables: { userId: user?.id },
+	});
 
 	useEffect(() => {
-		setTasks(taskData);
-	}, []);
+		if (data) {
+			console.log("Data:", data);
+			const fetchedTasks: Task[] = data.getTasksOfUser;
+			setTasks(fetchedTasks);
+			setLoading(false);
+		}
+	}, [data]);
+
+	if (loading) {
+		return <p>Loading...</p>;
+	}
+
+	if (error) {
+		return <p>Error: {error.message}</p>;
+	}
 
 	return (
 		<TaskDndContextProvider setTasks={setTasks}>

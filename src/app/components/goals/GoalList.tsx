@@ -7,6 +7,7 @@ import GoalDndContextProvider from "@/lib/providers/GoalDndContextProvider";
 import { useQuery } from "@apollo/client";
 import { useUser } from "@clerk/nextjs";
 import { GetGoals } from "@/graphql/queries.graphql";
+import { Goal } from "@/generated/graphql";
 
 type Column = {
 	id: string;
@@ -26,7 +27,7 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	useEffect(() => {
 		if (data) {
 			console.log("Data:", data);
-			const fetchedGoals = data.getGoals;
+			const fetchedGoals: Goal[] = data.getGoals;
 			setGoals(fetchedGoals);
 			setLoading(false);
 		}
@@ -53,7 +54,7 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		{
 			id: "inactive",
 			title: "Inactive",
-			goals: goals.filter((goal: Goal) => goal.isActive),
+			goals: goals.filter((goal: Goal) => !goal.isActive),
 		},
 	];
 
