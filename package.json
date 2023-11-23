@@ -9,7 +9,9 @@
 		"lint": "next lint",
 		"migration:generate": "drizzle-kit generate:pg --schema=./src/db/schema.ts",
 		"introspect": "drizzle-kit introspect:pg",
-		"push": "drizzle-kit push:pg"
+		"push": "drizzle-kit push:pg",
+		"codegen": "graphql-codegen --config codegen.ts",
+		"codegen:watch": "graphql-codegen --config codegen.js --watch"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.8.7",
@@ -74,6 +76,10 @@
 		"uuid": "^9.0.0"
 	},
 	"devDependencies": {
+		"@graphql-codegen/cli": "^5.0.0",
+		"@graphql-codegen/cli": "5.0.0",
+		"@graphql-codegen/typescript": "4.0.1",
+		"@graphql-codegen/typescript-resolvers": "4.0.1",
 		"@iconify/react": "^4.1.1",
 		"@types/pg": "^8.10.7",
 		"dotenv": "^16.3.1",
