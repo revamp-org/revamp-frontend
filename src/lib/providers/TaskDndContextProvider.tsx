@@ -4,6 +4,7 @@ import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/
 import TaskListItem from "@/app/components/tasks/TaskListItem";
 import { createPortal } from "react-dom";
 import { arrayMove } from "@dnd-kit/sortable";
+import { Task } from "@/generated/graphql";
 
 const TaskDndContextProvider = ({
 	children,

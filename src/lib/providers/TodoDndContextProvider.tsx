@@ -4,6 +4,7 @@ import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/
 import { createPortal } from "react-dom";
 import { arrayMove } from "@dnd-kit/sortable";
 import TodoListItem from "@/app/components/todos/TodoListItem";
+import { Todo } from "@/generated/graphql";
 
 const TodoDndContextProvider = ({
 	children,
@@ -23,7 +24,7 @@ const TodoDndContextProvider = ({
 							{activeCard && (
 								<TodoListItem
 									todo={activeCard}
-									href={`/dashboard/todo?todoid=${activeCard.taskId}`}
+									href={`/dashboard/todo?todoid=${activeCard.todoId}`}
 									dragBtnStyle="text-red-500"
 								/>
 							)}
