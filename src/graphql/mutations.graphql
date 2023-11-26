@@ -1,0 +1,6 @@
+mutation SetGoal($userId: ID!, $title: String!, $description: String!, $deadline: Timestamp) {
+	setGoal(userId: $userId, title: $title, description: $description, deadline: $deadline)
+}
+mutation DeleteGoal($goalId: ID!) {
+	deleteGoal(goalId: $goalId)
+}

@@ -8,6 +8,10 @@ import { useQuery } from "@apollo/client";
 import { useUser } from "@clerk/nextjs";
 import { GetGoals } from "@/graphql/queries.graphql";
 import { Goal } from "@/generated/graphql";
+import { useSearchParams } from "next/navigation";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { setGoals } from "@/redux/features/goalSlice";
 
 type Column = {
 	id: string;
@@ -16,9 +20,11 @@ type Column = {
 };
 
 const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
-	const [goals, setGoals] = useState<Goal[]>([]);
 	const { user } = useUser();
 	const [loading, setLoading] = useState(true);
+	const goalChange: boolean = useAppSelector((state) => state.goal.goalChange);
+	const goals: Goal[] = useAppSelector((state) => state.goal.goals);
+	const dispatch = useDispatch<AppDispatch>();
 
 	const { error, data } = useQuery(GetGoals, {
 		variables: { userId: user?.id },
@@ -26,12 +32,15 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 
 	useEffect(() => {
 		if (data) {
-			console.log("Data:", data);
 			const fetchedGoals: Goal[] = data.getGoals;
-			setGoals(fetchedGoals);
+			dispatch(setGoals(fetchedGoals));
 			setLoading(false);
 		}
-	}, [data]);
+	}, [data, dispatch]);
+
+	useEffect(() => {
+		dispatch(setGoals(goals));
+	}, [goals, dispatch]);
 
 	if (loading) {
 		return <p>Loading...</p>;
@@ -67,7 +76,7 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 				{!isDashboardPage ? <CreateGoalDialog /> : null}
 			</div>
 
-			<GoalDndContextProvider setGoals={setGoals}>
+			<GoalDndContextProvider>
 				{column.map((column: Column) => (
 					<section key={column.id} className="space-y-2">
 						{column.id === "active" || !isDashboardPage ? (

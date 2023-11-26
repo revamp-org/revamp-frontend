@@ -6,6 +6,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
+import { Goal } from "@/generated/graphql";
 
 const GoalListItem = ({
 	goal,

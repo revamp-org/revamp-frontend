@@ -14,3 +14,44 @@ query GetGoals($userId: ID!) {
 		updatedAt
 	}
 }
+query GetTasksOfUser($userId: ID!) {
+	getTasksOfUser(userId: $userId) {
+		taskId
+		title
+		description
+		priority
+		streak
+		order
+		isDone
+	}
+}
+
+query GetTodosOfUser($userId: ID!) {
+	getTodosOfUser(userId: $userId) {
+		todoId
+		todo
+		order
+		isDone
+	}
+}
+
+query GetTasksOfGoal($goalId: ID!) {
+	getTasksOfGoal(goalId: $goalId) {
+		taskId
+		title
+		description
+		priority
+		streak
+		order
+		isDone
+	}
+}
+
+query GetTodosOfTask($taskId: ID!) {
+	getTodosOfTask(taskId: $taskId) {
+		todoId
+		todo
+		order
+		isDone
+	}
+}
