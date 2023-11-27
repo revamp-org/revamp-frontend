@@ -49,9 +49,8 @@ const GoalListItem = ({
 			<Link
 				aria-label="Goal tag"
 				href={href}
-				className={`flex h-full  w-full cursor-pointer  items-center justify-between  pr-4 text-xl  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
-					selectedGoal === goal?.goalId.toString() ? "bg-[#446288]" : "bg-topbar"
-				}`}
+				className={`flex h-full  w-full cursor-pointer  items-center justify-between  pr-4 text-xl  transition-all duration-300 ease-in-out hover:bg-[#446288] ${selectedGoal === goal?.goalId.toString() ? "bg-[#446288]" : "bg-topbar"
+					}`}
 			>
 				<div className="flex h-full items-center gap-4">
 					<span className="priority after:bg-white "></span>
