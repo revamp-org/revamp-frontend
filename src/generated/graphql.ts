@@ -85,7 +85,7 @@ export type Scalars = {
 export type Aspect = {
   __typename?: 'Aspect';
   aspect: Scalars['String']['output'];
-  aspectId: Scalars['ID']['output'];
+  aspectId: Scalars['Int']['output'];
   tags: Array<Tag>;
 };
 
@@ -93,7 +93,7 @@ export type Comment = {
   __typename?: 'Comment';
   authorId: Scalars['ID']['output'];
   comment: Scalars['String']['output'];
-  commentId: Scalars['ID']['output'];
+  commentId: Scalars['Int']['output'];
   createdAt: Scalars['Timestamp']['output'];
   updatedAt?: Maybe<Scalars['Timestamp']['output']>;
 };
@@ -101,7 +101,7 @@ export type Comment = {
 export type Community = {
   __typename?: 'Community';
   community: Scalars['String']['output'];
-  communityId: Scalars['ID']['output'];
+  communityId: Scalars['Int']['output'];
   createdAt: Scalars['Timestamp']['output'];
   description: Scalars['String']['output'];
   nametag: Scalars['String']['output'];
@@ -115,7 +115,7 @@ export type Goal = {
   createdAt: Scalars['Timestamp']['output'];
   deadline?: Maybe<Scalars['Timestamp']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  goalId: Scalars['ID']['output'];
+  goalId: Scalars['Int']['output'];
   goalQnas?: Maybe<Array<Maybe<GoalQna>>>;
   isActive: Scalars['Boolean']['output'];
   isDone: Scalars['Boolean']['output'];
@@ -131,7 +131,7 @@ export type Goal = {
 export type GoalQna = {
   __typename?: 'GoalQna';
   answer: Scalars['String']['output'];
-  goalQnaId: Scalars['ID']['output'];
+  goalQnaId: Scalars['Int']['output'];
   question: Scalars['String']['output'];
 };
 
@@ -141,7 +141,7 @@ export type Journal = {
   comments: Array<Comment>;
   content: Scalars['String']['output'];
   date: Scalars['Timestamp']['output'];
-  journalId: Scalars['ID']['output'];
+  journalId: Scalars['Int']['output'];
   likedBy: Array<JournalLike>;
   sharedBy: Array<JournalShare>;
   title: Scalars['String']['output'];
@@ -165,7 +165,7 @@ export type Milestone = {
   __typename?: 'Milestone';
   createdAt: Scalars['Timestamp']['output'];
   milestone: Scalars['String']['output'];
-  milestoneId: Scalars['ID']['output'];
+  milestoneId: Scalars['Int']['output'];
 };
 
 export type Mutation = {
@@ -185,17 +185,17 @@ export type Mutation = {
 
 
 export type MutationDeleteGoalArgs = {
-  goalId: Scalars['ID']['input'];
+  goalId: Scalars['Int']['input'];
 };
 
 
 export type MutationDeleteTaskArgs = {
-  taskId: Scalars['ID']['input'];
+  taskId: Scalars['Int']['input'];
 };
 
 
 export type MutationDeleteTodoArgs = {
-  todoId: Scalars['ID']['input'];
+  todoId: Scalars['Int']['input'];
 };
 
 
@@ -207,7 +207,7 @@ export type MutationDeleteUserArgs = {
 export type MutationEditGoalArgs = {
   deadline?: InputMaybe<Scalars['Timestamp']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  goalId: Scalars['ID']['input'];
+  goalId: Scalars['Int']['input'];
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   isDone?: InputMaybe<Scalars['Boolean']['input']>;
   order?: InputMaybe<Scalars['Int']['input']>;
@@ -224,7 +224,7 @@ export type MutationEditTaskArgs = {
   order?: InputMaybe<Scalars['Int']['input']>;
   priority?: InputMaybe<Scalars['String']['input']>;
   streak?: InputMaybe<Scalars['Int']['input']>;
-  taskId: Scalars['ID']['input'];
+  taskId: Scalars['Int']['input'];
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -233,7 +233,7 @@ export type MutationEditTodoArgs = {
   isDone?: InputMaybe<Scalars['Boolean']['input']>;
   order?: InputMaybe<Scalars['Int']['input']>;
   todo?: InputMaybe<Scalars['String']['input']>;
-  todoId: Scalars['ID']['input'];
+  todoId: Scalars['Int']['input'];
 };
 
 
@@ -250,14 +250,14 @@ export type MutationSetGoalArgs = {
 export type MutationSetTaskArgs = {
   deadline?: InputMaybe<Scalars['Timestamp']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  goalId: Scalars['ID']['input'];
+  goalId: Scalars['Int']['input'];
   priority?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
 };
 
 
 export type MutationSetTodoArgs = {
-  taskId: Scalars['ID']['input'];
+  taskId: Scalars['Int']['input'];
   todo: Scalars['String']['input'];
 };
 
@@ -269,7 +269,7 @@ export type MutationSetUserArgs = {
 export type Pausetime = {
   __typename?: 'Pausetime';
   pauseTime: Scalars['Timestamp']['output'];
-  pausetimeId: Scalars['ID']['output'];
+  pausetimeId: Scalars['Int']['output'];
 };
 
 export type Query = {
@@ -295,17 +295,17 @@ export type QueryGetGoalsArgs = {
 
 
 export type QueryGetSingleGoalArgs = {
-  goalId: Scalars['ID']['input'];
+  goalId: Scalars['Int']['input'];
 };
 
 
 export type QueryGetSingleTaskArgs = {
-  taskId: Scalars['ID']['input'];
+  taskId: Scalars['Int']['input'];
 };
 
 
 export type QueryGetSingleTodoArgs = {
-  todoId: Scalars['ID']['input'];
+  todoId: Scalars['Int']['input'];
 };
 
 
@@ -315,7 +315,7 @@ export type QueryGetSingleUserArgs = {
 
 
 export type QueryGetTasksOfGoalArgs = {
-  goalId: Scalars['ID']['input'];
+  goalId: Scalars['Int']['input'];
 };
 
 
@@ -325,7 +325,7 @@ export type QueryGetTasksOfUserArgs = {
 
 
 export type QueryGetTodosOfTaskArgs = {
-  taskId: Scalars['ID']['input'];
+  taskId: Scalars['Int']['input'];
 };
 
 
@@ -337,19 +337,19 @@ export type Question = {
   __typename?: 'Question';
   options: Array<Scalars['String']['output']>;
   question: Scalars['String']['output'];
-  questionId: Scalars['ID']['output'];
+  questionId: Scalars['Int']['output'];
 };
 
 export type Resumetime = {
   __typename?: 'Resumetime';
   resumeTime: Scalars['Timestamp']['output'];
-  resumetimeId: Scalars['ID']['output'];
+  resumetimeId: Scalars['Int']['output'];
 };
 
 export type Tag = {
   __typename?: 'Tag';
   tag: Scalars['String']['output'];
-  tagId: Scalars['ID']['output'];
+  tagId: Scalars['Int']['output'];
 };
 
 export type Task = {
@@ -357,12 +357,13 @@ export type Task = {
   createdAt: Scalars['Timestamp']['output'];
   deadline?: Maybe<Scalars['Timestamp']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  goalId: Scalars['Int']['output'];
   isDone: Scalars['Boolean']['output'];
   milestones?: Maybe<Array<Maybe<Milestone>>>;
   order: Scalars['Int']['output'];
   priority: Scalars['String']['output'];
   streak: Scalars['Int']['output'];
-  taskId: Scalars['ID']['output'];
+  taskId: Scalars['Int']['output'];
   timelapsed?: Maybe<Timelapse>;
   title: Scalars['String']['output'];
   todos?: Maybe<Array<Maybe<Todo>>>;
@@ -384,7 +385,7 @@ export type Timelapse = {
   pausetimes?: Maybe<Array<Maybe<Pausetime>>>;
   resumetimes?: Maybe<Array<Maybe<Resumetime>>>;
   startTime: Scalars['Timestamp']['output'];
-  timelapseId: Scalars['ID']['output'];
+  timelapseId: Scalars['Int']['output'];
 };
 
 export type Todo = {
@@ -394,7 +395,7 @@ export type Todo = {
   order: Scalars['Int']['output'];
   timelapsed?: Maybe<Timelapse>;
   todo: Scalars['String']['output'];
-  todoId: Scalars['ID']['output'];
+  todoId: Scalars['Int']['output'];
   updatedAt?: Maybe<Scalars['Timestamp']['output']>;
 };
 
@@ -407,12 +408,12 @@ export type User = {
   emailAddresses: Array<UserEmailAddress>;
   firstName: Scalars['String']['output'];
   goals: Array<Goal>;
-  id: Scalars['ID']['output'];
   imageUrl: Scalars['URL']['output'];
   journals: Array<Journal>;
   lastName: Scalars['String']['output'];
   questions?: Maybe<Array<Maybe<Question>>>;
   updatedAt: Scalars['Timestamp']['output'];
+  userId: Scalars['ID']['output'];
   username: Scalars['String']['output'];
 };
 
@@ -696,7 +697,7 @@ export interface AccountNumberScalarConfig extends GraphQLScalarTypeConfig<Resol
 
 export type AspectResolvers<ContextType = any, ParentType extends ResolversParentTypes['Aspect'] = ResolversParentTypes['Aspect']> = {
   aspect?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  aspectId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  aspectId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   tags?: Resolver<Array<ResolversTypes['Tag']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -712,7 +713,7 @@ export interface ByteScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export type CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
   authorId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   comment?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  commentId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  commentId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -720,7 +721,7 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type CommunityResolvers<ContextType = any, ParentType extends ResolversParentTypes['Community'] = ResolversParentTypes['Community']> = {
   community?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  communityId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  communityId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   nametag?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -778,7 +779,7 @@ export type GoalResolvers<ContextType = any, ParentType extends ResolversParentT
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   deadline?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  goalId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  goalId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   goalQnas?: Resolver<Maybe<Array<Maybe<ResolversTypes['GoalQna']>>>, ParentType, ContextType>;
   isActive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   isDone?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
@@ -794,7 +795,7 @@ export type GoalResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type GoalQnaResolvers<ContextType = any, ParentType extends ResolversParentTypes['GoalQna'] = ResolversParentTypes['GoalQna']> = {
   answer?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  goalQnaId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  goalQnaId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   question?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -860,7 +861,7 @@ export type JournalResolvers<ContextType = any, ParentType extends ResolversPare
   comments?: Resolver<Array<ResolversTypes['Comment']>, ParentType, ContextType>;
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   date?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
-  journalId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  journalId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   likedBy?: Resolver<Array<ResolversTypes['JournalLike']>, ParentType, ContextType>;
   sharedBy?: Resolver<Array<ResolversTypes['JournalShare']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -924,7 +925,7 @@ export interface MacScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes[
 export type MilestoneResolvers<ContextType = any, ParentType extends ResolversParentTypes['Milestone'] = ResolversParentTypes['Milestone']> = {
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   milestone?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  milestoneId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  milestoneId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -976,7 +977,7 @@ export interface ObjectIdScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 
 export type PausetimeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Pausetime'] = ResolversParentTypes['Pausetime']> = {
   pauseTime?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
-  pausetimeId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  pausetimeId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1018,7 +1019,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type QuestionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Question'] = ResolversParentTypes['Question']> = {
   options?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
   question?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  questionId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  questionId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1032,7 +1033,7 @@ export interface RgbaScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 
 export type ResumetimeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Resumetime'] = ResolversParentTypes['Resumetime']> = {
   resumeTime?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
-  resumetimeId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  resumetimeId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1050,7 +1051,7 @@ export interface SemVerScalarConfig extends GraphQLScalarTypeConfig<ResolversTyp
 
 export type TagResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = {
   tag?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  tagId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  tagId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1058,12 +1059,13 @@ export type TaskResolvers<ContextType = any, ParentType extends ResolversParentT
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   deadline?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  goalId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   isDone?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   milestones?: Resolver<Maybe<Array<Maybe<ResolversTypes['Milestone']>>>, ParentType, ContextType>;
   order?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   priority?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   streak?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  taskId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  taskId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   timelapsed?: Resolver<Maybe<ResolversTypes['Timelapse']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   todos?: Resolver<Maybe<Array<Maybe<ResolversTypes['Todo']>>>, ParentType, ContextType>;
@@ -1093,7 +1095,7 @@ export type TimelapseResolvers<ContextType = any, ParentType extends ResolversPa
   pausetimes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Pausetime']>>>, ParentType, ContextType>;
   resumetimes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Resumetime']>>>, ParentType, ContextType>;
   startTime?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
-  timelapseId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  timelapseId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1107,7 +1109,7 @@ export type TodoResolvers<ContextType = any, ParentType extends ResolversParentT
   order?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   timelapsed?: Resolver<Maybe<ResolversTypes['Timelapse']>, ParentType, ContextType>;
   todo?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  todoId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  todoId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1140,12 +1142,12 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   emailAddresses?: Resolver<Array<ResolversTypes['UserEmailAddress']>, ParentType, ContextType>;
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   goals?: Resolver<Array<ResolversTypes['Goal']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   imageUrl?: Resolver<ResolversTypes['URL'], ParentType, ContextType>;
   journals?: Resolver<Array<ResolversTypes['Journal']>, ParentType, ContextType>;
   lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   questions?: Resolver<Maybe<Array<Maybe<ResolversTypes['Question']>>>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

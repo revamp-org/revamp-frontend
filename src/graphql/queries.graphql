@@ -35,7 +35,7 @@ query GetTodosOfUser($userId: ID!) {
 	}
 }
 
-query GetTasksOfGoal($goalId: ID!) {
+query GetTasksOfGoal($goalId: Int!) {
 	getTasksOfGoal(goalId: $goalId) {
 		taskId
 		title
@@ -47,7 +47,7 @@ query GetTasksOfGoal($goalId: ID!) {
 	}
 }
 
-query GetTodosOfTask($taskId: ID!) {
+query GetTodosOfTask($taskId: Int!) {
 	getTodosOfTask(taskId: $taskId) {
 		todoId
 		todo

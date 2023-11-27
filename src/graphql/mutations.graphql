@@ -1,6 +1,6 @@
 mutation SetGoal($userId: ID!, $title: String!, $description: String!, $deadline: Timestamp) {
 	setGoal(userId: $userId, title: $title, description: $description, deadline: $deadline)
 }
-mutation DeleteGoal($goalId: ID!) {
+mutation DeleteGoal($goalId: Int!) {
 	deleteGoal(goalId: $goalId)
 }
