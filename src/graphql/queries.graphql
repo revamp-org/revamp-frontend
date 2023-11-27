@@ -23,6 +23,7 @@ query GetTasksOfUser($userId: ID!) {
 		streak
 		order
 		isDone
+		goalId
 	}
 }
 

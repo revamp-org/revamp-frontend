@@ -3,12 +3,14 @@ import { TypedUseSelectorHook, useSelector } from "react-redux";
 import navbarReducer from "./features/navbarSlice";
 import goalReducer from "./features/goalSlice";
 import taskReducer from "./features/taskSlice";
+import todoReducer from "./features/todoSlice";
 
 export const store = configureStore({
 	reducer: {
 		menu: navbarReducer,
 		goal: goalReducer,
 		task: taskReducer,
+		todo: todoReducer,
 	},
 });
 

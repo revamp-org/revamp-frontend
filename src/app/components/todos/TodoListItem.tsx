@@ -1,33 +1,35 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
-import { taskData } from "@/lib/data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { toggleCheckbox } from "@/redux/features/taskSlice";
+import { Todo } from "@/generated/graphql";
 
 const TodoListItem = ({
 	todo,
 	href,
 	dragBtnStyle,
 	className,
+	isDashboard = true,
 }: {
 	todo: Todo;
 	href: string;
 	dragBtnStyle?: string;
+	isDashboard?: boolean;
 	className?: string;
 }) => {
 	const searchParams = useSearchParams();
 	const selectedTodo = searchParams.get("todoid");
 	const router = useRouter();
-	const relevantTask = taskData.find((task: Task) => task.taskId === todo.taskId);
+
+	// const relevantTask = taskData.find((task: Task) => task.taskId === todo.taskId);
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(todo.isDone);
 	const dispatch = useDispatch<AppDispatch>();
 
@@ -87,7 +89,12 @@ const TodoListItem = ({
 					<div>
 						<p className={`${isCheckboxChecked ? "line-through" : "no-underline"}`}>{todo.todo}</p>
 
-						<p className="text-xs font-extralight">From {relevantTask?.title}</p>
+						{isDashboard && (
+							<p className="text-xs ">
+								<span className="font-extralight">From </span>
+								{/* <span className="text-gray-300">{relevantTask?.title}</span> */}
+							</p>
+						)}
 					</div>
 				</Link>
 

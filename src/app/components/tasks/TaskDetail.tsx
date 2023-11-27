@@ -2,13 +2,14 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import TodoListItem from "../todos/TodoListItem";
-import CreateTaskDialog from "./CreateTask";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { useAppSelector } from "@/redux/store";
 import { Todo } from "@/generated/graphql";
 import { GetTodosOfTask } from "@/graphql/queries.graphql";
 import { useQuery } from "@apollo/client";
+import CreateTodoDialog from "../todos/CreateTodoDialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const TaskDetail = () => {
 	const searchParams = useSearchParams();
@@ -17,9 +18,12 @@ const TaskDetail = () => {
 	const [allTodosCompleted, setAllTodosCompleted] = useState<boolean>(false);
 	const isCheckboxChecked = useAppSelector((state) => state.task.isCheckboxChecked);
 	const [loading, setLoading] = useState<boolean>(true);
+	const tasks = useAppSelector((state) => state.task.tasks);
+	const relevantTask = tasks.find((task) => task.taskId === +selectedTask!);
+	const todoChanged = useAppSelector((state) => state.todo.todoChange);
 
-	const { error, data } = useQuery(GetTodosOfTask, {
-		variables: { taskId: selectedTask },
+	const { error, data, refetch } = useQuery(GetTodosOfTask, {
+		variables: { taskId: +selectedTask! },
 	});
 
 	useEffect(() => {
@@ -28,23 +32,27 @@ const TaskDetail = () => {
 			setTodos(fetchedTodos);
 			setLoading(false);
 		}
-	}, [data]);
+	}, [data, todoChanged]);
+
+	// after todo changed, refetch goals
+	useEffect(() => {
+		refetch({ taskId: +selectedTask! });
+	}, [todoChanged, refetch, selectedTask]);
 
 	useEffect(() => {
 		const areAllTodosCompleted = todos.every((todo: Todo) => todo.isDone);
 		setAllTodosCompleted(areAllTodosCompleted);
 	}, [todos, isCheckboxChecked]);
 
+	if (error) {
+		return <p>Error: {error.message}</p>;
+	}
 	if (loading) {
 		return <p>Loading...</p>;
 	}
 
-	if (error) {
-		return <p>Error: {error.message}</p>;
-	}
-
 	return (
-		<div className="bg-topbar p-2">
+		<div className="relative bg-topbar p-2">
 			<div className="flex items-center justify-between">
 				<div>
 					<p className="text-2xl font-semibold">{data?.title}</p>
@@ -62,26 +70,30 @@ const TaskDetail = () => {
 					<div className="space-y-2">
 						<div className="flex items-center justify-between  ">
 							<p className="text-xl">Todos</p>
-							<CreateTaskDialog />
 						</div>
-						{todos.map((todo: Todo) => {
-							return (
-								<div key={todo.todoId}>
-									<TodoListItem
-										key={todo.todoId}
-										todo={todo}
-										href={`/tasks?todoid=${todo.todoId}`}
-										className="bg-sidebar"
-										dragBtnStyle="hidden"
-									/>
-								</div>
-							);
-						})}
+
+						<ScrollArea className="h-[16rem] ">
+							<div className="space-y-2">
+								{todos.map((todo: Todo) => {
+									return (
+										<div key={todo.todoId}>
+											<TodoListItem
+												key={todo.todoId}
+												todo={todo}
+												href={`/tasks?todoid=${todo.todoId}`}
+												className="bg-sidebar"
+												dragBtnStyle="hidden"
+												isDashboard={false}
+											/>
+										</div>
+									);
+								})}
+							</div>
+						</ScrollArea>
 					</div>
 				) : (
 					<div className="flex items-center justify-between bg-primary ">
 						<p className="text-xl">Tasks</p>
-						<CreateTaskDialog />
 					</div>
 				)}
 			</section>
@@ -90,16 +102,20 @@ const TaskDetail = () => {
 				<div>
 					<p className="text-lg">Commitment Streak</p>
 
-					{data?.streak === 0 ? (
-						<span className="bg-red-500">
-							{data.streak}
-							<p>{`It's the start of greatness`}</p>
-						</span>
+					{relevantTask?.streak === 0 ? (
+						<div className=" ">
+							<p className="text-center font-[Tourney] text-[length:--streak-font-size]">
+								{relevantTask.streak}
+							</p>
+							<p className="text-xl">{`It's the start of greatness`}</p>
+						</div>
 					) : (
-						<span className=" bg-red-500">
-							<p className=" font-[Tourney] text-[length:--streak-font-size]">{data?.streak}</p>
+						<div className="">
+							<p className=" text-center font-[Tourney] text-[length:--streak-font-size]">
+								{relevantTask?.streak}
+							</p>
 							<p className="text-3xl">day streak!</p>
-						</span>
+						</div>
 					)}
 				</div>
 				<div>
@@ -118,6 +134,8 @@ const TaskDetail = () => {
 					</p>
 				</div>
 			</section>
+
+			<CreateTodoDialog />
 		</div>
 	);
 };

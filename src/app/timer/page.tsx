@@ -1,12 +1,13 @@
 "use client";
-import { todoData } from "@/lib/data";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 import TimerInput from "../components/styled-components/TimerInput";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
+import { useAppSelector } from "@/redux/store";
+import { Todo } from "@/generated/graphql";
 
 const TimerPage = ({
 	searchParams,
@@ -15,7 +16,9 @@ const TimerPage = ({
 }) => {
 	const params = searchParams?.goalid || searchParams?.taskid || searchParams?.todoid;
 	const router = useRouter();
-	const todo = todoData.filter((todo: Todo) => todo.todoId.toString() === params)[0];
+
+	const todos = useAppSelector((state) => state.todo.todos);
+	const todo = todos.filter((todo: Todo) => todo.todoId.toString() === params)[0];
 
 	const [hours, setHours] = useState<string>("00");
 	const [minutes, setMinutes] = useState<string>("00");
@@ -27,7 +30,7 @@ const TimerPage = ({
 			<div className="flex  items-center gap-4">
 				<button
 					className="icon w-10 "
-					onClick={() => router.push(`/dashboard/tasks?taskid=${todo.taskId}`)}
+					onClick={() => router.push(`/dashboard/tasks?taskid=${todo.todoId}`)}
 				>
 					<Icon icon="ep:back" className="text-2xl" />
 				</button>

@@ -12,20 +12,21 @@ import { DeleteGoal } from "@/graphql/mutations.graphql";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { setGoals } from "@/redux/features/goalSlice";
-import CreateTaskDialog from "../tasks/CreateTask";
+import CreateTaskDialog from "../tasks/CreateTaskDialog";
 
 const GoalDetail = () => {
 	const searchParams = useSearchParams();
-	const selectedGoal = searchParams.get("goalid");
-	const selectedGoalId = +selectedGoal!;
 	const [tasks, setTasks] = useState<Task[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const router = useRouter();
-
+	const taskChanged = useAppSelector((state) => state.task.taskChange);
 	const goals: Goal[] = useAppSelector((state) => state.goal.goals);
 	const dispatch = useDispatch<AppDispatch>();
 
-	const { error, data } = useQuery(GetTasksOfGoal, {
+	const selectedGoal = searchParams.get("goalid") || goals[0]?.goalId;
+	const selectedGoalId = +selectedGoal!;
+
+	const { error, data, refetch } = useQuery(GetTasksOfGoal, {
 		variables: { goalId: selectedGoalId },
 	});
 
@@ -37,7 +38,12 @@ const GoalDetail = () => {
 			setTasks(fetchedTasks);
 			setLoading(false);
 		}
-	}, [data]);
+	}, [data, taskChanged]);
+
+	// after goal changed, refetch goals
+	useEffect(() => {
+		refetch({ goalId: selectedGoalId });
+	}, [taskChanged, refetch, selectedGoalId]);
 
 	if (error) {
 		return <p>Error: {error.message}</p>;
@@ -100,17 +106,22 @@ const GoalDetail = () => {
 					<h1 className="text-lg font-medium">Tasks</h1>
 					{/* Task Section */}
 					<ScrollArea className="h-[16rem] ">
-						{tasks.map((task: Task) => (
-							<TaskListItem key={task.taskId} task={task} href={`tasks?taskid=${task.taskId}`} />
-						))}
+						<div className="space-y-1">
+							{tasks.map((task: Task) => (
+								<TaskListItem
+									key={task.taskId}
+									className="h-12"
+									linkStyle=" bg-[#3a506a]"
+									task={task}
+									href={`tasks?taskid=${task.taskId}`}
+									isDashboard={false}
+								/>
+							))}
+						</div>
 					</ScrollArea>
 				</div>
 			</section>
 
-			{/* <SmallIcon */}
-			{/* 	icon="material-symbols:add" */}
-			{/* 	className="absolute bottom-4 right-4 rounded-full bg-gray-500 p-2 text-5xl" */}
-			{/* /> */}
 			<CreateTaskDialog />
 		</div>
 	);

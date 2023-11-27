@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<ClerkProvider>
 			<html lang="en">
-				<body className="dark flex ">
+				<body className="dark flex overflow-y-hidden ">
 					<ApolloClientProvider>
 						<link rel="shortcut icon" type="image/x-icon" href="/assets/logo.svg" />
 						<ReduxProvider>

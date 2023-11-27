@@ -5,31 +5,31 @@ import TaskListItem from "@/app/components/tasks/TaskListItem";
 import { createPortal } from "react-dom";
 import { arrayMove } from "@dnd-kit/sortable";
 import { Task } from "@/generated/graphql";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { setTasks } from "@/redux/features/taskSlice";
 
-const TaskDndContextProvider = ({
-	children,
-	setTasks,
-}: {
-	children: React.ReactNode;
-	setTasks: React.Dispatch<SetStateAction<Task[]>>;
-}) => {
+const TaskDndContextProvider = ({ children }: { children: React.ReactNode }) => {
 	const [activeCard, setActiveCard] = React.useState<Task | null>(null);
+	const tasks = useAppSelector((state) => state.task.tasks);
+	const dispatch = useDispatch<AppDispatch>();
+
 	return (
 		<DndContext id="unique-dnd-context-id" onDragStart={onDragStart} onDragEnd={onDragEnd}>
 			{children}
 
 			{typeof window !== "undefined"
 				? createPortal(
-						<DragOverlay>
-							{activeCard && (
-								<TaskListItem
-									task={activeCard}
-									href={`/dashboard/tasks?taskid=${activeCard.taskId}`}
-								/>
-							)}
-						</DragOverlay>,
-						window.document.body,
-				  )
+					<DragOverlay>
+						{activeCard && (
+							<TaskListItem
+								task={activeCard}
+								href={`/dashboard/tasks?taskid=${activeCard.taskId}`}
+							/>
+						)}
+					</DragOverlay>,
+					window.document.body,
+				)
 				: null}
 		</DndContext>
 	);
@@ -51,12 +51,12 @@ const TaskDndContextProvider = ({
 
 		if (activeTaskId === overTaskId) return;
 
-		setTasks((tasks) => {
-			const overIndex = tasks.findIndex((task) => task.taskId === over?.id);
-			const activeIndex = tasks.findIndex((task) => task.taskId === active?.id);
+		const overIndex = tasks.findIndex((task) => task.taskId === over?.id);
+		const activeIndex = tasks.findIndex((task) => task.taskId === active?.id);
 
-			return arrayMove(tasks, activeIndex, overIndex);
-		});
+		const newTasks = arrayMove(tasks, activeIndex, overIndex);
+
+		dispatch(setTasks(newTasks));
 	}
 };
 

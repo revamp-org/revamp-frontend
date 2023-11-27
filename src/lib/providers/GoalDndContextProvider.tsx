@@ -61,7 +61,6 @@ const GoalDndContextProvider = ({ children }: { children: React.ReactNode }) => 
 		const overIndex = goals.findIndex((goal) => goal.goalId === over?.id);
 		const activeIndex = goals.findIndex((goal) => goal.goalId === active?.id);
 		const newGoals = arrayMove(goals, activeIndex, overIndex);
-		console.log("hwllo from dnd", newGoals);
 		dispatch(setGoals(newGoals));
 		// console.log(event);
 	}
@@ -85,7 +84,6 @@ const GoalDndContextProvider = ({ children }: { children: React.ReactNode }) => 
 
 		const newGoals = arrayMove(goals, activeIndex, overIndex);
 
-		console.log("hwllo from dnd ovber", newGoals);
 		dispatch(setGoals(newGoals));
 	}
 };
