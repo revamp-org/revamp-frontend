@@ -38,14 +38,13 @@ const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		refetch({ userId: user?.id });
 	}, [taskChanged, refetch, user?.id]);
 
-	if (error) {
-		return <p>Error: {error.message}</p>;
-	}
-
 	if (loading) {
 		return <p>Loading...</p>;
 	}
 
+	if (error) {
+		return <p>Error: {error.message}</p>;
+	}
 	return (
 		<TaskDndContextProvider>
 			<section className="space-y-2">

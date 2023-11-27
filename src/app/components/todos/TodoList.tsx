@@ -7,6 +7,7 @@ import { Todo } from "@/generated/graphql";
 import { useQuery } from "@apollo/client";
 import { useUser } from "@clerk/nextjs";
 import { GetTodosOfUser } from "@/graphql/queries.graphql";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const TodoList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const [todos, setTodos] = useState<Todo[]>([]);
@@ -40,19 +41,24 @@ const TodoList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 				<div>
 					<p className="text-lg">Todos</p>
 				</div>
-				<SortableContext items={todos.map((todo: Todo) => todo.todoId)}>
-					{todos.map((todo: Todo) => (
-						<TodoListItem
-							key={todo.todoId}
-							todo={todo}
-							href={
-								isDashboardPage
-									? `/dashboard/tasks?todoid=${todo.todoId}`
-									: `/tasks?todoid=${todo.todoId}`
-							}
-						/>
-					))}
-				</SortableContext>
+
+				<ScrollArea className="h-[calc(100dvh-4rem-1.75rem-1rem)]">
+					<div className="space-y-2">
+						<SortableContext items={todos.map((todo: Todo) => todo.todoId)}>
+							{todos.map((todo: Todo) => (
+								<TodoListItem
+									key={todo.todoId}
+									todo={todo}
+									href={
+										isDashboardPage
+											? `/dashboard/tasks?todoid=${todo.todoId}`
+											: `/tasks?todoid=${todo.todoId}`
+									}
+								/>
+							))}
+						</SortableContext>
+					</div>
+				</ScrollArea>
 			</section>
 		</TodoDndContextProvider>
 	);

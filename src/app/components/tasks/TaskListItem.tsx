@@ -25,11 +25,9 @@ const TaskListItem = ({
 	linkStyle?: string;
 }) => {
 	const searchParams = useSearchParams();
-
 	const selectedTask = searchParams.get("taskid");
 
 	const goals = useAppSelector((state) => state.goal.goals);
-
 	const relevantGoal = goals.find((goal: Goal) => goal.goalId === task.goalId);
 
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({

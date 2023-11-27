@@ -11,6 +11,7 @@ import { Goal } from "@/generated/graphql";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { setGoals } from "@/redux/features/goalSlice";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Column = {
 	id: string;
@@ -77,30 +78,34 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 				{!isDashboardPage ? <CreateGoalDialog /> : null}
 			</div>
 
-			<GoalDndContextProvider>
-				{column.map((column: Column) => (
-					<section key={column.id} className="space-y-2">
-						{column.id === "active" || !isDashboardPage ? (
-							<>
-								<p className="">{column.title}</p>
-								<SortableContext items={column.goals.map((goal: Goal) => goal.goalId)}>
-									{column.goals.map((goal: Goal) => (
-										<GoalListItem
-											key={goal.goalId}
-											goal={goal}
-											href={
-												isDashboardPage
-													? `dashboard/goals?goalid=${goal.goalId}`
-													: `goals?goalid=${goal.goalId}`
-											}
-										/>
-									))}
-								</SortableContext>
-							</>
-						) : null}
-					</section>
-				))}
-			</GoalDndContextProvider>
+			<ScrollArea className="h-[calc(100dvh-4rem-1.75rem-1rem)]">
+				<div className="space-y-2">
+					<GoalDndContextProvider>
+						{column.map((column: Column) => (
+							<section key={column.id} className="space-y-2">
+								{column.id === "active" || !isDashboardPage ? (
+									<>
+										{!isDashboardPage && <p className="">{column.title}</p>}
+										<SortableContext items={column.goals.map((goal: Goal) => goal.goalId)}>
+											{column.goals.map((goal: Goal) => (
+												<GoalListItem
+													key={goal.goalId}
+													goal={goal}
+													href={
+														isDashboardPage
+															? `dashboard/goals?goalid=${goal.goalId}`
+															: `goals?goalid=${goal.goalId}`
+													}
+												/>
+											))}
+										</SortableContext>
+									</>
+								) : null}
+							</section>
+						))}
+					</GoalDndContextProvider>
+				</div>
+			</ScrollArea>
 		</div>
 	);
 };
