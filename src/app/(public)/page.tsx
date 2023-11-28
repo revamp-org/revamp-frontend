@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 const Landing = () => {
 	return (
 		<div>
+			<Navbar />
 			<div className="36546E">
 				<section className="mx-auto mt-24 max-w-screen-xl items-center px-4 pb-12 md:px-8 lg:flex">
 					<div className="flex-1 space-y-4 sm:text-center lg:text-left">
