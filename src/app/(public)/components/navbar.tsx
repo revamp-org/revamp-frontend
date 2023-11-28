@@ -39,7 +39,42 @@ const Navbar = () => {
 					<a href="javascript:void(0)">
 						<Image src="/assets/logo3-dark.svg" width={120} height={60} alt="Revamp Logo" />
 					</a>
-					
+					<div className="lg:hidden">
+						<button
+							className="rounded-md p-2  outline-none focus:border focus:border-gray-400"
+							onClick={() => setState(!state)}
+						>
+							{state ? (
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									className="h-6 w-6"
+									viewBox="0 0 20 20"
+									fill="currentColor"
+								>
+									<path
+										fillRule="evenodd"
+										d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+										clipRule="evenodd"
+									/>
+								</svg>
+							) : (
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									className="h-6 w-6"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2}
+										d="M4 6h16M4 12h16M4 18h16"
+									/>
+								</svg>
+							)}
+						</button>
+					</div>
 				</div>
 				<div
 					className={`flex-1 flex-row-reverse justify-between lg:flex lg:h-auto lg:overflow-visible lg:pb-0 lg:pr-0 ${
@@ -70,7 +105,7 @@ const Navbar = () => {
 								href="/dashboard"
 								className="block rounded-md bg-indigo-600 px-4 py-3 text-center text-white shadow hover:opacity-80 lg:inline"
 							>
-							Go to Dashboard
+								Go to Dashboard
 							</Link>
 						</SignedIn>
 					</div>
