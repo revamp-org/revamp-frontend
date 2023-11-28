@@ -43,6 +43,36 @@ const GoalListItem = ({
 			></div>
 		);
 	}
+	const formattedDate = (date: string) => {
+		const postCreatedAt = new Date(date);
+		const currentTimestamp = new Date().getTime();
+
+		const timeDiff = currentTimestamp - postCreatedAt.getTime();
+
+		const oneHour = 60 * 60 * 1000;
+		const oneDay = 24 * oneHour;
+		const oneWeek = 7 * oneDay;
+
+		let formattedTime;
+
+		if (timeDiff < oneHour) {
+			const minutes = Math.floor(timeDiff / (60 * 1000));
+			formattedTime = `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+		} else if (timeDiff < oneDay) {
+			const hours = Math.floor(timeDiff / oneHour);
+			formattedTime = `${hours} hour${hours > 1 ? "s" : ""} ago`;
+		} else if (timeDiff < oneWeek) {
+			const days = Math.floor(timeDiff / oneDay);
+			formattedTime = `${days} day${days > 1 ? "s" : ""} ago`;
+		} else {
+			const date = new Date(postCreatedAt);
+			const month = date.toLocaleString("default", { month: "short" });
+			const day = date.getDate();
+			formattedTime = `${month} ${day}`;
+		}
+
+		return formattedTime;
+	};
 
 	return (
 		<div ref={setNodeRef} style={style} className="flex h-16 items-center text-foreground">
@@ -59,7 +89,7 @@ const GoalListItem = ({
 						<p>{goal?.title}</p>
 						<span className="flex items-center gap-1  text-xs font-extralight">
 							<Icon icon="uil:calender" />
-							<p className="text-xs">{goal?.createdAt}</p>
+							<p className="text-xs">{formattedDate(goal?.createdAt)}</p>
 						</span>
 					</div>
 				</div>
