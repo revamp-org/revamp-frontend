@@ -1,6 +1,12 @@
+import TaskDetail from "@/app/components/tasks/TaskDetail";
 import TaskList from "@/app/components/tasks/TaskList";
 
-const Tasks = () => {
+const Tasks = ({
+	searchParams,
+}: {
+	searchParams: { [key: string]: string | string[] | undefined };
+}) => {
+	const taskId = searchParams?.taskid;
 	return (
 		<section className="grid h-[100dvh_-_4rem] w-full grid-cols-2 gap-2   p-2 text-primary-foreground">
 			<div className="space-y-2">
@@ -9,9 +15,13 @@ const Tasks = () => {
 				<TaskList isDashboardPage={false} />
 			</div>
 
-			<section className="boreder-gray-100 border">
-				<h1>Todos List</h1>
-			</section>
+			{taskId ? (
+				<TaskDetail />
+			) : (
+				<div className="broder-gray-100 grid h-full w-full place-items-center border ">
+					Choose a Task
+				</div>
+			)}
 		</section>
 	);
 };

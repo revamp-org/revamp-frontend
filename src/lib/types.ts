@@ -19,6 +19,7 @@ type Task = {
 	priority?: string;
 	deadline?: string | null;
 	createdAt: string;
+	streak: number;
 	order: number;
 	goalId: number;
 };
@@ -32,7 +33,7 @@ type Milestone = {
 type Todo = {
 	todoId: number;
 	todo: string;
-	isDone: string;
+	isDone: boolean;
 	createdAt: string;
 	order: number;
 	taskId: number;
