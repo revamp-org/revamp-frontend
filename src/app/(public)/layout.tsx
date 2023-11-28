@@ -1,4 +1,5 @@
 import { ClerkProvider } from "@clerk/nextjs";
+import "@/app/globals.scss";
 
 export const metadata = {
 	title: "Revamp",
@@ -11,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<ClerkProvider>
 			<html lang="en">
 				<link rel="shortcut icon" type="image/x-icon" href="/assets/logo.svg" />
-				<body>{children}</body>
+				<body className="dark">{children}</body>
 			</html>
 		</ClerkProvider>
 	);
