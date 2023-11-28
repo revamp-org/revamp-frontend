@@ -1,27 +1,28 @@
+import { Goal } from "@/generated/graphql";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface GoalState {
-	activeGoal: Goal[];
-	inActiveGoal: Goal[];
+	goals: Goal[];
+	goalChange: boolean;
 }
 
 const initialState: GoalState = {
-	activeGoal: [],
-	inActiveGoal: [],
+	goals: [],
+	goalChange: false,
 };
 
 export const goalSlice = createSlice({
 	name: "goal",
 	initialState,
 	reducers: {
-		setActiveGoal: (state, action: PayloadAction<Goal[]>) => {
-			state.activeGoal = action.payload;
+		setGoalChange: (state) => {
+			state.goalChange = !state.goalChange;
 		},
-		setInActiveGoal: (state, action: PayloadAction<Goal[]>) => {
-			state.inActiveGoal = action.payload;
+		setGoals: (state, action: PayloadAction<Goal[]>) => {
+			state.goals = action.payload;
 		},
 	},
 });
 
-export const { setActiveGoal, setInActiveGoal } = goalSlice.actions;
+export const { setGoals, setGoalChange } = goalSlice.actions;
 export default goalSlice.reducer;

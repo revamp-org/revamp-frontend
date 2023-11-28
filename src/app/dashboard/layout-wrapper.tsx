@@ -9,13 +9,11 @@ import { UserButton } from "@clerk/nextjs";
 const Li = ({
 	icon,
 	text,
-	canAdd,
 	className,
 	path,
 }: {
 	icon: string;
 	text: string;
-	canAdd: boolean;
 	path: string;
 	className?: string;
 }) => {
@@ -30,8 +28,6 @@ const Li = ({
 				<Icon icon={icon} className="text-3xl" />
 				<span className="text-xl ">{text}</span>
 			</Link>
-
-			{canAdd && <Icon icon={"typcn:plus"} className="text-2xl" />}
 		</li>
 	);
 };
@@ -77,12 +73,12 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 					} h-[calc(100dvh_-_4rem)]  overflow-y-auto  bg-sidebar duration-300 ease-in-out  `}
 				>
 					<ul role="navigation" className="relative h-full space-y-4 p-4">
-						<Li path="/" icon="radix-icons:dashboard" text="Overview" canAdd={false} />
-						<Li path="/goals" icon="octicon:goal-16" text="Goals" canAdd={true} />
-						<Li path="/tasks" icon="ph:notepad" text="Tasks" canAdd={true} />
-						<Li path="/journals" icon="mdi:journal-outline" text="Journals" canAdd={false} />
-						<Li path="/analytics" icon="octicon:graph-24" text="Analytics" canAdd={false} />
-						<Li path="/community" icon="bi:people" text="Community" canAdd={false} className="" />
+						<Li path="/" icon="radix-icons:dashboard" text="Overview" />
+						<Li path="/goals" icon="octicon:goal-16" text="Goals" />
+						<Li path="/tasks" icon="ph:notepad" text="Tasks" />
+						<Li path="/journals" icon="mdi:journal-outline" text="Journals" />
+						<Li path="/analytics" icon="octicon:graph-24" text="Analytics" />
+						<Li path="/community" icon="bi:people" text="Community" />
 					</ul>
 				</aside>
 

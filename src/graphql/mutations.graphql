@@ -1,0 +1,14 @@
+mutation SetGoal($userId: ID!, $title: String!, $description: String!, $deadline: Timestamp) {
+	setGoal(userId: $userId, title: $title, description: $description, deadline: $deadline)
+}
+mutation DeleteGoal($goalId: Int!) {
+	deleteGoal(goalId: $goalId)
+}
+
+mutation SetTask($goalId: Int!, $title: String!, $description: String!, $deadline: Timestamp) {
+	setTask(goalId: $goalId, title: $title, description: $description, deadline: $deadline)
+}
+
+mutation SetTodo($taskId: Int!, $todo: String!) {
+	setTodo(taskId: $taskId, todo: $todo)
+}

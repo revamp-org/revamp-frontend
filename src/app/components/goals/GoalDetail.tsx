@@ -1,103 +1,86 @@
 "use client";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { CircularProgress } from "@nextui-org/react";
-import { addDays, eachDayOfInterval, format, startOfWeek, subDays } from "date-fns";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
-import SmallIcon from "../styled-components/SmallIcon";
-import { useSearchParams } from "next/navigation";
-import { goalData, taskData } from "@/lib/data";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import TaskListItem from "../tasks/TaskListItem";
-
-const RoutineItem = ({ title, repitation }: { title: string; repitation: string }) => {
-	return (
-		<div className="w-full bg-sidebar p-2">
-			<div className="flex  items-start justify-between">
-				<div>
-					<p className="text-sm font-semibold">{title}</p>
-					<p className="text-xs">{repitation}</p>
-				</div>
-
-				<button aria-label="Add a routine" className="rounded-sm bg-green-400 ">
-					<Icon icon="ic:round-plus" className="text-xl" />
-				</button>
-			</div>
-
-			{/* Routines and streak stat  */}
-			<WeeklyActivity />
-			<div className="flex items-center justify-between">
-				<CircularProgress
-					aria-label="progres bar"
-					classNames={{
-						svg: "w-3 h-4 drop-shadow-md",
-						indicator: "stroke-white",
-						track: "stroke-white/10",
-						value: "text-xs  text-white",
-					}}
-					value={70}
-					strokeWidth={12}
-				/>
-
-				<p className="ml-1 text-xs">100%</p>
-
-				<div className="flex w-full justify-end gap-1 ">
-					<SmallIcon icon="uil:calender" />
-					<SmallIcon icon="material-symbols:task-alt" />
-					<SmallIcon icon="gridicons:stats-alt" />
-					<SmallIcon icon="bx:edit" />
-					<SmallIcon icon="ri:more-fill" />
-				</div>
-			</div>
-		</div>
-	);
-};
-
-const WeeklyActivity = () => {
-	const startDate = new Date();
-	const endDate = subDays(startDate, 6);
-
-	const allDays = eachDayOfInterval({
-		start: endDate,
-		end: startDate,
-	});
-	const dayDate = allDays.map((date) => format(date, "dd"));
-	const dayNames = allDays.map((date) => format(date, "EEE"));
-	return (
-		<div>
-			<div className="grid grid-cols-7 gap-1  ">
-				{dayNames.map((dayName) => (
-					<div key={dayName} className=" text-center">
-						<p className="text-xs">{dayName}</p>
-					</div>
-				))}
-				{dayDate.map((date) => (
-					<div key={date} className="rounded-sm bg-[#02315e] p-1 text-center">
-						<p className="text-xs">{date}</p>
-					</div>
-				))}
-			</div>
-		</div>
-	);
-};
+import { useMutation, useQuery } from "@apollo/client";
+import { GetTasksOfGoal } from "@/graphql/queries.graphql";
+import { Goal, Task } from "@/generated/graphql";
+import SmallIcon from "../styled-components/SmallIcon";
+import { DeleteGoal } from "@/graphql/mutations.graphql";
+import { useDispatch } from "react-redux";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { setGoals } from "@/redux/features/goalSlice";
+import CreateTaskDialog from "../tasks/CreateTaskDialog";
 
 const GoalDetail = () => {
 	const searchParams = useSearchParams();
-	const selectedGoal = searchParams.get("goalid");
+	const [tasks, setTasks] = useState<Task[]>([]);
+	const [loading, setLoading] = useState<boolean>(true);
+	const router = useRouter();
+	const taskChanged = useAppSelector((state) => state.task.taskChange);
+	const goals: Goal[] = useAppSelector((state) => state.goal.goals);
+	const dispatch = useDispatch<AppDispatch>();
 
-	const data = goalData.find((goal: Goal) => goal.goalId.toString() === selectedGoal);
-	const [relevantTasks, setRelevantTasks] = useState<Task[]>([]);
+	const selectedGoal = searchParams.get("goalid") || goals[0]?.goalId;
+	const selectedGoalId = +selectedGoal!;
+
+	const { error, data, refetch } = useQuery(GetTasksOfGoal, {
+		variables: { goalId: selectedGoalId },
+	});
+
+	const [deleteGoal, { error: deleteError }] = useMutation(DeleteGoal);
 
 	useEffect(() => {
-		setRelevantTasks(taskData.filter((task: Task) => task.goalId.toString() === selectedGoal));
-	}, [selectedGoal]);
+		if (data) {
+			const fetchedTasks: Task[] = data.getTasksOfGoal;
+			setTasks(fetchedTasks);
+			setLoading(false);
+		}
+	}, [data, taskChanged]);
+
+	// after goal changed, refetch goals
+	useEffect(() => {
+		refetch({ goalId: selectedGoalId });
+	}, [taskChanged, refetch, selectedGoalId]);
+
+	if (loading) {
+		return <p>Loading...</p>;
+	}
+
+	if (error) {
+		return <p>Error: {error.message}</p>;
+	}
+
+	const handleDelete = () => {
+		if (tasks.length > 0) {
+			return;
+		}
+		deleteGoal({
+			variables: {
+				goalId: selectedGoalId,
+			},
+		});
+		if (deleteError) {
+			console.log(deleteError.message);
+		} else {
+			dispatch(setGoals(goals.filter((goal: Goal) => goal.goalId !== selectedGoalId)));
+			router.replace("goals");
+			console.log("deleted");
+		}
+	};
 
 	return (
-		<div className="bg-topbar p-2">
+		<div className="relative bg-topbar p-2">
 			<div className="flex items-center justify-between">
 				<p className="text-2xl font-semibold">{data?.title}</p>
 				<p className="text-sm font-semibold">{data?.createdAt}</p>
+				<SmallIcon
+					icon="material-symbols:delete-outline"
+					className="text-3xl"
+					handleClick={handleDelete}
+				/>
 			</div>
 
 			<div className="grid grid-cols-3">
@@ -121,14 +104,25 @@ const GoalDetail = () => {
 			<section className="py-4">
 				<div className="w-full">
 					<h1 className="text-lg font-medium">Tasks</h1>
-					{/* Routine section */}
+					{/* Task Section */}
 					<ScrollArea className="h-[16rem] ">
-						{relevantTasks.map((task: Task) => (
-							<TaskListItem key={task.taskId} task={task} href={`tasks?taskid=${task.taskId}`} />
-						))}
+						<div className="space-y-1">
+							{tasks.map((task: Task) => (
+								<TaskListItem
+									key={task.taskId}
+									className="h-12"
+									linkStyle=" bg-[#3a506a]"
+									task={task}
+									href={`tasks?taskid=${task.taskId}`}
+									isDashboard={false}
+								/>
+							))}
+						</div>
 					</ScrollArea>
 				</div>
 			</section>
+
+			<CreateTaskDialog />
 		</div>
 	);
 };

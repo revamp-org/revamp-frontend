@@ -1,5 +1,8 @@
 "use client";
 import GoalListItem from "@/app/components/goals/GoalListItem";
+import { Goal } from "@/generated/graphql";
+import { setGoals } from "@/redux/features/goalSlice";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import {
 	DndContext,
 	DragEndEvent,
@@ -10,15 +13,12 @@ import {
 import { arrayMove } from "@dnd-kit/sortable";
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { useDispatch } from "react-redux";
 
-const GoalDndContextProvider = ({
-	children,
-	setGoals,
-}: {
-	children: React.ReactNode;
-	setGoals: React.Dispatch<React.SetStateAction<Goal[]>>;
-}) => {
+const GoalDndContextProvider = ({ children }: { children: React.ReactNode }) => {
 	const [activeGoalCard, setActiveGoalCard] = useState<Goal | null>(null);
+	const dispatch = useDispatch<AppDispatch>();
+	const goals: Goal[] = useAppSelector((state) => state.goal.goals);
 	return (
 		<DndContext
 			id="goal-context-id"
@@ -30,16 +30,16 @@ const GoalDndContextProvider = ({
 
 			{typeof window !== "undefined"
 				? createPortal(
-						<DragOverlay>
-							{activeGoalCard && (
-								<GoalListItem
-									goal={activeGoalCard}
-									href={`/dashboard/goals?goalid=${activeGoalCard.goalId}`}
-								/>
-							)}
-						</DragOverlay>,
-						window.document.body,
-				  )
+					<DragOverlay>
+						{activeGoalCard && (
+							<GoalListItem
+								goal={activeGoalCard}
+								href={`/dashboard/goals?goalid=${activeGoalCard.goalId}`}
+							/>
+						)}
+					</DragOverlay>,
+					window.document.body,
+				)
 				: null}
 		</DndContext>
 	);
@@ -58,12 +58,10 @@ const GoalDndContextProvider = ({
 
 		if (activeGoalId === overGoalId) return;
 
-		setGoals((goals) => {
-			const overIndex = goals.findIndex((goal) => goal.goalId === over?.id);
-			const activeIndex = goals.findIndex((goal) => goal.goalId === active?.id);
-			return arrayMove(goals, activeIndex, overIndex);
-		});
-
+		const overIndex = goals.findIndex((goal) => goal.goalId === over?.id);
+		const activeIndex = goals.findIndex((goal) => goal.goalId === active?.id);
+		const newGoals = arrayMove(goals, activeIndex, overIndex);
+		dispatch(setGoals(newGoals));
 		// console.log(event);
 	}
 
@@ -77,16 +75,16 @@ const GoalDndContextProvider = ({
 
 		if (activeGoalId === overGoalId) return;
 
-		setGoals((goals) => {
-			const overIndex = goals.findIndex((goal) => goal.goalId === over?.id);
-			const activeIndex = goals.findIndex((goal) => goal.goalId === active?.id);
+		const overIndex = goals.findIndex((goal) => goal.goalId === over?.id);
+		const activeIndex = goals.findIndex((goal) => goal.goalId === active?.id);
 
-			if (goals[overIndex].status !== goals[activeIndex].status) {
-				goals[activeIndex].status = goals[overIndex].status;
-			}
+		if (goals[overIndex].isActive !== goals[activeIndex].isActive) {
+			goals[activeIndex].isActive = goals[overIndex].isActive;
+		}
 
-			return arrayMove(goals, activeIndex, overIndex);
-		});
+		const newGoals = arrayMove(goals, activeIndex, overIndex);
+
+		dispatch(setGoals(newGoals));
 	}
 };
 

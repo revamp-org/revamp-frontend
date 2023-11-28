@@ -1,0 +1,251 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+scalar Date
+scalar Time
+scalar DateTime
+scalar DateTimeISO
+scalar Timestamp
+scalar TimeZone
+scalar UtcOffset
+scalar Duration
+scalar ISO8601Duration
+scalar LocalDate
+scalar LocalTime
+scalar LocalDateTime
+scalar LocalEndTime
+scalar EmailAddress
+scalar NegativeFloat
+scalar NegativeInt
+scalar NonEmptyString
+scalar NonNegativeFloat
+scalar NonNegativeInt
+scalar NonPositiveFloat
+scalar NonPositiveInt
+scalar PhoneNumber
+scalar PositiveFloat
+scalar PositiveInt
+scalar PostalCode
+scalar UnsignedFloat
+scalar UnsignedInt
+scalar URL
+scalar BigInt
+scalar Long
+scalar Byte
+scalar UUID
+scalar GUID
+scalar Hexadecimal
+scalar HexColorCode
+scalar HSL
+scalar HSLA
+scalar IP
+scalar IPv4
+scalar IPv6
+scalar ISBN
+scalar JWT
+scalar Latitude
+scalar Longitude
+scalar MAC
+scalar Port
+scalar RGB
+scalar RGBA
+scalar SafeInt
+scalar USCurrency
+scalar Currency
+scalar JSON
+scalar JSONObject
+scalar IBAN
+scalar ObjectID
+scalar Void
+scalar DID
+scalar CountryCode
+scalar Locale
+scalar RoutingNumber
+scalar AccountNumber
+scalar Cuid
+scalar SemVer
+scalar DeweyDecimal
+scalar LCCSubclass
+scalar IPCPatent
+type Pausetime {
+  pausetimeId: Int!
+  pauseTime: Timestamp!
+}
+type Resumetime {
+  resumetimeId: Int!
+  resumeTime: Timestamp!
+}
+type TimeDuration {
+  days: Int!
+  hours: Int!
+  minutes: Int!
+  seconds: Int!
+}
+type Timelapse {
+  timelapseId: Int!
+  startTime: Timestamp!
+  endTime: Timestamp
+  duration: TimeDuration
+  pausetimes: [Pausetime]
+  resumetimes: [Resumetime]
+}
+type Todo {
+  todoId: Int!
+  todo: String!
+  order: Int!
+  isDone: Boolean!
+  createdAt: Timestamp!
+  updatedAt: Timestamp
+  timelapsed: Timelapse
+}
+type Milestone {
+  milestoneId: Int!
+  milestone: String!
+  createdAt: Timestamp!
+}
+type Task {
+  taskId: Int!
+  goalId: Int!
+  title: String!
+  description: String
+  priority: String!
+  order: Int!
+  deadline: Timestamp
+  isDone: Boolean!
+  createdAt: Timestamp!
+  updatedAt: Timestamp
+  streak: Int!
+  todos: [Todo]
+  milestones: [Milestone]
+  timelapsed: Timelapse
+}
+type GoalQna {
+  goalQnaId: Int!
+  question: String!
+  answer: String!
+}
+type Goal {
+  goalId: Int!
+  title: String!
+  description: String
+  priority: String
+  relatedArea: String
+  order: Int!
+  streak: Int!
+  isActive: Boolean!
+  deadline: Timestamp
+  isDone: Boolean!
+  createdAt: Timestamp!
+  updatedAt: Timestamp
+  tasks: [Task!]!
+  goalQnas: [GoalQna]
+}
+type Tag {
+  tagId: Int!
+  tag: String!
+}
+type Aspect {
+  aspectId: Int!
+  aspect: String!
+  tags: [Tag!]!
+}
+type Question {
+  questionId: Int!
+  question: String!
+  options: [String!]!
+}
+type UserEmailAddress {
+  emailAddress: EmailAddress!
+  verified: Boolean!
+  isPrimary: Boolean!
+}
+type Comment {
+  commentId: Int!
+  comment: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp
+  authorId: ID!
+}
+type JournalLike {
+  likedBy: User!
+  likedAt: Timestamp!
+}
+type JournalShare {
+  sharedBy: User!
+  sharedAt: Timestamp!
+  sharedIn: Community!
+}
+type Journal {
+  journalId: Int!
+  title: String!
+  content: String!
+  type: String!
+  access: String!
+  date: Timestamp!
+  comments: [Comment!]!
+  likedBy: [JournalLike!]!
+  sharedBy: [JournalShare!]!
+}
+type User {
+  userId: ID!
+  firstName: String!
+  lastName: String!
+  username: String!
+  imageUrl: URL!
+  banned: Boolean!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  aspects: [Aspect!]!
+  journals: [Journal!]!
+  goals: [Goal!]!
+  questions: [Question]
+  emailAddresses: [UserEmailAddress!]!
+  communities: [Community!]!
+}
+type UserWithRole {
+  user: User!
+  role: String!
+}
+type Community {
+  communityId: Int!
+  community: String!
+  description: String!
+  nametag: String!
+  privacy: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  users: [UserWithRole]!
+}
+type Query {
+  getTodosOfTask(taskId: Int!): [Todo!]!
+  getTodosOfUser(userId: ID!): [Todo!]!
+  getTasksOfGoal(goalId: Int!): [Task!]!
+  getTasksOfUser(userId: ID!): [Task!]!
+  getGoals(userId: ID!): [Goal!]!
+  getAllUsers: [User!]!
+  getAllQuestions: [Question!]!
+  getAllAspects: [Aspect!]!
+  getSingleGoal(goalId: Int!): Goal!
+  getSingleTask(taskId: Int!): Task!
+  getSingleTodo(todoId: Int!): Todo!
+  getSingleUser(userId: ID!): User!
+}
+type Mutation {
+  setUser(userId: ID!): String!
+  setGoal(userId: ID!, title: String!, description: String, priority: String, relatedArea: String, deadline: Timestamp): String!
+  setTask(goalId: Int!, title: String!, description: String, priority: String, deadline: Timestamp): String!
+  setTodo(taskId: Int!, todo: String!): String!
+  deleteUser(userId: ID!): String!
+  deleteGoal(goalId: Int!): String!
+  deleteTask(taskId: Int!): String!
+  deleteTodo(todoId: Int!): String!
+  editGoal(goalId: Int!, title: String, description: String, priority: String, relatedArea: String, deadline: Timestamp, order: Int, isDone: Boolean, isActive: Boolean): String!
+  editTask(taskId: Int!, title: String, description: String, priority: String, isDone: Boolean, deadline: Timestamp, order: Int, streak: Int): String!
+  editTodo(todoId: Int!, todo: String, isDone: Boolean, order: Int): String!
+}
+"Exposes a URL that specifies the behavior of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behavior of this scalar."
+    url: String!
+  ) on SCALAR

@@ -1,33 +1,34 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
-import { taskData } from "@/lib/data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { toggleCheckbox } from "@/redux/features/taskSlice";
+import { Todo } from "@/generated/graphql";
 
 const TodoListItem = ({
 	todo,
 	href,
 	dragBtnStyle,
 	className,
+	isDashboard = true,
 }: {
 	todo: Todo;
 	href: string;
 	dragBtnStyle?: string;
+	isDashboard?: boolean;
 	className?: string;
 }) => {
 	const searchParams = useSearchParams();
 	const selectedTodo = searchParams.get("todoid");
 	const router = useRouter();
-	const relevantTask = taskData.find((task: Task) => task.taskId === todo.taskId);
+
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(todo.isDone);
 	const dispatch = useDispatch<AppDispatch>();
 
@@ -62,7 +63,7 @@ const TodoListItem = ({
 			const audio = new Audio("/assets/completion-sound.mp3");
 			audio.play();
 		}
-		todo.isDone = !isCheckboxChecked;
+		// todo.isDone = !isCheckboxChecked;
 		setIsCheckboxChecked(!isCheckboxChecked);
 		dispatch(toggleCheckbox());
 	};
@@ -73,7 +74,7 @@ const TodoListItem = ({
 				className={cn(
 					`flex h-full ${
 						isCheckboxChecked ? "opacity-20" : "opacity-100"
-					} w-full   items-center  justify-between   text-xl text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
+					} w-full   items-center  justify-between   text-lg text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
 						selectedTodo === todo.todoId.toString() ? "bg-[#446288]" : "bg-topbar"
 					}`,
 					className,
@@ -85,9 +86,20 @@ const TodoListItem = ({
 				>
 					<span className="priority after:bg-white "></span>
 					<div>
-						<p className={`${isCheckboxChecked ? "line-through" : "no-underline"}`}>{todo.todo}</p>
+						<p
+							className={` truncate-overflow-1 ${
+								isCheckboxChecked ? "line-through" : "no-underline"
+							}`}
+						>
+							{todo.todo}
+						</p>
 
-						<p className="text-xs">From {relevantTask?.title}</p>
+						{isDashboard && (
+							<p className="text-xs ">
+								<span className="font-extralight">From </span>
+								{/* <span className="text-gray-300">{relevantTask?.title}</span> */}
+							</p>
+						)}
 					</div>
 				</Link>
 
@@ -99,7 +111,7 @@ const TodoListItem = ({
 					>
 						<Icon icon="material-symbols:timer-outline" className="h-full text-2xl  " />
 					</button>
-					<Checkbox checked={todo.isDone} onCheckedChange={handleChecked} />
+					<Checkbox checked={isCheckboxChecked} onCheckedChange={handleChecked} />
 				</div>
 			</div>
 			<span
