@@ -70,7 +70,7 @@ const Navbar = () => {
 								href="/dashboard"
 								className="block rounded-md bg-indigo-600 px-4 py-3 text-center text-white shadow hover:opacity-80 lg:inline"
 							>
-								Go to Dashboard
+							Go to Dashboard
 							</Link>
 						</SignedIn>
 					</div>
