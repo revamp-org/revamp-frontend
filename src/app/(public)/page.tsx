@@ -26,7 +26,15 @@ const Landing = () => {
 							</div>
 						</div>
 					</div>
-					
+					<div className="mt-7 flex-1 text-center lg:ml-3 lg:mt-0">
+						<Image
+							height={720}
+							width={720}
+							alt="Image"
+							src="https://i.postimg.cc/HxHyt53c/undraw-heatmap-uyye.png"
+							className="mx-auto w-full sm:w-10/12  lg:w-full"
+						/>
+					</div>
 				</section>
 			</div>
 		</div>
