@@ -83,7 +83,7 @@ const CreateGoalDialog = () => {
 									message: "Please enter a title with fewer than 100 characters",
 								},
 							})}
-							placeholder="tasks..."
+							placeholder="goals..."
 							className="col-span-3 placeholder-red-500"
 						/>
 					</div>

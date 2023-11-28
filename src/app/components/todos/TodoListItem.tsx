@@ -29,7 +29,6 @@ const TodoListItem = ({
 	const selectedTodo = searchParams.get("todoid");
 	const router = useRouter();
 
-	// const relevantTask = taskData.find((task: Task) => task.taskId === todo.taskId);
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(todo.isDone);
 	const dispatch = useDispatch<AppDispatch>();
 
@@ -64,7 +63,7 @@ const TodoListItem = ({
 			const audio = new Audio("/assets/completion-sound.mp3");
 			audio.play();
 		}
-		todo.isDone = !isCheckboxChecked;
+		// todo.isDone = !isCheckboxChecked;
 		setIsCheckboxChecked(!isCheckboxChecked);
 		dispatch(toggleCheckbox());
 	};
@@ -75,7 +74,7 @@ const TodoListItem = ({
 				className={cn(
 					`flex h-full ${
 						isCheckboxChecked ? "opacity-20" : "opacity-100"
-					} w-full   items-center  justify-between   text-xl text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
+					} w-full   items-center  justify-between   text-lg text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
 						selectedTodo === todo.todoId.toString() ? "bg-[#446288]" : "bg-topbar"
 					}`,
 					className,
@@ -87,7 +86,13 @@ const TodoListItem = ({
 				>
 					<span className="priority after:bg-white "></span>
 					<div>
-						<p className={`${isCheckboxChecked ? "line-through" : "no-underline"}`}>{todo.todo}</p>
+						<p
+							className={` truncate-overflow-1 ${
+								isCheckboxChecked ? "line-through" : "no-underline"
+							}`}
+						>
+							{todo.todo}
+						</p>
 
 						{isDashboard && (
 							<p className="text-xs ">
@@ -106,7 +111,7 @@ const TodoListItem = ({
 					>
 						<Icon icon="material-symbols:timer-outline" className="h-full text-2xl  " />
 					</button>
-					<Checkbox checked={todo.isDone} onCheckedChange={handleChecked} />
+					<Checkbox checked={isCheckboxChecked} onCheckedChange={handleChecked} />
 				</div>
 			</div>
 			<span

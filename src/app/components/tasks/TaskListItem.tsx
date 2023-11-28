@@ -65,7 +65,7 @@ const TaskListItem = ({
 			<Link
 				href={href || ""}
 				className={cn(
-					`relative flex h-full  w-full cursor-pointer  items-center justify-between   pr-4  text-xl transition-all duration-300 ease-in-out hover:bg-[#446288] ${
+					`relative flex h-full  w-full cursor-pointer  items-center justify-between   pr-4  text-lg transition-all duration-300 ease-in-out hover:bg-[#446288] ${
 						selectedTask === task.taskId.toString() ? "bg-[#446288]" : "bg-topbar"
 					}`,
 					linkStyle,
