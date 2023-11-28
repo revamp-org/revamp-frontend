@@ -17,7 +17,14 @@ const Landing = () => {
 							</span>
 						</h1>
 
-						
+						<div className="items-center justify-center space-y-3 pt-20 sm:flex sm:space-x-10 sm:space-y-0 lg:justify-start">
+							<div className=" block rounded-md bg-indigo-600 px-6 py-5 text-center text-white shadow hover:bg-red-700 lg:inline ">
+								<Link href="/sign-in">Get Started</Link>
+							</div>
+							<div className="block rounded-md bg-indigo-600 px-6 py-5 text-center text-white shadow hover:bg-red-700 lg:inline">
+								<Link href="/sign-up">How it Works</Link>
+							</div>
+						</div>
 					</div>
 					
 				</section>
