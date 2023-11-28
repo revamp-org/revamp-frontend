@@ -6,7 +6,23 @@ import { Button } from "@/components/ui/button";
 
 const Landing = () => {
 	return (
-		
+		<div>
+			<div className="36546E">
+				<section className="mx-auto mt-24 max-w-screen-xl items-center px-4 pb-12 md:px-8 lg:flex">
+					<div className="flex-1 space-y-4 sm:text-center lg:text-left">
+						<h1 className="pt-10 text-6xl font-bold text-white xl:text-9xl ">REVAMP</h1>
+						<h1 className=" text-3xl font-semibold text-white ">
+							<span className="text-red-400">
+								Transcending Physical, Mental and Emotional Health
+							</span>
+						</h1>
+
+						
+					</div>
+					
+				</section>
+			</div>
+		</div>
 	);
 };
 
