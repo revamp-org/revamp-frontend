@@ -73,3 +73,15 @@ $lines: 1, 2, 3, 4, 5;
 .counter {
 	@apply absolute right-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-400 text-[0.55rem] lg:h-5 lg:w-5 lg:text-[0.6rem];
 }
+
+.journal-icon-temp {
+	@apply cursor-pointer p-1 text-lg transition-all duration-150 ease-in-out hover:fill-red-500 lg:text-3xl;
+}
+
+.ce-paragraph {
+	line-height: 0.8 !important;
+}
+.ce-inline-toolbar {
+	background-color: #02315e !important;
+	z-index: 10 !important;
+}

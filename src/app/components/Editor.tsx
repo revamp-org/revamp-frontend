@@ -67,18 +67,18 @@ const Editor = () => {
 		const init = async () => {
 			await intializedEditor();
 
-			setTimeout(() => { });
+			setTimeout(() => {});
 		};
 
 		if (enabled) {
 			init();
 
-			return () => { };
+			return () => {};
 		}
 	}, [enabled, intializedEditor]);
 
 	return (
-		<div className=" max-h-[330px] overflow-auto  text-foreground">
+		<div className=" h-[100dvh] max-h-[100dvh] w-full overflow-auto  text-foreground">
 			<div id="editorjs" className="" />
 		</div>
 	);

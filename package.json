@@ -31,6 +31,7 @@
 		"@editorjs/link": "^2.6.2",
 		"@editorjs/list": "^1.9.0",
 		"@editorjs/table": "^2.3.0",
+		"@headlessui/react": "^1.7.17",
 		"@hookform/resolvers": "^3.3.2",
 		"@nextui-org/react": "^2.1.13",
 		"@radix-ui/react-alert-dialog": "^1.0.4",
@@ -85,7 +86,6 @@
 		"tailwindcss": "3.3.3",
 		"tailwindcss-animate": "^1.0.7",
 		"typescript": "5.2.2",
-		"uuid": "^9.0.0",
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {
@@ -97,6 +97,7 @@
 		"dotenv": "^16.3.1",
 		"drizzle-kit": "^0.19.13",
 		"prettier": "^3.0.3",
-		"prettier-plugin-tailwindcss": "^0.5.3"
+		"prettier-plugin-tailwindcss": "^0.5.3",
+		"uuid": "^9.0.0"
 	}
 }

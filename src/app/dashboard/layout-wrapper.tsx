@@ -5,6 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
+import SmallIcon from "../components/styled-components/SmallIcon";
 
 const Li = ({
 	icon,
@@ -12,7 +13,7 @@ const Li = ({
 	className,
 	path,
 }: {
-	icon: string;
+	icon?: string;
 	text: string;
 	path: string;
 	className?: string;
@@ -20,13 +21,13 @@ const Li = ({
 	return (
 		<li
 			className={cn(
-				"flex items-center justify-between text-primary-foreground hover:cursor-pointer",
+				"flex items-center justify-between text-xl text-primary-foreground hover:cursor-pointer",
 				className,
 			)}
 		>
 			<Link href={`/dashboard/${path}`} className="flex w-full items-center gap-2">
-				<Icon icon={icon} className="text-3xl" />
-				<span className="text-xl ">{text}</span>
+				{icon ? <Icon icon={icon} className="text-3xl" /> : null}
+				<span className=" ">{text}</span>
 			</Link>
 		</li>
 	);
@@ -34,6 +35,8 @@ const Li = ({
 
 const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+	const [isJournalDropDownOpen, setIsJournalDropDownOpen] = useState<boolean>(false);
+
 	return (
 		<div className=" w-full text-primary-foreground ">
 			{/* Appbar */}
@@ -76,7 +79,26 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 						<Li path="/" icon="radix-icons:dashboard" text="Overview" />
 						<Li path="/goals" icon="octicon:goal-16" text="Goals" />
 						<Li path="/tasks" icon="ph:notepad" text="Tasks" />
-						<Li path="/journals" icon="mdi:journal-outline" text="Journals" />
+
+						<li className="flex items-center justify-between text-primary-foreground hover:cursor-pointer">
+							<Link href={`/dashboard/journals`} className="flex w-full items-center gap-2">
+								<Icon icon="mdi:journal-outline" className="text-3xl" />
+								<span className="text-xl ">Journals</span>
+							</Link>
+							<SmallIcon
+								icon="gridicons:dropdown"
+								className="p-1/2 rounded-full text-3xl"
+								handleClick={() => setIsJournalDropDownOpen(!isJournalDropDownOpen)}
+							/>
+						</li>
+
+						{isJournalDropDownOpen && (
+							<ul className="ml-12 ">
+								<Li path="journals/daily" text="Daily" className="py-1 text-sm" />
+								<Li path="journals/weekly" text="Weekly" className="py-1 text-sm" />
+								<Li path="journals/monthly" text="Monthly" className="py-1 text-sm" />
+							</ul>
+						)}
 						<Li path="/analytics" icon="octicon:graph-24" text="Analytics" />
 						<Li path="/community" icon="bi:people" text="Community" />
 					</ul>
