@@ -21,19 +21,20 @@ const GoalDetail = () => {
 	const goals: Goal[] = useAppSelector((state) => state.goal.goals);
 	const goalsDetails: Goal[] = useAppSelector((state) => state.goal.goalsDetails);
 
-	const selectedGoal = searchParams.get("goalid") || goals[0]?.goalId;
-	const selectedGoalId = +selectedGoal || -1;
+	const selectedGoalId = +(searchParams.get("goalid") || -1);
 
-	const singleGoalDetail = goalsDetails.find((goal) => goal?.goalId === selectedGoalId);
+	const singleGoalDetail =
+		goalsDetails.find((goal) => goal?.goalId === selectedGoalId) || goalsDetails?.[0];
 	const tasks = singleGoalDetail?.tasks || [];
 
-	const [loading, setLoading] = useState<boolean>(true);
 	const router = useRouter();
 	const dispatch = useDispatch<AppDispatch>();
+	const [loading, setLoading] = useState(true);
 
 	const {
-		error: _,
+		error,
 		data,
+		loading: fetchLoading,
 		refetch,
 	} = useQuery(GetSingleGoal, {
 		variables: { goalId: selectedGoalId },
@@ -45,9 +46,14 @@ const GoalDetail = () => {
 		if (data) {
 			const fetchedGoalDetail: Goal = data.getSingleGoal;
 			dispatch(addGoalDetail(fetchedGoalDetail));
-			setLoading(false);
 		}
 	}, [data, taskChanged, dispatch]);
+
+	useEffect(() => {
+		if (!fetchLoading) {
+			setLoading(false);
+		}
+	}, [fetchLoading]);
 
 	// after goal changed, refetch goals
 	useEffect(() => {
@@ -58,11 +64,15 @@ const GoalDetail = () => {
 		return <p>Loading...</p>;
 	}
 
-	const handleDelete = () => {
+	if (error) {
+		return <p>{error.message}</p>;
+	}
+
+	const handleDelete = async () => {
 		if (tasks.length > 0) {
 			return;
 		}
-		deleteGoal({
+		await deleteGoal({
 			variables: {
 				goalId: selectedGoalId,
 			},
