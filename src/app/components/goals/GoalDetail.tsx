@@ -11,17 +11,17 @@ import SmallIcon from "../styled-components/SmallIcon";
 import { DeleteGoal } from "@/graphql/mutations.graphql";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
-import { addGoalDetail, setGoals } from "@/redux/features/goalSlice";
+import { addGoalDetail, deleteGoal as deleteGoalFromState } from "@/redux/features/goalSlice";
 import CreateTaskDialog from "../tasks/CreateTaskDialog";
 import { fullDate } from "@/lib/utils";
 
 const GoalDetail = () => {
 	const searchParams = useSearchParams();
 	const taskChanged = useAppSelector((state) => state.task.taskChange);
-	const goals: Goal[] = useAppSelector((state) => state.goal.goals);
+	const goalsWithoutDetails: Goal[] = useAppSelector((state) => state.goal.goals);
 	const goalsDetails: Goal[] = useAppSelector((state) => state.goal.goalsDetails);
 
-	const selectedGoalId = +(searchParams.get("goalid") || -1);
+	const selectedGoalId = +(searchParams.get("goalid") || goalsWithoutDetails?.[0]?.goalId);
 
 	const singleGoalDetail =
 		goalsDetails.find((goal) => goal?.goalId === selectedGoalId) || goalsDetails?.[0];
@@ -64,6 +64,10 @@ const GoalDetail = () => {
 		return <p>Loading...</p>;
 	}
 
+	if (isNaN(selectedGoalId)) {
+		return <p>Please select a goal</p>;
+	}
+
 	if (error) {
 		return <p>{error.message}</p>;
 	}
@@ -80,9 +84,8 @@ const GoalDetail = () => {
 		if (deleteError) {
 			console.log(deleteError.message);
 		} else {
-			dispatch(setGoals(goals.filter((goal: Goal) => goal.goalId !== selectedGoalId)));
-			router.replace("goals");
-			console.log("deleted");
+			dispatch(deleteGoalFromState(selectedGoalId));
+			router.push("goals?goalid=" + goalsWithoutDetails?.[0]?.goalId);
 		}
 	};
 

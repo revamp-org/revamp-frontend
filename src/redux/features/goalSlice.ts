@@ -24,6 +24,15 @@ export const goalSlice = createSlice({
 			state.goals = action.payload;
 			localStorage.setItem("goals", JSON.stringify(action.payload));
 		},
+		deleteGoal: (state, action: PayloadAction<Goal["goalId"]>) => {
+			state.goals = state.goals.filter((singleGoal) => singleGoal?.goalId !== action.payload);
+			localStorage.setItem("goals", JSON.stringify(state.goals));
+
+			state.goalsDetails = state.goalsDetails.filter(
+				(singleGoal) => singleGoal?.goalId !== action.payload,
+			);
+			localStorage.setItem("goalsDetails", JSON.stringify(state.goalsDetails));
+		},
 		addGoalDetail: (state, action: PayloadAction<Goal>) => {
 			// check if goal already exists
 			const goalExists = state.goalsDetails.find(
@@ -43,5 +52,5 @@ export const goalSlice = createSlice({
 	},
 });
 
-export const { setGoals, setGoalChange, addGoalDetail } = goalSlice.actions;
+export const { setGoals, setGoalChange, addGoalDetail, deleteGoal } = goalSlice.actions;
 export default goalSlice.reducer;
