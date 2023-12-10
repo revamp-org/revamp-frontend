@@ -44,7 +44,7 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		refetch({ userId: user?.id });
 	}, [goalChanged, refetch, user?.id]);
 
-	if (loading) {
+	if (loading && localStorage.getItem("goals") == null) {
 		return <p>Loading...</p>;
 	}
 

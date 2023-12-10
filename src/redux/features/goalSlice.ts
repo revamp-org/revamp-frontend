@@ -7,7 +7,7 @@ interface GoalState {
 }
 
 const initialState: GoalState = {
-	goals: [],
+	goals: JSON.parse(localStorage.getItem("goals") || "[]"),
 	goalChange: false,
 };
 
@@ -20,6 +20,7 @@ export const goalSlice = createSlice({
 		},
 		setGoals: (state, action: PayloadAction<Goal[]>) => {
 			state.goals = action.payload;
+			localStorage.setItem("goals", JSON.stringify(action.payload));
 		},
 	},
 });

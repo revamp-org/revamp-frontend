@@ -7,7 +7,7 @@ interface TaskState {
 }
 
 const initialState: TaskState = {
-	todos: [],
+	todos: JSON.parse(localStorage.getItem("todos") || "[]"),
 	todoChange: false,
 };
 
@@ -17,6 +17,7 @@ export const todoSlice = createSlice({
 	reducers: {
 		setTodos: (state, action: PayloadAction<Todo[]>) => {
 			state.todos = action.payload;
+			localStorage.setItem("todos", JSON.stringify(action.payload));
 		},
 		setTodoChange: (state) => {
 			state.todoChange = !state.todoChange;

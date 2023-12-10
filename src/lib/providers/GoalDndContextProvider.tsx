@@ -70,9 +70,6 @@ const GoalDndContextProvider = ({ children }: { children: React.ReactNode }) => 
 
 		if (!over) return;
 
-		console.log("active", active);
-		console.log("over", over);
-
 		const activeGoalId = active.id;
 		const overGoalId = over.id;
 

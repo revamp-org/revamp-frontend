@@ -33,19 +33,17 @@ const CreateGoalDialog = () => {
 	const [setGoal, { error }] = useMutation(SetGoal);
 	const dispatch = useDispatch<AppDispatch>();
 
-	const onSubmit = (data: FieldValues) => {
-		setGoal({
+	const onSubmit = async (data: FieldValues) => {
+		await setGoal({
 			variables: {
 				userId: user?.id,
 				title: data.title,
 				description: data.description,
 			},
 		});
-		if (!isSubmitting) {
-			reset();
-			dispatch(setGoalChange());
-			setDialogOpen(!dialogOpen);
-		}
+		reset();
+		dispatch(setGoalChange());
+		setDialogOpen(!dialogOpen);
 	};
 
 	return (

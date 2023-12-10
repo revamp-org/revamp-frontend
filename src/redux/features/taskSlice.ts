@@ -8,7 +8,7 @@ interface TaskState {
 }
 
 const initialState: TaskState = {
-	tasks: [],
+	tasks: JSON.parse(localStorage.getItem("tasks") || "[]"),
 	taskChange: false,
 	isCheckboxChecked: false,
 };
@@ -19,6 +19,7 @@ export const taskSlice = createSlice({
 	reducers: {
 		setTasks: (state, action: PayloadAction<Task[]>) => {
 			state.tasks = action.payload;
+			localStorage.setItem("tasks", JSON.stringify(action.payload));
 		},
 		setTaskChange: (state) => {
 			state.taskChange = !state.taskChange;
