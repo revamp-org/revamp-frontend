@@ -14,7 +14,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const { user } = useUser();
-	const [loading, setLoading] = useState<boolean>(true);
 	const tasks = useAppSelector((state) => state.task.tasks);
 	const taskChanged = useAppSelector((state) => state.task.taskChange);
 	const dispatch = useDispatch<AppDispatch>();
@@ -29,11 +28,9 @@ const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 
 	useEffect(() => {
 		if (data) {
-			console.log("Data:", data);
 			const fetchedTasks: Task[] = data.getTasksOfUser;
 
 			dispatch(setTasks(fetchedTasks));
-			setLoading(false);
 		}
 	}, [data, dispatch]);
 
@@ -41,10 +38,6 @@ const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	useEffect(() => {
 		refetch({ userId: user?.id });
 	}, [taskChanged, refetch, user?.id]);
-
-	if (loading) {
-		return <p>Loading...</p>;
-	}
 
 	return (
 		<TaskDndContextProvider>
