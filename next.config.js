@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
 	webpack: (config) => {
 		config.module.rules.push({
 			test: /\.(graphql|gql)/,
@@ -11,19 +10,18 @@ const nextConfig = {
 		return config;
 	},
 
-    images:{
-        remotePatterns: [
-            {
-              protocol: 'https',
-              hostname: 'i.postimg.cc',
-              port: '',
-              pathname: '/*/**',
-            },
-          ]
-    },
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "i.postimg.cc",
+				port: "",
+				pathname: "/*/**",
+			},
+		],
+	},
 
 	output: "standalone",
-
 };
 
 module.exports = nextConfig;

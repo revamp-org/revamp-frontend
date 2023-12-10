@@ -67,7 +67,7 @@ $lines: 1, 2, 3, 4, 5;
 }
 
 .post-icon {
-	@apply cursor-pointer  rounded-full p-1 text-2xl transition-all duration-150 ease-in-out  hover:bg-gray-200 lg:text-4xl;
+	@apply cursor-pointer  rounded-full p-1 text-2xl transition-all duration-150 ease-in-out  hover:bg-accent lg:text-4xl;
 }
 
 .counter {
