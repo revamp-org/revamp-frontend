@@ -5,31 +5,37 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import TaskListItem from "../tasks/TaskListItem";
 import { useMutation, useQuery } from "@apollo/client";
-import { GetTasksOfGoal } from "@/graphql/queries.graphql";
+import { GetSingleGoal } from "@/graphql/queries.graphql";
 import { Goal, Task } from "@/generated/graphql";
 import SmallIcon from "../styled-components/SmallIcon";
 import { DeleteGoal } from "@/graphql/mutations.graphql";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
-import { setGoals } from "@/redux/features/goalSlice";
+import { addGoalDetail, setGoals } from "@/redux/features/goalSlice";
 import CreateTaskDialog from "../tasks/CreateTaskDialog";
-import { formatDate, fullDate } from "@/lib/utils";
+import { fullDate } from "@/lib/utils";
 
 const GoalDetail = () => {
 	const searchParams = useSearchParams();
-	const [tasks, setTasks] = useState<Task[]>([]);
-	const [loading, setLoading] = useState<boolean>(true);
-	const router = useRouter();
 	const taskChanged = useAppSelector((state) => state.task.taskChange);
 	const goals: Goal[] = useAppSelector((state) => state.goal.goals);
-	const dispatch = useDispatch<AppDispatch>();
+	const goalsDetails: Goal[] = useAppSelector((state) => state.goal.goalsDetails);
 
 	const selectedGoal = searchParams.get("goalid") || goals[0]?.goalId;
-	const selectedGoalId = +selectedGoal!;
+	const selectedGoalId = +selectedGoal || -1;
 
-	const relevantGoal = goals.find((goal: Goal) => goal.goalId === selectedGoalId);
+	const singleGoalDetail = goalsDetails.find((goal) => goal?.goalId === selectedGoalId);
+	const tasks = singleGoalDetail?.tasks || [];
 
-	const { error, data, refetch } = useQuery(GetTasksOfGoal, {
+	const [loading, setLoading] = useState<boolean>(true);
+	const router = useRouter();
+	const dispatch = useDispatch<AppDispatch>();
+
+	const {
+		error: _,
+		data,
+		refetch,
+	} = useQuery(GetSingleGoal, {
 		variables: { goalId: selectedGoalId },
 	});
 
@@ -37,11 +43,11 @@ const GoalDetail = () => {
 
 	useEffect(() => {
 		if (data) {
-			const fetchedTasks: Task[] = data.getTasksOfGoal;
-			setTasks(fetchedTasks);
+			const fetchedGoalDetail: Goal = data.getSingleGoal;
+			dispatch(addGoalDetail(fetchedGoalDetail));
 			setLoading(false);
 		}
-	}, [data, taskChanged]);
+	}, [data, taskChanged, dispatch]);
 
 	// after goal changed, refetch goals
 	useEffect(() => {
@@ -50,10 +56,6 @@ const GoalDetail = () => {
 
 	if (loading) {
 		return <p>Loading...</p>;
-	}
-
-	if (error) {
-		return <p>Error: {error.message}</p>;
 	}
 
 	const handleDelete = () => {
@@ -77,8 +79,8 @@ const GoalDetail = () => {
 	return (
 		<div className="relative bg-topbar p-2">
 			<div className="flex items-center justify-between">
-				<p className="text-2xl font-semibold">{relevantGoal?.title}</p>
-				<p className="text-sm font-semibold">{`${fullDate(relevantGoal?.createdAt)}`}</p>
+				<p className="text-2xl font-semibold">{singleGoalDetail?.title}</p>
+				<p className="text-sm font-semibold">{`${fullDate(singleGoalDetail?.createdAt)}`}</p>
 				<SmallIcon
 					icon="material-symbols:delete-outline"
 					className="text-3xl"
@@ -87,7 +89,7 @@ const GoalDetail = () => {
 			</div>
 
 			<div className="">
-				<p className="truncate-overflow-7 col-span-2  text-sm">{relevantGoal?.description}</p>
+				<p className="truncate-overflow-7 col-span-2  text-sm">{singleGoalDetail?.description}</p>
 			</div>
 
 			<section className="py-4">
@@ -115,17 +117,17 @@ const GoalDetail = () => {
 				<div>
 					<p className="text-lg">Commitment Streak</p>
 
-					{relevantGoal?.streak === 0 ? (
+					{singleGoalDetail?.streak === 0 ? (
 						<div className=" ">
 							<p className="text-center font-[Tourney] text-[length:--streak-font-size]">
-								{relevantGoal.streak}
+								{singleGoalDetail.streak}
 							</p>
 							<p className="text-xl">{`It's the start of greatness`}</p>
 						</div>
 					) : (
 						<div className="">
 							<p className=" text-center font-[Tourney] text-[length:--streak-font-size]">
-								{relevantGoal?.streak}
+								{singleGoalDetail?.streak}
 							</p>
 							<p className="text-3xl">day streak!</p>
 						</div>

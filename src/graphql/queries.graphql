@@ -14,6 +14,33 @@ query GetGoals($userId: ID!) {
 		updatedAt
 	}
 }
+
+query GetSingleGoal($goalId: Int!) {
+	getSingleGoal(goalId: $goalId) {
+		goalId
+		title
+		description
+		priority
+		relatedArea
+		order
+		streak
+		isActive
+		deadline
+		isDone
+		createdAt
+		updatedAt
+		tasks {
+			taskId
+			title
+			description
+			priority
+			streak
+			order
+			isDone
+		}
+	}
+}
+
 query GetTasksOfUser($userId: ID!) {
 	getTasksOfUser(userId: $userId) {
 		taskId

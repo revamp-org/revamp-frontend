@@ -4,11 +4,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface GoalState {
 	goals: Goal[];
 	goalChange: boolean;
+	goalsDetails: Goal[];
 }
 
 const initialState: GoalState = {
 	goals: JSON.parse(localStorage.getItem("goals") || "[]"),
 	goalChange: false,
+	goalsDetails: JSON.parse(localStorage.getItem("goalsDetails") || "[]"),
 };
 
 export const goalSlice = createSlice({
@@ -22,8 +24,24 @@ export const goalSlice = createSlice({
 			state.goals = action.payload;
 			localStorage.setItem("goals", JSON.stringify(action.payload));
 		},
+		addGoalDetail: (state, action: PayloadAction<Goal>) => {
+			// check if goal already exists
+			const goalExists = state.goalsDetails.find(
+				(singleGoal) => singleGoal?.goalId === action.payload?.goalId,
+			);
+
+			if (goalExists) {
+				state.goalsDetails = state.goalsDetails.map((singleGoal) =>
+					singleGoal?.goalId === action.payload?.goalId ? action.payload : singleGoal,
+				);
+			} else {
+				state.goalsDetails = [...state.goalsDetails, action.payload];
+			}
+
+			localStorage.setItem("goalsDetails", JSON.stringify(state.goalsDetails));
+		},
 	},
 });
 
-export const { setGoals, setGoalChange } = goalSlice.actions;
+export const { setGoals, setGoalChange, addGoalDetail } = goalSlice.actions;
 export default goalSlice.reducer;
