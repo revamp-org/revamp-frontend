@@ -14,7 +14,7 @@ const TodoList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const { user } = useUser();
 	const [loading, setLoading] = useState<boolean>(true);
 
-	const { error, data } = useQuery(GetTodosOfUser, {
+	const { error: _, data } = useQuery(GetTodosOfUser, {
 		variables: { userId: user?.id },
 	});
 
@@ -29,10 +29,6 @@ const TodoList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 
 	if (loading) {
 		return <p>Loading...</p>;
-	}
-
-	if (error) {
-		return <p>Error: {error.message}</p>;
 	}
 
 	return (

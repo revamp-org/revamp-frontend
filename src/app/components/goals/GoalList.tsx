@@ -26,7 +26,11 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const goals: Goal[] = useAppSelector((state) => state.goal.goals);
 	const dispatch = useDispatch<AppDispatch>();
 
-	const { error, data, refetch } = useQuery(GetGoals, {
+	const {
+		error: _error,
+		data,
+		refetch,
+	} = useQuery(GetGoals, {
 		variables: { userId: user?.id },
 	});
 
@@ -46,10 +50,6 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 
 	if (loading && localStorage.getItem("goals") == null) {
 		return <p>Loading...</p>;
-	}
-
-	if (error) {
-		return <p>Error: {error.message}</p>;
 	}
 
 	const handleOnClick = () => {
