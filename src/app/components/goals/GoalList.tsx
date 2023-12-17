@@ -52,10 +52,6 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		return <p>Loading...</p>;
 	}
 
-	const handleOnClick = () => {
-		console.log("clicked", data?.getGoals);
-	};
-
 	const column: Column[] = [
 		{
 			id: "active",
@@ -72,9 +68,7 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	return (
 		<div className="space-y-2">
 			<div className="flex items-center justify-between">
-				<p className="text-lg" onClick={handleOnClick}>
-					Goals
-				</p>
+				<p className="text-lg">Goals</p>
 				{!isDashboardPage ? <CreateGoalDialog /> : null}
 			</div>
 

@@ -34,7 +34,24 @@ query GetSingleGoal($goalId: Int!) {
 			title
 			description
 			priority
-			streak
+			order
+			isDone
+		}
+	}
+}
+
+query GetSingleTask($taskId: Int!) {
+	getSingleTask(taskId: $taskId) {
+		taskId
+		title
+		description
+		priority
+		order
+		isDone
+		goalId
+		todos {
+			todoId
+			todo
 			order
 			isDone
 		}
@@ -47,7 +64,6 @@ query GetTasksOfUser($userId: ID!) {
 		title
 		description
 		priority
-		streak
 		order
 		isDone
 		goalId
@@ -69,7 +85,6 @@ query GetTasksOfGoal($goalId: Int!) {
 		title
 		description
 		priority
-		streak
 		order
 		isDone
 	}

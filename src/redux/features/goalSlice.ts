@@ -8,9 +8,10 @@ interface GoalState {
 }
 
 const initialState: GoalState = {
-	goals: JSON.parse(localStorage.getItem("goals") || "[]"),
+	goals: typeof window !== "undefined" ? JSON.parse(localStorage.getItem("goals") || "[]") : [],
 	goalChange: false,
-	goalsDetails: JSON.parse(localStorage.getItem("goalsDetails") || "[]"),
+	goalsDetails:
+		typeof window !== "undefined" ? JSON.parse(localStorage.getItem("goalsDetails") || "[]") : [],
 };
 
 export const goalSlice = createSlice({
@@ -22,16 +23,18 @@ export const goalSlice = createSlice({
 		},
 		setGoals: (state, action: PayloadAction<Goal[]>) => {
 			state.goals = action.payload;
-			localStorage.setItem("goals", JSON.stringify(action.payload));
+			if (typeof window !== "undefined")
+				localStorage.setItem("goals", JSON.stringify(action.payload));
 		},
 		deleteGoal: (state, action: PayloadAction<Goal["goalId"]>) => {
 			state.goals = state.goals.filter((singleGoal) => singleGoal?.goalId !== action.payload);
-			localStorage.setItem("goals", JSON.stringify(state.goals));
+			if (typeof window !== "undefined") localStorage.setItem("goals", JSON.stringify(state.goals));
 
 			state.goalsDetails = state.goalsDetails.filter(
 				(singleGoal) => singleGoal?.goalId !== action.payload,
 			);
-			localStorage.setItem("goalsDetails", JSON.stringify(state.goalsDetails));
+			if (typeof window !== "undefined")
+				localStorage.setItem("goalsDetails", JSON.stringify(state.goalsDetails));
 		},
 		addGoalDetail: (state, action: PayloadAction<Goal>) => {
 			// check if goal already exists
@@ -47,7 +50,8 @@ export const goalSlice = createSlice({
 				state.goalsDetails = [...state.goalsDetails, action.payload];
 			}
 
-			localStorage.setItem("goalsDetails", JSON.stringify(state.goalsDetails));
+			if (typeof window !== "undefined")
+				localStorage.setItem("goalsDetails", JSON.stringify(state.goalsDetails));
 		},
 	},
 });

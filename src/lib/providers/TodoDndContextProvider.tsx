@@ -5,15 +5,15 @@ import { createPortal } from "react-dom";
 import { arrayMove } from "@dnd-kit/sortable";
 import TodoListItem from "@/app/components/todos/TodoListItem";
 import { Todo } from "@/generated/graphql";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { setTodos } from "@/redux/features/todoSlice";
 
-const TodoDndContextProvider = ({
-	children,
-	setTodos,
-}: {
-	children: React.ReactNode;
-	setTodos: React.Dispatch<SetStateAction<Todo[]>>;
-}) => {
+const TodoDndContextProvider = ({ children }: { children: React.ReactNode }) => {
 	const [activeCard, setActiveCard] = React.useState<Todo | null>(null);
+	const todos = useAppSelector((state) => state.todo.todos);
+	const dispatch = useDispatch<AppDispatch>();
+
 	return (
 		<DndContext id="unique-todo-dnd-context-id" onDragStart={onDragStart} onDragEnd={onDragEnd}>
 			{children}
@@ -54,12 +54,12 @@ const TodoDndContextProvider = ({
 
 		if (activeTodoId === overTodoId) return;
 
-		setTodos((todos) => {
-			const overIndex = todos.findIndex((todo) => todo.todoId === over?.id);
-			const activeIndex = todos.findIndex((todo) => todo.todoId === active?.id);
+		const overIndex = todos.findIndex((todo) => todo.todoId === over?.id);
+		const activeIndex = todos.findIndex((todo) => todo.todoId === active?.id);
 
-			return arrayMove(todos, activeIndex, overIndex);
-		});
+		const newTodos = arrayMove(todos, activeIndex, overIndex);
+
+		dispatch(setTodos(newTodos));
 	}
 };
 

@@ -60,16 +60,12 @@ const GoalDetail = () => {
 		refetch({ goalId: selectedGoalId });
 	}, [taskChanged, refetch, selectedGoalId]);
 
-	if (loading) {
+	if (loading && singleGoalDetail == null) {
 		return <p>Loading...</p>;
 	}
 
 	if (isNaN(selectedGoalId)) {
 		return <p>Please select a goal</p>;
-	}
-
-	if (error) {
-		return <p>{error.message}</p>;
 	}
 
 	const handleDelete = async () => {

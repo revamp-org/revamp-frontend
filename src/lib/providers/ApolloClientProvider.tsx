@@ -1,6 +1,5 @@
 "use client";
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from "@apollo/client";
-// import gqlClient from "../graphql";
 import { setContext } from "@apollo/client/link/context";
 import { useSession } from "@clerk/nextjs";
 
@@ -8,7 +7,7 @@ const ApolloClientProvider = ({ children }: { children: React.ReactNode }) => {
 	const { session } = useSession();
 	console.log("session", session?.id);
 	const httpLink = createHttpLink({
-		uri: "https://revamp-backend.onrender.com/graphql",
+		uri: process.env.NEXT_PUBLIC_GRAPHQL_API_URI,
 	});
 
 	const authLink = setContext((_, { headers }) => {

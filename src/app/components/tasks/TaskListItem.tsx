@@ -65,8 +65,7 @@ const TaskListItem = ({
 			<Link
 				href={href || ""}
 				className={cn(
-					`relative flex h-full  w-full cursor-pointer  items-center justify-between   pr-4  text-lg transition-all duration-300 ease-in-out hover:bg-[#446288] ${
-						selectedTask === task.taskId.toString() ? "bg-[#446288]" : "bg-topbar"
+					`relative flex h-full  w-full cursor-pointer  items-center justify-between   pr-4  text-lg transition-all duration-300 ease-in-out hover:bg-[#446288] ${selectedTask === task.taskId.toString() ? "bg-[#446288]" : "bg-topbar"
 					}`,
 					linkStyle,
 				)}
@@ -84,11 +83,6 @@ const TaskListItem = ({
 						)}
 					</div>
 				</div>
-
-				<span className="flex items-center gap-1  text-xl font-semibold ">
-					<Image src="/assets/fire.png" alt="streak" height={24} width={24} />
-					{task?.streak}
-				</span>
 			</Link>
 			{isDashboard && (
 				<span

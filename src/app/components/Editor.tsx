@@ -7,15 +7,15 @@ const Editor = () => {
 	const [enabled, setEnabled] = useState<boolean>(false);
 
 	const intializedEditor = useCallback(async () => {
-		const Editorjs = (await import("@editorjs/editorjs")).default; // @ts-ignore
-		const Header = (await import("@editorjs/header")).default; // @ts-ignore
-		const List = (await import("@editorjs/list")).default; // @ts-ignore
-		const Embed = (await import("@editorjs/embed")).default; // @ts-ignore
-		const Code = (await import("@editorjs/code")).default; // @ts-ignore
-		const InlineCode = (await import("@editorjs/code")).default; // @ts-ignore
-		const LinkTool = (await import("@editorjs/link")).default; // @ts-ignore
-		const Table = (await import("@editorjs/table")).default; // @ts-ignore
-		const ImageTool = (await import("@editorjs/image")).default; // @ts-ignore
+		const Editorjs = (await import("@editorjs/editorjs")).default;
+		const Header = (await import("@editorjs/header")).default;
+		const List = (await import("@editorjs/list")).default;
+		const Embed = (await import("@editorjs/embed")).default;
+		const Code = (await import("@editorjs/code")).default;
+		const InlineCode = (await import("@editorjs/code")).default;
+		const LinkTool = (await import("@editorjs/link")).default;
+		const Table = (await import("@editorjs/table")).default;
+		const ImageTool = (await import("@editorjs/image")).default;
 
 		if (!editorRef.current) {
 			const editor = new Editorjs({

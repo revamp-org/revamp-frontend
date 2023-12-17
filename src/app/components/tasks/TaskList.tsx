@@ -42,7 +42,7 @@ const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		refetch({ userId: user?.id });
 	}, [taskChanged, refetch, user?.id]);
 
-	if (loading) {
+	if (loading && typeof window !== "undefined" && localStorage.getItem("tasks") == null) {
 		return <p>Loading...</p>;
 	}
 

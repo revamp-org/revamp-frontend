@@ -9,7 +9,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
-import { toggleCheckbox } from "@/redux/features/taskSlice";
 import { Todo } from "@/generated/graphql";
 
 const TodoListItem = ({
@@ -65,17 +64,14 @@ const TodoListItem = ({
 		}
 		// todo.isDone = !isCheckboxChecked;
 		setIsCheckboxChecked(!isCheckboxChecked);
-		dispatch(toggleCheckbox());
 	};
 
 	return (
 		<div ref={setNodeRef} style={style} className="flex h-16 items-center">
 			<div
 				className={cn(
-					`flex h-full ${
-						isCheckboxChecked ? "opacity-20" : "opacity-100"
-					} w-full   items-center  justify-between   text-lg text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
-						selectedTodo === todo.todoId.toString() ? "bg-[#446288]" : "bg-topbar"
+					`flex h-full ${isCheckboxChecked ? "opacity-20" : "opacity-100"
+					} w-full   items-center  justify-between   text-lg text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${selectedTodo === todo.todoId.toString() ? "bg-[#446288]" : "bg-topbar"
 					}`,
 					className,
 				)}
@@ -87,9 +83,8 @@ const TodoListItem = ({
 					<span className="priority after:bg-white "></span>
 					<div>
 						<p
-							className={` truncate-overflow-1 ${
-								isCheckboxChecked ? "line-through" : "no-underline"
-							}`}
+							className={` truncate-overflow-1 ${isCheckboxChecked ? "line-through" : "no-underline"
+								}`}
 						>
 							{todo.todo}
 						</p>

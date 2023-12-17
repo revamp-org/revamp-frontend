@@ -8,31 +8,45 @@ import { useQuery } from "@apollo/client";
 import { useUser } from "@clerk/nextjs";
 import { GetTodosOfUser } from "@/graphql/queries.graphql";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { setTodos } from "@/redux/features/todoSlice";
+import { useDispatch } from "react-redux";
 
 const TodoList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
-	const [todos, setTodos] = useState<Todo[]>([]);
 	const { user } = useUser();
 	const [loading, setLoading] = useState<boolean>(true);
 
-	const { error: _, data } = useQuery(GetTodosOfUser, {
+	const todos = useAppSelector((state) => state.todo.todos);
+	const todoChanged = useAppSelector((state) => state.todo.todoChange);
+	const dispatch = useDispatch<AppDispatch>();
+
+	const {
+		error: _,
+		data,
+		refetch,
+	} = useQuery(GetTodosOfUser, {
 		variables: { userId: user?.id },
 	});
 
 	useEffect(() => {
 		if (data) {
-			console.log("Data:", data);
 			const fetchedTodos: Todo[] = data.getTodosOfUser;
-			setTodos(fetchedTodos);
+			dispatch(setTodos(fetchedTodos));
 			setLoading(false);
 		}
-	}, [data]);
+	}, [data, dispatch]);
 
-	if (loading) {
+	// after goal changed, refetch goals
+	useEffect(() => {
+		refetch({ userId: user?.id });
+	}, [todoChanged, refetch, user?.id]);
+
+	if (loading && localStorage.getItem("todos") == null) {
 		return <p>Loading...</p>;
 	}
 
 	return (
-		<TodoDndContextProvider setTodos={setTodos}>
+		<TodoDndContextProvider>
 			<section className="space-y-2">
 				<div>
 					<p className="text-lg">Todos</p>

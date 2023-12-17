@@ -82,7 +82,9 @@ const CreatePost = () => {
 					image: {
 						class: ImageTool,
 						config: {
-							uploader: {},
+							uploader: {
+
+							},
 						},
 					},
 					list: List,
@@ -104,17 +106,19 @@ const CreatePost = () => {
 		const init = async () => {
 			await intializedEditor();
 
-			setTimeout(() => {});
+			setTimeout(() => { });
 		};
 
 		if (enabled) {
 			init();
-			return () => {};
+			return () => { };
 		}
 	}, [enabled, intializedEditor]);
 
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
+		const blocks = await editorRef.current?.save();
+		console.log(blocks);
 		try {
 			await addPost();
 			router.push("journals/daily");

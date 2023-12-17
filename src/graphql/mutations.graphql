@@ -8,6 +8,9 @@ mutation DeleteGoal($goalId: Int!) {
 mutation SetTask($goalId: Int!, $title: String!, $description: String!, $deadline: Timestamp) {
 	setTask(goalId: $goalId, title: $title, description: $description, deadline: $deadline)
 }
+mutation DeleteTask($taskId: Int!) {
+	deleteTask(taskId: $taskId)
+}
 
 mutation SetTodo($taskId: Int!, $todo: String!) {
 	setTodo(taskId: $taskId, todo: $todo)
