@@ -36,19 +36,17 @@ const CreateTaskDialog = () => {
 	const [setTask, { error }] = useMutation(SetTask);
 	const dispatch = useDispatch<AppDispatch>();
 
-	const onSubmit = (data: FieldValues) => {
-		setTask({
+	const onSubmit = async (data: FieldValues) => {
+		await setTask({
 			variables: {
 				goalId: +selectedGoal!,
 				title: data.title,
 				description: data.description,
 			},
 		});
-		if (!isSubmitting) {
-			reset();
-			dispatch(setTaskChange());
-			setDialogOpen(!dialogOpen);
-		}
+		reset();
+		dispatch(setTaskChange());
+		setDialogOpen(!dialogOpen);
 	};
 
 	return (

@@ -30,16 +30,16 @@ const GoalDndContextProvider = ({ children }: { children: React.ReactNode }) => 
 
 			{typeof window !== "undefined"
 				? createPortal(
-					<DragOverlay>
-						{activeGoalCard && (
-							<GoalListItem
-								goal={activeGoalCard}
-								href={`/dashboard/goals?goalid=${activeGoalCard.goalId}`}
-							/>
-						)}
-					</DragOverlay>,
-					window.document.body,
-				)
+						<DragOverlay>
+							{activeGoalCard && (
+								<GoalListItem
+									goal={activeGoalCard}
+									href={`/dashboard/goals?goalid=${activeGoalCard.goalId}`}
+								/>
+							)}
+						</DragOverlay>,
+						window.document.body,
+				  )
 				: null}
 		</DndContext>
 	);

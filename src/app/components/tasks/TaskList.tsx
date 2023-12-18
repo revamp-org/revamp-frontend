@@ -19,7 +19,11 @@ const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const taskChanged = useAppSelector((state) => state.task.taskChange);
 	const dispatch = useDispatch<AppDispatch>();
 
-	const { error, data, refetch } = useQuery(GetTasksOfUser, {
+	const {
+		error: _error,
+		data,
+		refetch,
+	} = useQuery(GetTasksOfUser, {
 		variables: { userId: user?.id },
 	});
 
@@ -38,13 +42,10 @@ const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		refetch({ userId: user?.id });
 	}, [taskChanged, refetch, user?.id]);
 
-	if (loading) {
+	if (loading && typeof window !== "undefined" && localStorage.getItem("tasks") == null) {
 		return <p>Loading...</p>;
 	}
 
-	if (error) {
-		return <p>Error: {error.message}</p>;
-	}
 	return (
 		<TaskDndContextProvider>
 			<section className="space-y-2">

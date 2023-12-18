@@ -13,13 +13,7 @@ const Tasks = ({
 				<TaskList isDashboardPage={false} />
 			</div>
 
-			{taskId ? (
-				<TaskDetail />
-			) : (
-				<div className="broder-gray-100 grid h-full w-full place-items-center border ">
-					Choose a Task
-				</div>
-			)}
+			<TaskDetail />
 		</section>
 	);
 };
