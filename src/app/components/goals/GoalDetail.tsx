@@ -7,14 +7,13 @@ import TaskListItem from "../tasks/TaskListItem";
 import { useMutation, useQuery } from "@apollo/client";
 import { GetSingleGoal } from "@/graphql/queries.graphql";
 import { Goal, Task } from "@/generated/graphql";
-import SmallIcon from "../styled-components/SmallIcon";
 import { DeleteGoal } from "@/graphql/mutations.graphql";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { addGoalDetail, deleteGoal as deleteGoalFromState } from "@/redux/features/goalSlice";
 import CreateTaskDialog from "../tasks/CreateTaskDialog";
 import { fullDate } from "@/lib/utils";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { MenuPopover } from "../MenuPopover";
 
 const GoalDetail = () => {
 	const searchParams = useSearchParams();
@@ -91,11 +90,7 @@ const GoalDetail = () => {
 			<div className="flex items-center justify-between">
 				<p className="text-2xl font-semibold">{singleGoalDetail?.title}</p>
 				<p className="text-sm font-semibold">{`${fullDate(singleGoalDetail?.createdAt)}`}</p>
-				<SmallIcon
-					icon="material-symbols:delete-outline"
-					className="text-3xl"
-					handleClick={handleDelete}
-				/>
+				<MenuPopover deleteItem={handleDelete} />
 			</div>
 
 			<div className="">

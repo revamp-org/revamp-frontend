@@ -71,6 +71,7 @@ const TaskDetail = () => {
 	}
 
 	const handleDelete = async () => {
+		console.log("delete");
 		if (todos.length > 0) {
 			return;
 		}
