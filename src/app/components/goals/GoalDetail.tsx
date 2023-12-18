@@ -14,6 +14,7 @@ import { AppDispatch, useAppSelector } from "@/redux/store";
 import { addGoalDetail, deleteGoal as deleteGoalFromState } from "@/redux/features/goalSlice";
 import CreateTaskDialog from "../tasks/CreateTaskDialog";
 import { fullDate } from "@/lib/utils";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const GoalDetail = () => {
 	const searchParams = useSearchParams();
@@ -122,7 +123,7 @@ const GoalDetail = () => {
 				</div>
 			</section>
 
-			<section className="grid grid-cols-2 place-items-center">
+			<section className="absolute bottom-8 grid grid-cols-2 place-items-center">
 				<div>
 					<p className="text-lg">Commitment Streak</p>
 
@@ -142,6 +143,7 @@ const GoalDetail = () => {
 						</div>
 					)}
 				</div>
+
 				<div>
 					<Image
 						src="/assets/fire.png"
@@ -152,7 +154,7 @@ const GoalDetail = () => {
 					/>
 				</div>
 				<div className="col-span-2">
-					<p className="text-sm font-extralight">
+					<p className="mx-auto max-w-[80%] text-sm font-extralight">
 						Complete all todos or create a checkpoint for your todo using milestone to prevent your
 						streak being lost
 					</p>

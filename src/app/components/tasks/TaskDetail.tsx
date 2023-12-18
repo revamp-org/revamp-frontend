@@ -2,11 +2,9 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import TodoListItem from "../todos/TodoListItem";
-import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { Maybe, Task, Todo } from "@/generated/graphql";
-import { GetTodosOfTask } from "@/graphql/queries.graphql";
 import { useMutation, useQuery } from "@apollo/client";
 import CreateTodoDialog from "../todos/CreateTodoDialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -15,6 +13,8 @@ import { DeleteTask } from "@/graphql/mutations.graphql";
 import { useDispatch } from "react-redux";
 import { GetSingleTask } from "@/graphql/queries.graphql";
 import { addTaskDetail, deleteTask as deleteTaskFromState } from "@/redux/features/taskSlice";
+import { fullDate } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const TaskDetail = () => {
 	const searchParams = useSearchParams();
@@ -34,7 +34,7 @@ const TaskDetail = () => {
 	const [loading, setLoading] = useState(true);
 
 	const {
-		error,
+		error: _,
 		data,
 		loading: fetchLoading,
 		refetch,
@@ -90,21 +90,16 @@ const TaskDetail = () => {
 	return (
 		<div className="relative bg-topbar p-2">
 			<div className="flex items-center justify-between">
-				<div>
-					<p className="text-2xl font-semibold">{singleTaskDetail?.title}</p>
-					<p className="text-sm font-semibold">{singleTaskDetail?.createdAt}</p>
-					<SmallIcon
-						icon="material-symbols:delete-outline"
-						className="text-3xl"
-						handleClick={handleDelete}
-					/>
-				</div>
-				<button title="Add Milestone">
-					<Icon icon="mdi:milestone-add" className="h-full text-3xl  " />
-				</button>
+				<p className="text-2xl font-semibold">{singleTaskDetail?.title}</p>
+				<p className="text-sm font-semibold">{`${fullDate(singleTaskDetail?.createdAt)}`}</p>
+				<SmallIcon
+					icon="material-symbols:delete-outline"
+					className="text-3xl"
+					handleClick={handleDelete}
+				/>
 			</div>
 
-			<p className="truncate-overflow-7 col-span-2  text-sm">{data?.description}</p>
+			<p className="truncate-overflow-7 col-span-2  text-sm">{singleTaskDetail?.description}</p>
 
 			<section className=" py-4 ">
 				{todos.length !== 0 ? (
@@ -134,30 +129,25 @@ const TaskDetail = () => {
 					</div>
 				) : (
 					<div className="flex items-center justify-between bg-primary ">
-						<p className="text-xl">Tasks</p>
+						<p className="text-xl">Todos</p>
 					</div>
 				)}
 			</section>
 
-			<section className="grid grid-cols-2 place-items-center">
-				<div>
-					<p className="text-lg">Commitment Streak</p>
-
-					{singleTaskDetail?.streak === 0 ? (
-						<div className=" ">
-							<p className="text-center font-[Tourney] text-[length:--streak-font-size]">
-								{singleTaskDetail.streak}
-							</p>
-							<p className="text-xl">{`It's the start of greatness`}</p>
-						</div>
-					) : (
-						<div className="">
-							<p className=" text-center font-[Tourney] text-[length:--streak-font-size]">0</p>
-							<p className="text-3xl">day streak!</p>
-						</div>
-					)}
+			{/* Milestone section */}
+			<div className="flex items-center justify-center gap-4  p-2">
+				<Icon icon="mdi:clock-fast" className="h-full text-6xl  " />
+				<div className="space-y-1">
+					<p className="text-sm">
+						<span className="font-semibold">42 minutes </span>
+						until your streeak resets!
+					</p>
+					<button title="Add Milestone" className="btn flex items-center gap-1 px-2 py-1 text-sm  ">
+						<Icon icon="mdi:milestone-add" className="h-full text-lg  " />
+						Add Milestone
+					</button>
 				</div>
-			</section>
+			</div>
 
 			<CreateTodoDialog />
 		</div>

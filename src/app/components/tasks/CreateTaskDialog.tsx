@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useMutation } from "@apollo/client";
 import { Icon } from "@iconify/react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -20,10 +20,12 @@ import { setTaskChange } from "@/redux/features/taskSlice";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { DatePicker } from "../datePicker";
+import { Goal } from "@/generated/graphql";
 
 const CreateTaskDialog = () => {
 	const searchParams = useSearchParams();
-	const selectedGoal = searchParams.get("goalid");
+	const goalsWithoutDetails: Goal[] = useAppSelector((state) => state.goal.goals);
+	const selectedGoal = +(searchParams.get("goalid") || goalsWithoutDetails?.[0]?.goalId);
 	const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
 	const {
@@ -39,7 +41,7 @@ const CreateTaskDialog = () => {
 	const onSubmit = async (data: FieldValues) => {
 		await setTask({
 			variables: {
-				goalId: +selectedGoal!,
+				goalId: selectedGoal,
 				title: data.title,
 				description: data.description,
 			},

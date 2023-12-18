@@ -48,8 +48,14 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		refetch({ userId: user?.id });
 	}, [goalChanged, refetch, user?.id]);
 
-	if (loading && localStorage.getItem("goals") == null) {
-		return <p>Loading...</p>;
+	// if (loading && typeof window !== "undefined" && window.localStorage.getItem("goals") == null) {
+	// 	return <p>Loading...</p>;
+	// }
+
+	if (typeof window !== "undefined") {
+		if (window.localStorage?.getItem("goals") == null && loading) {
+			return <p>Loading...</p>;
+		}
 	}
 
 	const column: Column[] = [
@@ -76,7 +82,7 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 				<div className="space-y-2">
 					<GoalDndContextProvider>
 						{column.map((column: Column) => (
-							<section key={column.id} className="space-y-2">
+							<section key={column.id} className="space-y-2" suppressHydrationWarning={true}>
 								{column.id === "active" || !isDashboardPage ? (
 									<>
 										{!isDashboardPage && <p className="">{column.title}</p>}

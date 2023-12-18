@@ -41,8 +41,10 @@ const TodoList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		refetch({ userId: user?.id });
 	}, [todoChanged, refetch, user?.id]);
 
-	if (loading && localStorage.getItem("todos") == null) {
-		return <p>Loading...</p>;
+	if (typeof window !== "undefined") {
+		if (loading && localStorage.getItem("todos") == null) {
+			return <p>Loading...</p>;
+		}
 	}
 
 	return (
