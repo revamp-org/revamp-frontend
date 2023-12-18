@@ -19,6 +19,8 @@ import { useForm, type FieldValues } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { setGoalChange } from "@/redux/features/goalSlice";
+import { Textarea } from "@/components/ui/textarea";
+import PriorityCombobox from "../PriorityComboBox";
 
 const CreateGoalDialog = () => {
 	const {
@@ -65,7 +67,7 @@ const CreateGoalDialog = () => {
 					</DialogDescription>
 				</DialogHeader>
 				<form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
-					<div className="grid grid-cols-4 items-center gap-4">
+					<div className="space-y-1">
 						<Label htmlFor="name" className="text-right text-foreground">
 							Title
 						</Label>
@@ -88,11 +90,11 @@ const CreateGoalDialog = () => {
 					{errors.title && (
 						<p className="text-center text-xs text-red-500 ">{`${errors.title.message}`}</p>
 					)}
-					<div className="grid grid-cols-4 items-center gap-4">
+					<div className="space-y-1">
 						<Label htmlFor="username" className="text-right text-foreground">
 							Description
 						</Label>
-						<Input
+						<Textarea
 							{...register("description", {
 								maxLength: {
 									value: 255,
@@ -106,18 +108,23 @@ const CreateGoalDialog = () => {
 							<p className="text-xs text-red-500">{`${errors.description.message}`}</p>
 						)}
 					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="username" className="text-right text-foreground">
-							priority
-						</Label>
-						<Input {...register("priority")} placeholder="priority..." className="col-span-3" />
-					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="username" className="text-right text-foreground">
-							deadline
-						</Label>
-						<DatePicker />
-					</div>{" "}
+
+					<section className="grid grid-cols-2 items-center gap-2 ">
+						<div className="space-y-1">
+							<Label htmlFor="username" className=" text-foreground">
+								priority
+							</Label>
+							<PriorityCombobox />
+							{/* <Input {...register("priority")} placeholder="priority..." className="col-span-3" /> */}
+						</div>
+
+						<div className=" space-y-1">
+							<Label htmlFor="username" className=" text-foreground">
+								deadline
+							</Label>
+							<DatePicker />
+						</div>
+					</section>
 					<DialogFooter>
 						{error && <p className="text-foreground">Error: {error.message}</p>}
 						<Button disabled={isSubmitting} type="submit">
