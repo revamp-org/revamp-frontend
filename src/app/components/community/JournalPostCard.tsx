@@ -11,7 +11,7 @@ interface Props {
 
 export default function JournalPostCard() {
 	return (
-		<Card className="h-[14rem] w-full rounded-lg border-none p-1 shadow ">
+		<Card className="h-[14rem] w-full rounded-lg border-none  p-1 shadow ">
 			<CardHeader>
 				<div className="flex items-center space-x-2">
 					<AvatarLogo />

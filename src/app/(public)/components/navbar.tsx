@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -36,7 +36,7 @@ const Navbar = () => {
 		<nav ref={navRef} className="top-0 z-20 w-full bg-topbar text-topbar-foreground">
 			<div className="items-center px-4 md:px-8 lg:flex">
 				<div className="flex items-center justify-between py-3 lg:block lg:py-4">
-					<a href="javascript:void(0)">
+					<a href="#">
 						<Image src="/assets/logo3-dark.svg" width={120} height={60} alt="Revamp Logo" />
 					</a>
 					<div className="lg:hidden">
@@ -77,9 +77,8 @@ const Navbar = () => {
 					</div>
 				</div>
 				<div
-					className={`flex-1 flex-row-reverse justify-between lg:flex lg:h-auto lg:overflow-visible lg:pb-0 lg:pr-0 ${
-						state ? "h-screen overflow-auto pb-20 pr-4" : "hidden"
-					}`}
+					className={`flex-1 flex-row-reverse justify-between lg:flex lg:h-auto lg:overflow-visible lg:pb-0 lg:pr-0 ${state ? "h-screen overflow-auto pb-20 pr-4" : "hidden"
+						}`}
 				>
 					<div>
 						<SignedOut>
