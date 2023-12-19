@@ -81,7 +81,7 @@ const GoalDetail = () => {
 			console.log(deleteError.message);
 		} else {
 			dispatch(deleteGoalFromState(selectedGoalId));
-			router.push("goals?goalid=" + goalsWithoutDetails?.[0]?.goalId);
+			router.push("goals?goalid=" + goalsWithoutDetails?.[goalsWithoutDetails.length - 1]?.goalId);
 		}
 	};
 
@@ -95,6 +95,10 @@ const GoalDetail = () => {
 
 			<div className="">
 				<p className="truncate-overflow-7 col-span-2  text-sm">{singleGoalDetail?.description}</p>
+			</div>
+
+			<div className="">
+				<p className="truncate-overflow-7 col-span-2  text-sm">{singleGoalDetail?.deadline}</p>
 			</div>
 
 			<section className="py-4">

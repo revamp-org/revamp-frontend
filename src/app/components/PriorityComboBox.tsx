@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ArrowUpCircle, CheckCircle2, Circle, HelpCircle, LucideIcon, XCircle } from "lucide-react";
+import { ArrowDownCircle, ArrowUpCircle, Circle, LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ const statuses: Status[] = [
 	{
 		value: "high",
 		label: "High",
-		icon: HelpCircle,
+		icon: ArrowUpCircle,
 	},
 	{
 		value: "normal",
@@ -33,9 +33,9 @@ const statuses: Status[] = [
 		icon: Circle,
 	},
 	{
-		value: "Low",
+		value: "low",
 		label: "Low",
-		icon: ArrowUpCircle,
+		icon: ArrowDownCircle,
 	},
 ];
 
@@ -54,7 +54,7 @@ export default function PriorityCombobox() {
 								{selectedStatus.label}
 							</>
 						) : (
-							<>+ Set status</>
+							<>+ Set Priority</>
 						)}
 					</Button>
 				</PopoverTrigger>
