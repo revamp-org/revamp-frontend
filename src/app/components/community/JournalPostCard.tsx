@@ -4,14 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import AvatarLogo from "../AvatarLogo";
+import { useRouter } from "next/navigation";
 
 interface Props {
 	className?: string;
 }
 
 export default function JournalPostCard() {
+	const router = useRouter();
+	const id = 14;
 	return (
-		<Card className="h-[14rem] w-full rounded-lg border-none  p-1 shadow ">
+		<Card className="h-[14rem] w-full rounded-lg border-none  p-1 shadow hover:cursor-pointer">
 			<CardHeader>
 				<div className="flex items-center space-x-2">
 					<AvatarLogo />
@@ -23,7 +26,10 @@ export default function JournalPostCard() {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<h2 className="my-2 text-lg font-bold">
+				<h2
+					className="my-2 text-lg font-bold transition-all duration-200 ease-in-out hover:text-blue-400"
+					onClick={() => router.push(`community/${id}`)}
+				>
 					{`Tech Trends and "The Emerging Innovations" Insights`}
 				</h2>
 				<Badge className="mb-4" variant="secondary">

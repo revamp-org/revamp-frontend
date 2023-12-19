@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { AiOutlineArrowUp, AiOutlineMinusCircle } from "react-icons/ai";
 import { BsBookmarkPlus, BsBookmarkFill } from "react-icons/bs";
