@@ -10,7 +10,7 @@ interface Props {
 
 export default function CommunityNavbar() {
 	return (
-		<nav className="sticky top-0 z-10  mx-auto flex h-16 max-w-[--screen-max]  items-center  justify-between bg-topbar  px-4 py-2 sm:flex-row sm:justify-between sm:px-4">
+		<nav className="sticky top-0 z-10  mx-auto flex h-16  items-center  justify-between bg-topbar  px-4 py-2 sm:flex-row sm:justify-between sm:px-4">
 			<Link href="/" className="">
 				<Image
 					src="/assets/logo3-dark.svg"
