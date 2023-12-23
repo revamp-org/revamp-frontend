@@ -7,13 +7,13 @@ import TaskListItem from "../tasks/TaskListItem";
 import { useMutation, useQuery } from "@apollo/client";
 import { GetSingleGoal } from "@/graphql/queries.graphql";
 import { Goal, Task } from "@/generated/graphql";
-import SmallIcon from "../styled-components/SmallIcon";
 import { DeleteGoal } from "@/graphql/mutations.graphql";
 import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import { addGoalDetail, deleteGoal as deleteGoalFromState } from "@/redux/features/goalSlice";
 import CreateTaskDialog from "../tasks/CreateTaskDialog";
 import { fullDate } from "@/lib/utils";
+import { MenuPopover } from "../MenuPopover";
 
 const GoalDetail = () => {
 	const searchParams = useSearchParams();
@@ -81,7 +81,7 @@ const GoalDetail = () => {
 			console.log(deleteError.message);
 		} else {
 			dispatch(deleteGoalFromState(selectedGoalId));
-			router.push("goals?goalid=" + goalsWithoutDetails?.[0]?.goalId);
+			router.push("goals?goalid=" + goalsWithoutDetails?.[goalsWithoutDetails.length - 1]?.goalId);
 		}
 	};
 
@@ -90,15 +90,15 @@ const GoalDetail = () => {
 			<div className="flex items-center justify-between">
 				<p className="text-2xl font-semibold">{singleGoalDetail?.title}</p>
 				<p className="text-sm font-semibold">{`${fullDate(singleGoalDetail?.createdAt)}`}</p>
-				<SmallIcon
-					icon="material-symbols:delete-outline"
-					className="text-3xl"
-					handleClick={handleDelete}
-				/>
+				<MenuPopover deleteItem={handleDelete} />
 			</div>
 
 			<div className="">
 				<p className="truncate-overflow-7 col-span-2  text-sm">{singleGoalDetail?.description}</p>
+			</div>
+
+			<div className="">
+				<p className="truncate-overflow-7 col-span-2  text-sm">{singleGoalDetail?.deadline}</p>
 			</div>
 
 			<section className="py-4">
@@ -122,7 +122,7 @@ const GoalDetail = () => {
 				</div>
 			</section>
 
-			<section className="grid grid-cols-2 place-items-center">
+			<section className="absolute bottom-8 grid grid-cols-2 place-items-center">
 				<div>
 					<p className="text-lg">Commitment Streak</p>
 
@@ -142,6 +142,7 @@ const GoalDetail = () => {
 						</div>
 					)}
 				</div>
+
 				<div>
 					<Image
 						src="/assets/fire.png"
@@ -152,7 +153,7 @@ const GoalDetail = () => {
 					/>
 				</div>
 				<div className="col-span-2">
-					<p className="text-sm font-extralight">
+					<p className="mx-auto max-w-[80%] text-sm font-extralight">
 						Complete all todos or create a checkpoint for your todo using milestone to prevent your
 						streak being lost
 					</p>

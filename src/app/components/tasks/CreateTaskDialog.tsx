@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 import { useMutation } from "@apollo/client";
 import { Icon } from "@iconify/react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -20,11 +20,17 @@ import { setTaskChange } from "@/redux/features/taskSlice";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { DatePicker } from "../datePicker";
+import { Goal } from "@/generated/graphql";
+import PriorityCombobox from "../PriorityComboBox";
+import { Textarea } from "@/components/ui/textarea";
 
 const CreateTaskDialog = () => {
 	const searchParams = useSearchParams();
-	const selectedGoal = searchParams.get("goalid");
+	const goalsWithoutDetails: Goal[] = useAppSelector((state) => state.goal.goals);
+	const selectedGoal = +(searchParams.get("goalid") || goalsWithoutDetails?.[0]?.goalId);
 	const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+	const [date, setDate] = useState<Date>();
+	const [priority, setPriority] = useState<string>("normal");
 
 	const {
 		register,
@@ -39,9 +45,10 @@ const CreateTaskDialog = () => {
 	const onSubmit = async (data: FieldValues) => {
 		await setTask({
 			variables: {
-				goalId: +selectedGoal!,
+				goalId: selectedGoal,
 				title: data.title,
 				description: data.description,
+				priority: priority,
 			},
 		});
 		reset();
@@ -55,6 +62,7 @@ const CreateTaskDialog = () => {
 			onOpenChange={() => {
 				setDialogOpen(!dialogOpen);
 				reset();
+				setDate(undefined);
 			}}
 		>
 			<DialogTrigger asChild>
@@ -65,7 +73,7 @@ const CreateTaskDialog = () => {
 					/>
 				</button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[425px]">
+			<DialogContent className=" sm:max-w-[30rem]">
 				<DialogHeader>
 					<DialogTitle>Create Task</DialogTitle>
 					<DialogDescription>
@@ -73,7 +81,7 @@ const CreateTaskDialog = () => {
 					</DialogDescription>
 				</DialogHeader>
 				<form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
-					<div className="grid grid-cols-4 items-center gap-4">
+					<div className="space-y-1">
 						<Label htmlFor="name" className="text-right text-foreground">
 							Title
 						</Label>
@@ -90,15 +98,18 @@ const CreateTaskDialog = () => {
 								},
 							})}
 							placeholder="tasks..."
-							className="col-span-3 placeholder-red-500"
+							className=" placeholder-red-500"
 						/>
+						{errors.title && (
+							<p className=" text-center text-xs text-red-500">{`${errors.title.message}`}</p>
+						)}
 					</div>
-					{errors.title && (
-						<p className="text-center text-xs text-red-500 ">{`${errors.title.message}`}</p>
-					)}
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label className="text-right text-foreground">Description</Label>
-						<Input
+
+					<div className="space-y-1">
+						<Label htmlFor="username" className="text-right text-foreground">
+							Description
+						</Label>
+						<Textarea
 							{...register("description", {
 								maxLength: {
 									value: 255,
@@ -112,23 +123,24 @@ const CreateTaskDialog = () => {
 							<p className="text-xs text-red-500">{`${errors.description.message}`}</p>
 						)}
 					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="username" className="text-right text-foreground">
-							priority
-						</Label>
-						<Input {...register("priority")} placeholder="priority..." className="col-span-3" />
-					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="username" className="text-right text-foreground">
-							deadline
-						</Label>
-						<DatePicker />
-					</div>{" "}
+
+					<section className="grid grid-cols-2 items-center gap-2 ">
+						<div className="space-y-1">
+							<Label htmlFor="username" className=" text-foreground">
+								priority
+							</Label>
+							<PriorityCombobox setPriority={setPriority} />
+						</div>
+
+						<div className=" space-y-1">
+							<Label htmlFor="username" className=" text-foreground">
+								deadline
+							</Label>
+							<DatePicker date={date} setDate={setDate} />
+						</div>
+					</section>
 					<DialogFooter>
-						{error && <p className="text-foreground">Error: {error.message}</p>}
-						<Button disabled={isSubmitting} type="submit">
-							Save changes
-						</Button>
+						<Button type="submit">Submit</Button>
 					</DialogFooter>
 				</form>
 			</DialogContent>

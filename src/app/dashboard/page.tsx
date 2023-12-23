@@ -3,7 +3,7 @@ import TaskList from "../components/tasks/TaskList";
 import TodoList from "../components/todos/TodoList";
 
 const HomePage = ({
-	searchParams,
+	searchParams: _searchParams,
 }: {
 	searchParams: { [key: string]: string | string[] | undefined };
 }) => {

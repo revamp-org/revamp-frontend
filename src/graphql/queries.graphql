@@ -49,6 +49,7 @@ query GetSingleTask($taskId: Int!) {
 		order
 		isDone
 		goalId
+		createdAt
 		todos {
 			todoId
 			todo
