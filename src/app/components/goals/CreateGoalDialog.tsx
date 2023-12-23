@@ -1,5 +1,3 @@
-"use client";
-import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -22,6 +20,8 @@ import { AppDispatch } from "@/redux/store";
 import { setGoalChange } from "@/redux/features/goalSlice";
 import { Textarea } from "@/components/ui/textarea";
 import PriorityCombobox from "../PriorityComboBox";
+import { Button } from "@/components/ui/button";
+import { formatISO } from "date-fns";
 
 const GoalQuestion = ({ question, questionId }: { question: string; questionId: string }) => {
 	return (
@@ -37,6 +37,8 @@ const GoalQuestion = ({ question, questionId }: { question: string; questionId: 
 const CreateGoalDialog = () => {
 	const [section, setSection] = useState(1);
 	const [date, setDate] = useState<Date>();
+	const [priority, setPriority] = useState<string>("normal");
+
 	const {
 		register,
 		handleSubmit,
@@ -51,16 +53,19 @@ const CreateGoalDialog = () => {
 	const dispatch = useDispatch<AppDispatch>();
 
 	const onSubmit = async (data: FieldValues) => {
+		const deadlineTimestamp = date ? new Date(date).getTime() : null;
+		console.log(deadlineTimestamp);
 		await setGoal({
 			variables: {
 				userId: user?.id,
 				title: data.title,
 				description: data.description,
-				deadline: new Date().toISOString(),
+				priority: priority,
 			},
 		});
 		reset();
 		setDate(undefined);
+		setPriority("normal");
 
 		dispatch(setGoalChange());
 		setDialogOpen(!dialogOpen);
@@ -79,7 +84,7 @@ const CreateGoalDialog = () => {
 			<DialogTrigger asChild>
 				<Button variant="outline">Create Goal</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:h-[36rem] sm:max-w-[30rem]">
+			<DialogContent className=" sm:max-w-[30rem]">
 				<DialogHeader>
 					<DialogTitle>Create Goal</DialogTitle>
 					<DialogDescription>
@@ -137,7 +142,7 @@ const CreateGoalDialog = () => {
 									<Label htmlFor="username" className=" text-foreground">
 										priority
 									</Label>
-									<PriorityCombobox />
+									<PriorityCombobox setPriority={setPriority} />
 									{/* <Input {...register("priority")} placeholder="priority..." className="col-span-3" /> */}
 								</div>
 

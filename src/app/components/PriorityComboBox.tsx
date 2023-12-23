@@ -1,6 +1,3 @@
-"use client";
-
-import * as React from "react";
 import { ArrowDownCircle, ArrowUpCircle, Circle, LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -14,6 +11,7 @@ import {
 	CommandList,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useEffect, useState } from "react";
 
 type Status = {
 	value: string;
@@ -39,9 +37,17 @@ const statuses: Status[] = [
 	},
 ];
 
-export default function PriorityCombobox() {
-	const [open, setOpen] = React.useState(false);
-	const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(statuses[1]);
+export default function PriorityCombobox({
+	setPriority,
+}: {
+	setPriority: React.Dispatch<React.SetStateAction<string>>;
+}) {
+	const [open, setOpen] = useState(false);
+	const [selectedStatus, setSelectedStatus] = useState<Status | null>(statuses[1]);
+
+	useEffect(() => {
+		setPriority(selectedStatus?.value || "normal");
+	}, [setPriority, selectedStatus]);
 
 	return (
 		<div className="flex w-full items-center space-x-4 text-foreground">
