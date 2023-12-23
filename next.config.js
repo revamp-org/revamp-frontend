@@ -1,4 +1,20 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+	images: {
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'i.postimg.cc',
+				port: '',
+				pathname: '/*/**',
+			},
+		]
+	},
+
+	output: "standalone",
+
+};
 
 module.exports = nextConfig;
+
+
