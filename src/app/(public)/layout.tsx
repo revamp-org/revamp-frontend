@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<html lang="en">
 				<link rel="shortcut icon" type="image/x-icon" href="/assets/logo.svg" />
 
-				<body className="dark"><Navbar />{children}</body>
+				<body className="dark min-h-screen"><Navbar />{children}</body>
 			</html>
 		</ClerkProvider>
 	);

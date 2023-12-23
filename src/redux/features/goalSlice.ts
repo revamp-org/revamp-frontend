@@ -1,27 +1,60 @@
+import { Goal } from "@/generated/graphql";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface GoalState {
-	activeGoal: Goal[];
-	inActiveGoal: Goal[];
+	goals: Goal[];
+	goalChange: boolean;
+	goalsDetails: Goal[];
 }
 
 const initialState: GoalState = {
-	activeGoal: [],
-	inActiveGoal: [],
+	goals: typeof window !== "undefined" ? JSON.parse(localStorage.getItem("goals") || "[]") : [],
+	goalChange: false,
+	goalsDetails:
+		typeof window !== "undefined" ? JSON.parse(localStorage.getItem("goalsDetails") || "[]") : [],
 };
 
 export const goalSlice = createSlice({
 	name: "goal",
 	initialState,
 	reducers: {
-		setActiveGoal: (state, action: PayloadAction<Goal[]>) => {
-			state.activeGoal = action.payload;
+		setGoalChange: (state) => {
+			state.goalChange = !state.goalChange;
 		},
-		setInActiveGoal: (state, action: PayloadAction<Goal[]>) => {
-			state.inActiveGoal = action.payload;
+		setGoals: (state, action: PayloadAction<Goal[]>) => {
+			state.goals = action.payload;
+			if (typeof window !== "undefined")
+				localStorage.setItem("goals", JSON.stringify(action.payload));
+		},
+		deleteGoal: (state, action: PayloadAction<Goal["goalId"]>) => {
+			state.goals = state.goals.filter((singleGoal) => singleGoal?.goalId !== action.payload);
+			if (typeof window !== "undefined") localStorage.setItem("goals", JSON.stringify(state.goals));
+
+			state.goalsDetails = state.goalsDetails.filter(
+				(singleGoal) => singleGoal?.goalId !== action.payload,
+			);
+			if (typeof window !== "undefined")
+				localStorage.setItem("goalsDetails", JSON.stringify(state.goalsDetails));
+		},
+		addGoalDetail: (state, action: PayloadAction<Goal>) => {
+			// check if goal already exists
+			const goalExists = state.goalsDetails.find(
+				(singleGoal) => singleGoal?.goalId === action.payload?.goalId,
+			);
+
+			if (goalExists) {
+				state.goalsDetails = state.goalsDetails.map((singleGoal) =>
+					singleGoal?.goalId === action.payload?.goalId ? action.payload : singleGoal,
+				);
+			} else {
+				state.goalsDetails = [...state.goalsDetails, action.payload];
+			}
+
+			if (typeof window !== "undefined")
+				localStorage.setItem("goalsDetails", JSON.stringify(state.goalsDetails));
 		},
 	},
 });
 
-export const { setActiveGoal, setInActiveGoal } = goalSlice.actions;
+export const { setGoals, setGoalChange, addGoalDetail, deleteGoal } = goalSlice.actions;
 export default goalSlice.reducer;

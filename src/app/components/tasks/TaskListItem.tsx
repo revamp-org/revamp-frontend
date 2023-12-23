@@ -6,21 +6,32 @@ import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { goalData } from "@/lib/data";
+import { Goal, Task } from "@/generated/graphql";
+import { useAppSelector } from "@/redux/store";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
 
 const TaskListItem = ({
 	task,
 	href,
 	dragBtnStyle,
+	isDashboard = true,
+	className,
+	linkStyle,
 }: {
 	task: Task;
 	href: string;
 	dragBtnStyle?: string;
+	isDashboard?: boolean;
+	className?: string;
+	linkStyle?: string;
 }) => {
 	const searchParams = useSearchParams();
-
 	const selectedTask = searchParams.get("taskid");
-	const relevantGoal = goalData.find((goal: Goal) => goal.goalId === task.goalId);
+
+	const goals = useAppSelector((state) => state.goal.goals);
+	const relevantGoal = goals.find((goal: Goal) => goal.goalId === task.goalId);
+	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(task.isDone);
 
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: task.taskId,
@@ -40,40 +51,61 @@ const TaskListItem = ({
 			<div
 				ref={setNodeRef}
 				style={style}
-				className="flex h-12 items-center border-2 border-topbar bg-topbar opacity-60 "
+				className={cn(
+					"flex h-16 items-center border-2 border-topbar bg-topbar opacity-60 ",
+					className,
+				)}
 			></div>
 		);
 	}
 
+	const handleChecked = () => {
+		if (!isCheckboxChecked) {
+			const audio = new Audio("/assets/completion-sound.mp3");
+			audio.play();
+		}
+		// todo.isDone = !isCheckboxChecked;
+		setIsCheckboxChecked(!isCheckboxChecked);
+	};
+
 	return (
-		<div ref={setNodeRef} style={style} className="flex h-16 items-center text-foreground">
-			<Link
-				href={href || ""}
-				className={`relative flex h-full  w-full cursor-pointer  items-center justify-between  pr-4 text-xl  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
-					selectedTask === task.taskId.toString() ? "bg-[#446288]" : "bg-topbar"
-				}`}
+		<div
+			ref={setNodeRef}
+			style={style}
+			className={cn("flex h-16 items-center text-foreground", className)}
+		>
+			<div
+				className={cn(
+					`relative flex h-full  w-full cursor-pointer  items-center justify-between   pr-1  text-lg transition-all duration-300 ease-in-out hover:bg-[#446288] ${
+						selectedTask === task.taskId.toString() ? "bg-[#446288]" : "bg-topbar"
+					}`,
+					linkStyle,
+				)}
 			>
-				<div className="flex h-full items-center gap-4 ">
+				<Link href={href || ""} className="flex h-full w-full items-center gap-4 ">
 					<span className="priority after:bg-white "></span>
 					<div className="">
 						<p>{task.title}</p>
 
-						<p className="text-xs">From {relevantGoal?.title}</p>
+						{isDashboard && (
+							<p className="text-xs ">
+								<span className="font-extralight">From </span>
+								<span className="text-gray-300">{relevantGoal?.title}</span>
+							</p>
+						)}
 					</div>
-				</div>
+				</Link>
+			</div>
 
-				<span className="flex items-center gap-1  text-xl font-semibold ">
-					<Image src="/assets/fire.png" alt="streak" height={24} width={24} />
-					{task?.streak}
+			{isDashboard && (
+				<span
+					{...attributes}
+					{...listeners}
+					className={cn("h-full bg-gray-400 bg-opacity-20 px-1  ", dragBtnStyle)}
+				>
+					<Icon icon="iconamoon:menu-burger-horizontal-thin" className="h-full text-2xl  " />
 				</span>
-			</Link>
-			<span
-				{...attributes}
-				{...listeners}
-				className={cn("h-full bg-gray-400 bg-opacity-20 px-1  ", dragBtnStyle)}
-			>
-				<Icon icon="iconamoon:menu-burger-horizontal-thin" className="h-full text-2xl  " />
-			</span>
+			)}
 		</div>
 	);
 };

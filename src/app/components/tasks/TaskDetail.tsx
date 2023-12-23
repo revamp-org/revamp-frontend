@@ -1,107 +1,156 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-import { taskData, todoData } from "@/lib/data";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import TodoListItem from "../todos/TodoListItem";
-import CreateTaskDialog from "./CreateTask";
-import Image from "next/image";
 import { Icon } from "@iconify/react";
-import { useAppSelector } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { Maybe, Task, Todo } from "@/generated/graphql";
+import { useMutation, useQuery } from "@apollo/client";
+import CreateTodoDialog from "../todos/CreateTodoDialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import SmallIcon from "../styled-components/SmallIcon";
+import { DeleteTask } from "@/graphql/mutations.graphql";
+import { useDispatch } from "react-redux";
+import { GetSingleTask } from "@/graphql/queries.graphql";
+import { addTaskDetail, deleteTask as deleteTaskFromState } from "@/redux/features/taskSlice";
+import { fullDate } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const TaskDetail = () => {
 	const searchParams = useSearchParams();
-	const selectedTask = searchParams.get("taskid");
 
-	const [todoList, setTodoList] = useState<Todo[]>([]);
-	const [tasks, setTasks] = useState<Task[]>(taskData);
-	const data = tasks.find((task: Task) => task.taskId.toString() === selectedTask);
-	const [allTodosCompleted, setAllTodosCompleted] = useState<boolean>(false);
-	const isCheckboxChecked = useAppSelector((state) => state.task.isCheckboxChecked);
+	const todoChanged = useAppSelector((state) => state.todo.todoChange);
+	const tasksWithoutDetails: Task[] = useAppSelector((state) => state.task.tasks);
+	const tasksDetails: Task[] = useAppSelector((state) => state.task.tasksDetails);
+
+	const selectedTaskId = +(searchParams.get("taskid") || tasksWithoutDetails?.[0]?.taskId);
+
+	const singleTaskDetail =
+		tasksDetails.find((task) => task?.taskId === selectedTaskId) || tasksDetails?.[0];
+	const todos = singleTaskDetail?.todos || [];
+
+	const router = useRouter();
+	const dispatch = useDispatch<AppDispatch>();
+	const [loading, setLoading] = useState(true);
+
+	const {
+		error: _,
+		data,
+		loading: fetchLoading,
+		refetch,
+	} = useQuery(GetSingleTask, {
+		variables: { taskId: selectedTaskId },
+	});
+
+	const [deleteTask, { error: deleteError }] = useMutation(DeleteTask);
 
 	useEffect(() => {
-		setTodoList(todoData.filter((todo: Todo) => todo.taskId.toString() === selectedTask));
-	}, [selectedTask]);
+		if (data) {
+			const fetchedTaskDetail: Task = data.getSingleTask;
+			dispatch(addTaskDetail(fetchedTaskDetail));
+			setLoading(false);
+		}
+	}, [data, todoChanged, dispatch]);
 
 	useEffect(() => {
-		const areAllTodosCompleted = todoList.every((todo: Todo) => todo.isDone);
-		setAllTodosCompleted(areAllTodosCompleted);
-	}, [todoList, isCheckboxChecked]);
+		if (!fetchLoading) {
+			setLoading(false);
+		}
+	}, [fetchLoading]);
+
+	// after todo changed, refetch goals
+	useEffect(() => {
+		refetch({ taskId: selectedTaskId });
+	}, [todoChanged, refetch, selectedTaskId]);
+
+	if (loading && localStorage.getItem("taskDetails") == null) {
+		return <div>Loading...</div>;
+	}
+	if (isNaN(selectedTaskId)) {
+		return <div>Please select a goal</div>;
+	}
+
+	const handleDelete = async () => {
+		console.log("delete");
+		if (todos.length > 0) {
+			return;
+		}
+		await deleteTask({
+			variables: {
+				taskId: selectedTaskId,
+			},
+		});
+		if (deleteError) {
+			console.log(deleteError.message);
+		} else {
+			dispatch(deleteTaskFromState(selectedTaskId));
+			router.push("tasks?taskid=" + tasksWithoutDetails?.[0]?.taskId);
+		}
+	};
 
 	return (
-		<div className="bg-topbar p-2">
+		<div className="relative bg-topbar p-2">
 			<div className="flex items-center justify-between">
-				<div>
-					<p className="text-2xl font-semibold">{data?.title}</p>
-					<p className="text-sm font-semibold">{data?.createdAt}</p>
-				</div>
-				<button title="Add Milestone">
-					<Icon icon="mdi:milestone-add" className="h-full text-3xl  " />
-				</button>
+				<p className="text-2xl font-semibold">{singleTaskDetail?.title}</p>
+				<p className="text-sm font-semibold">{`${fullDate(singleTaskDetail?.createdAt)}`}</p>
+				<SmallIcon
+					icon="material-symbols:delete-outline"
+					className="text-3xl"
+					handleClick={handleDelete}
+				/>
 			</div>
 
-			<p className="truncate-overflow-7 col-span-2  text-sm">{data?.description}</p>
+			<p className="truncate-overflow-7 col-span-2  text-sm">{singleTaskDetail?.description}</p>
 
 			<section className=" py-4 ">
-				{todoList.length !== 0 ? (
+				{todos.length !== 0 ? (
 					<div className="space-y-2">
 						<div className="flex items-center justify-between  ">
 							<p className="text-xl">Todos</p>
-							<CreateTaskDialog />
 						</div>
-						{todoList.map((todo: Todo) => {
-							return (
-								<div key={todo.todoId}>
-									<TodoListItem
-										key={todo.todoId}
-										todo={todo}
-										href={`/tasks?todoid=${todo.todoId}`}
-										className="bg-sidebar"
-										dragBtnStyle="hidden"
-									/>
-								</div>
-							);
-						})}
+
+						<ScrollArea className="h-[16rem] ">
+							<div className="space-y-2">
+								{todos.map((todo: Maybe<Todo>) => {
+									return (
+										<div key={todo?.todoId}>
+											<TodoListItem
+												key={todo?.todoId}
+												todo={todo as Todo}
+												href={`/tasks?todoid=${todo?.todoId}`}
+												className="bg-sidebar"
+												dragBtnStyle="hidden"
+												isDashboard={false}
+											/>
+										</div>
+									);
+								})}
+							</div>
+						</ScrollArea>
 					</div>
 				) : (
 					<div className="flex items-center justify-between bg-primary ">
-						<p className="text-xl">Tasks</p>
-						<CreateTaskDialog />
+						<p className="text-xl">Todos</p>
 					</div>
 				)}
 			</section>
 
-			<section className="grid grid-cols-2 place-items-center">
-				<div>
-					<p className="text-lg">Commitment Streak</p>
-
-					{data?.streak === 0 ? (
-						<span className="bg-red-500">
-							{data.streak}
-							<p>{`It's the start of greatness`}</p>
-						</span>
-					) : (
-						<span className=" bg-red-500">
-							<p className=" font-[Tourney] text-[length:--streak-font-size]">{data?.streak}</p>
-							<p className="text-3xl">day streak!</p>
-						</span>
-					)}
-				</div>
-				<div>
-					<Image
-						src="/assets/fire.png"
-						alt="fire image"
-						height={120}
-						width={120}
-						className={`${allTodosCompleted ? "filter-none" : "grayscale"}`}
-					/>
-				</div>
-				<div className="col-span-2">
-					<p className="text-sm font-extralight">
-						Complete all todos or create a checkpoint for your todo using milestone to prevent your
-						streak being lost
+			{/* Milestone section */}
+			<div className="flex items-center justify-center gap-4  p-2">
+				<Icon icon="mdi:clock-fast" className="h-full text-6xl  " />
+				<div className="space-y-1">
+					<p className="text-sm">
+						<span className="font-semibold">42 minutes </span>
+						until your streeak resets!
 					</p>
+					<button title="Add Milestone" className="btn flex items-center gap-1 px-2 py-1 text-sm  ">
+						<Icon icon="mdi:milestone-add" className="h-full text-lg  " />
+						Add Milestone
+					</button>
 				</div>
-			</section>
+			</div>
+
+			<CreateTodoDialog />
 		</div>
 	);
 };

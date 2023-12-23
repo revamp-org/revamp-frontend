@@ -10,18 +10,10 @@ const Tasks = ({
 	return (
 		<section className="grid h-[100dvh_-_4rem] w-full grid-cols-2 gap-2   p-2 text-primary-foreground">
 			<div className="space-y-2">
-				<h1>Tasks list</h1>
-
 				<TaskList isDashboardPage={false} />
 			</div>
 
-			{taskId ? (
-				<TaskDetail />
-			) : (
-				<div className="broder-gray-100 grid h-full w-full place-items-center border ">
-					Choose a Task
-				</div>
-			)}
+			<TaskDetail />
 		</section>
 	);
 };

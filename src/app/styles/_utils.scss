@@ -1,32 +1,15 @@
 @use "components/navbar";
 
-.truncate-overflow-2 {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
-	overflow: hidden;
-}
+$lines: 1, 2, 3, 4, 5;
 
-.truncate-overflow-3 {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 3;
-	overflow: hidden;
+@each $line in $lines {
+	.truncate-overflow-#{$line} {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: $line;
+		overflow: hidden;
+	}
 }
-.truncate-overflow-5 {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 5;
-	overflow: hidden;
-}
-
-.truncate-overflow-7 {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 7;
-	overflow: hidden;
-}
-
 .active {
 	@apply rounded-md bg-gray-400 bg-opacity-60 transition-all duration-300 ease-in-out;
 }
@@ -84,9 +67,21 @@
 }
 
 .post-icon {
-	@apply cursor-pointer  rounded-full p-1 text-2xl transition-all duration-150 ease-in-out  hover:bg-gray-200 lg:text-4xl;
+	@apply cursor-pointer  rounded-full p-1 text-2xl transition-all duration-150 ease-in-out  hover:bg-accent lg:text-4xl;
 }
 
 .counter {
 	@apply absolute right-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-400 text-[0.55rem] lg:h-5 lg:w-5 lg:text-[0.6rem];
+}
+
+.journal-icon-temp {
+	@apply cursor-pointer p-1 text-lg transition-all duration-150 ease-in-out hover:fill-red-500 lg:text-3xl;
+}
+
+.ce-paragraph {
+	line-height: 0.8 !important;
+}
+.ce-inline-toolbar {
+	background-color: #02315e !important;
+	z-index: 10 !important;
 }

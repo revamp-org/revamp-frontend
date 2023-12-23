@@ -5,8 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
-import { cn } from "@/lib/utils";
-import SmallIcon from "../styled-components/SmallIcon";
+import { cn, formatDate, fullDate } from "@/lib/utils";
+import { Goal } from "@/generated/graphql";
 
 const GoalListItem = ({
 	goal,
@@ -49,7 +49,7 @@ const GoalListItem = ({
 			<Link
 				aria-label="Goal tag"
 				href={href}
-				className={`flex h-full  w-full cursor-pointer  items-center justify-between  pr-4 text-xl  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
+				className={`flex h-full  w-full cursor-pointer  items-center justify-between  pr-4 text-lg  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
 					selectedGoal === goal?.goalId.toString() ? "bg-[#446288]" : "bg-topbar"
 				}`}
 			>
@@ -57,9 +57,9 @@ const GoalListItem = ({
 					<span className="priority after:bg-white "></span>
 					<div>
 						<p>{goal?.title}</p>
-						<span className="flex items-center gap-1  text-xs">
+						<span className="flex items-center gap-1  text-xs font-extralight">
 							<Icon icon="uil:calender" />
-							<p className="text-xs">{goal?.createdAt}</p>
+							<p className="text-xs">{formatDate(goal?.createdAt)}</p>
 						</span>
 					</div>
 				</div>
