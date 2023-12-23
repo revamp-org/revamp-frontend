@@ -33,7 +33,7 @@ const Navbar = () => {
 	}, [state]);
 
 	return (
-		<nav ref={navRef} className="top-0 z-20 w-full bg-topbar text-topbar-foreground">
+		<nav ref={navRef} className="top-0 z-20 h-navbar-height w-full bg-topbar text-topbar-foreground">
 			<div className="items-center px-4 md:px-8 lg:flex">
 				<div className="flex items-center justify-between py-3 lg:block lg:py-4">
 					<a href="/">

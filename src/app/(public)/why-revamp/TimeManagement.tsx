@@ -3,7 +3,7 @@ import Image from 'next/image';
 const Time = () => {
 	return (
 		<>
-			<div className="flex flex-col md:flex-row items-center w-4/5 mx-auto h-screen">
+			<div className="h-screen-height flex flex-col md:flex-row items-center w-4/5 mx-auto ">
 				<div className='md:w-3/5 p-6 mr-8'>
 					<h1 className='text-4xl md:text-7xl text-white font-bold md:mb-10'>Time Management</h1>
 					<div className="md:mb-10"><p className="text-white font-normal text-lg md:text-2xl">Where have you been wasting your time? How do you really want to spend your time?</p></div><div><p className='text-white font-light  text-sm md:text-xl'>

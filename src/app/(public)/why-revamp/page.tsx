@@ -17,7 +17,7 @@ const WhyRevamp = () => {
 		setActiveSlideIndex(swiper.activeIndex);
 	};
 	return (
-		<div>
+		<div className="h-screen-height border-collapse">
 			<Swiper
 				modules={[Navigation, Pagination, Scrollbar, A11y]}
 				navigation
