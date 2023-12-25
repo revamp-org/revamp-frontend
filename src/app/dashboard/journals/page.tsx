@@ -16,6 +16,7 @@ const CreatePost = () => {
 	const [enabled, setEnabled] = useState<boolean>(false);
 	const titleInputRef = useRef<HTMLInputElement>(null);
 	const [quillInialized, setQuillInialized] = useState<boolean>(false);
+	const [editorContent, setEditorContent] = useState({});
 
 	const router = useRouter();
 
@@ -30,14 +31,6 @@ const CreatePost = () => {
 			progress: undefined,
 			theme: "dark",
 		});
-
-	const addPost = async () => {
-		try {
-			notify();
-		} catch (error) {
-			console.log(error);
-		}
-	};
 
 	const editorRef = useRef(null);
 
@@ -56,6 +49,12 @@ const CreatePost = () => {
 				},
 				placeholder: "Compose an epic...",
 				theme: "snow",
+			});
+
+			// Listen for changes in the Quill editor content
+			quill.on("text-change", () => {
+				const content = quill.getContents();
+				setEditorContent(content);
 			});
 			quill.focus();
 
@@ -82,11 +81,19 @@ const CreatePost = () => {
 		}
 	}, [enabled, intializedEditor]);
 
+	const addPost = async () => {
+		try {
+			console.log("editorContent", editorContent);
+			notify();
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
 		try {
 			await addPost();
-			router.push("journals/daily");
 		} catch (error) {
 			console.log("can't add to the firebase");
 		}
