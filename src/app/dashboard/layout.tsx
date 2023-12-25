@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<body className="dark flex overflow-y-hidden ">
 					<ApolloClientProvider>
 						<link rel="shortcut icon" type="image/x-icon" href="/assets/logo.svg" />
+						<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 						<ReduxProvider>
 							<LayoutWrapper>{children}</LayoutWrapper>
 						</ReduxProvider>

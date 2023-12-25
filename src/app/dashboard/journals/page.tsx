@@ -32,72 +32,36 @@ const CreatePost = () => {
 
 	const addPost = async () => {
 		try {
-			const blocks = await editorRef.current?.save();
-
 			notify();
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	const editorRef = useRef<EditorJS>();
+	const editorRef = useRef(null);
 
 	const intializedEditor = useCallback(async () => {
-		const Editorjs = (await import("@editorjs/editorjs")).default;
-		const Header = (await import("@editorjs/header")).default;
-		// @ts-ignore
-		const List = (await import("@editorjs/list")).default; // @ts-ignore
-		const Embed = (await import("@editorjs/embed")).default; // @ts-ignore
-		const Code = (await import("@editorjs/code")).default; // @ts-ignore
-		const InlineCode = (await import("@editorjs/code")).default; // @ts-ignore
-		const LinkTool = (await import("@editorjs/link")).default; // @ts-ignore
-		const Table = (await import("@editorjs/table")).default; // @ts-ignore
-		const ImageTool = (await import("@editorjs/image")).default; // @ts-ignore
+		const Quill = (await import("quill")).default;
 
-		if (!editorRef.current) {
-			console.log("Initialization of editor js is happening");
-			const editor = new Editorjs({
-				/**
-				 * Id of Element that should contain the Editor
-				 */
-				holder: "editorjs",
-				autofocus: true,
-
-				onReady: () => {
-					console.log("Editor.js is ready to work!");
-					editorRef.current = editor;
+		if (editorRef.current) {
+			const quill = new Quill(editorRef.current, {
+				modules: {
+					toolbar: [
+						[{ header: [1, 2, false] }],
+						["bold", "italic", "underline"],
+						["image", "code-block"],
+					],
 				},
-				placeholder: "Do blog with one click!",
-				inlineToolbar: true,
-				data: { blocks: [] },
-
-				tools: {
-					header: Header,
-					LinkTool: {
-						class: LinkTool,
-						config: {
-							endpoint: "api/link",
-						},
-					},
-					image: {
-						class: ImageTool,
-						config: {
-							uploader: {
-
-							},
-						},
-					},
-					list: List,
-					embed: Embed,
-					code: Code,
-					table: Table,
-				},
+				placeholder: "Compose an epic...",
+				theme: "snow",
 			});
+
+			console.log("hey", quill);
 		}
 	}, []);
 
 	useEffect(() => {
-		if (typeof window !== "undefined") {
+		if (typeof window !== "undefined" && typeof document != "undefined") {
 			setEnabled(true);
 		}
 	}, []);
@@ -105,8 +69,6 @@ const CreatePost = () => {
 	useEffect(() => {
 		const init = async () => {
 			await intializedEditor();
-
-			setTimeout(() => { });
 		};
 
 		if (enabled) {
@@ -117,8 +79,6 @@ const CreatePost = () => {
 
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
-		const blocks = await editorRef.current?.save();
-		console.log(blocks);
 		try {
 			await addPost();
 			router.push("journals/daily");
@@ -151,7 +111,7 @@ const CreatePost = () => {
 			<form
 				action="submit"
 				onSubmit={handleSubmit}
-				className="mx-auto  w-[90%] rounded-md  p-4 lg:max-w-[50%]"
+				className="mx-auto   w-[90%] rounded-md  p-4 lg:max-w-[50%]"
 			>
 				<input
 					placeholder="Title"
@@ -161,8 +121,8 @@ const CreatePost = () => {
 					onChange={(e) => setTitle(e.target.value)}
 				/>
 				<div
-					id="editorjs"
-					className=" mx-auto h-[calc(100dvh-8rem)]  min-h-full max-w-[90%]  overflow-y-auto text-base lg:text-lg "
+					ref={editorRef}
+					className=" mx-auto h-[calc(100dvh-8rem)]  min-h-full max-w-[90%]  overflow-y-auto text-base text-white lg:text-lg "
 				/>
 			</form>
 		</div>
