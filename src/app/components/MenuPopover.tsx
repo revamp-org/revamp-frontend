@@ -2,6 +2,19 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
 
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+
 const MenuItem = ({
 	icon,
 	title,
@@ -51,14 +64,33 @@ export function MenuPopover({
 						setIsMenuOpen(false);
 					}}
 				/>
-				<MenuItem
-					icon="fluent:delete-32-regular"
-					title="Delete Goal"
-					handleClick={() => {
-						deleteItem?.();
-						setIsMenuOpen(false);
-					}}
-				/>
+				<AlertDialog>
+					<AlertDialogTrigger asChild>
+						<button>
+							<MenuItem icon="fluent:delete-32-regular" title="Delete Goal" />
+						</button>
+					</AlertDialogTrigger>
+					<AlertDialogContent>
+						<AlertDialogHeader className="text-foreground">
+							<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+							<AlertDialogDescription>
+								This action cannot be undone. This will permanently delete your goals and its
+								corresponding tasks
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel className="text-muted-foreground">Cancel</AlertDialogCancel>
+							<AlertDialogAction
+								onClick={() => {
+									deleteItem?.();
+									setIsMenuOpen(false);
+								}}
+							>
+								Continue
+							</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
 			</PopoverContent>
 		</Popover>
 	);

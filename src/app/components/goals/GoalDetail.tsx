@@ -69,9 +69,6 @@ const GoalDetail = () => {
 	}
 
 	const handleDelete = async () => {
-		if (tasks.length > 0) {
-			return;
-		}
 		await deleteGoal({
 			variables: {
 				goalId: selectedGoalId,
