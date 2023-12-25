@@ -1,0 +1,29 @@
+.ql-formats {
+	color: #02315e !important;
+}
+.ql-snow .ql-stroke {
+	fill: none;
+	stroke: hsl(var(--foreground)) !important;
+}
+.ql-fill {
+	fill: hsl(var(--foreground)) !important;
+}
+.ql-picker-label {
+	color: hsl(var(--foreground)) !important;
+}
+.ql-editor {
+	height: calc(100dvh - 16rem) !important;
+	width: 100% !important;
+	&:before {
+		color: hsl(var(--muted-foreground)) !important;
+	}
+}
+.ql-container {
+	font-size: 1rem !important;
+	border: none !important;
+}
+
+.ql-toolbar {
+	border: none !important;
+	width: 100% !important;
+}

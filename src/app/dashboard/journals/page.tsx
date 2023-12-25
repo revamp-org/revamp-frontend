@@ -15,6 +15,7 @@ const CreatePost = () => {
 	const [title, setTitle] = useState<string>(todayDate);
 	const [enabled, setEnabled] = useState<boolean>(false);
 	const titleInputRef = useRef<HTMLInputElement>(null);
+	const [quillInialized, setQuillInialized] = useState<boolean>(false);
 
 	const router = useRouter();
 
@@ -43,22 +44,26 @@ const CreatePost = () => {
 	const intializedEditor = useCallback(async () => {
 		const Quill = (await import("quill")).default;
 
-		if (editorRef.current) {
+		if (editorRef.current && !quillInialized) {
 			const quill = new Quill(editorRef.current, {
 				modules: {
 					toolbar: [
-						[{ header: [1, 2, false] }],
-						["bold", "italic", "underline"],
+						[{ header: [1, 2, false, 3, false] }],
+						["bold", "italic", "underline", "strike", "blockquote"],
+						[{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
 						["image", "code-block"],
 					],
 				},
 				placeholder: "Compose an epic...",
 				theme: "snow",
 			});
+			quill.focus();
+
+			setQuillInialized(true);
 
 			console.log("hey", quill);
 		}
-	}, []);
+	}, [quillInialized]);
 
 	useEffect(() => {
 		if (typeof window !== "undefined" && typeof document != "undefined") {
@@ -73,7 +78,7 @@ const CreatePost = () => {
 
 		if (enabled) {
 			init();
-			return () => { };
+			return () => {};
 		}
 	}, [enabled, intializedEditor]);
 
@@ -89,10 +94,8 @@ const CreatePost = () => {
 
 	return (
 		<div className=" w-full">
-			<div className="sticky top-0 z-10 flex h-16 items-center  justify-between px-[20%]">
-				<div className="flex items-center gap-4 ">
-					<p className="text-xl  text-foreground lg:text-xl ">{todayDate}</p>
-				</div>
+			<div className="sticky top-0 z-10 flex h-16 items-center justify-between px-[10%]">
+				<p className="text-xl  text-foreground lg:text-xl ">{todayDate}</p>
 
 				<div className="flex items-center gap-2">
 					<button
@@ -120,10 +123,7 @@ const CreatePost = () => {
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
 				/>
-				<div
-					ref={editorRef}
-					className=" mx-auto h-[calc(100dvh-8rem)]  min-h-full max-w-[90%]  overflow-y-auto text-base text-white lg:text-lg "
-				/>
+				<div ref={editorRef} />
 			</form>
 		</div>
 	);
