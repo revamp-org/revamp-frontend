@@ -21,7 +21,6 @@ import { setGoalChange } from "@/redux/features/goalSlice";
 import { Textarea } from "@/components/ui/textarea";
 import PriorityCombobox from "../PriorityComboBox";
 import { Button } from "@/components/ui/button";
-import { formatISO } from "date-fns";
 
 const GoalQuestion = ({ question, questionId }: { question: string; questionId: string }) => {
 	return (
@@ -42,7 +41,7 @@ const CreateGoalDialog = () => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isSubmitting },
+		formState: { errors, isSubmitting, isValid },
 		reset,
 	} = useForm();
 
@@ -170,7 +169,7 @@ const CreateGoalDialog = () => {
 							<Button type="button" onClick={() => setSection(section - 1)}>
 								Prev
 							</Button>
-							<Button disabled={isSubmitting || error ? true : false || section != 2} type="submit">
+							<Button disabled={isSubmitting || !isValid || section != 2} type="submit">
 								Save changes
 							</Button>
 						</DialogFooter>
