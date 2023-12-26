@@ -1,15 +1,10 @@
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import Navbar from "./components/navbar";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-
 const Landing = () => {
 	return (
-		<div>
-			<Navbar />
-			<div className="36546E">
-				<section className="mx-auto mt-24 max-w-screen-xl items-center px-4 pb-12 md:px-8 lg:flex">
+		<>
+			<div className="h-screen-height border border-[#1F3148]">
+				<section className="mx-auto mt-24 max-w-screen-2xl items-center px-4 pb-6 md:px-8 lg:flex">
 					<div className="flex-1 space-y-4 sm:text-center lg:text-left">
 						<h1 className="pt-10 text-6xl font-bold text-white xl:text-9xl ">REVAMP</h1>
 						<h1 className=" text-3xl font-semibold text-white ">
@@ -37,8 +32,9 @@ const Landing = () => {
 						/>
 					</div>
 				</section>
-			</div>
-		</div>
+			</div >
+
+		</>
 	);
 };
 
