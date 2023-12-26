@@ -3,7 +3,7 @@ import Image from "next/image";
 const Landing = () => {
 	return (
 		<div className="h-screen-height  ">
-			<section className="mx-auto  max-w-screen-2xl items-center px-4 pb-6 md:px-8 lg:flex">
+			<section className="mx-auto mt-24  max-w-screen-2xl items-center px-4 pb-6 md:px-8 lg:flex">
 				<div className="flex-1 space-y-4 sm:text-center lg:text-left">
 					<h1 className="pt-10 text-6xl font-bold text-white xl:text-9xl ">REVAMP</h1>
 					<h1 className=" text-3xl font-semibold text-white ">
