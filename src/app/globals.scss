@@ -46,9 +46,8 @@
 
 		--radius: 0.5rem;
 
-		--navbar-height:4rem;
-		--footer-height:6rem;
-
+		--navbar-height: 4rem;
+		--footer-height: 6rem;
 	}
 
 	.dark {
@@ -92,18 +91,18 @@
 html {
 	scroll-behavior: smooth;
 }
-body{
+body {
 	margin: 0;
 	padding: 0;
 }
-.h-navbar-height{
-	 height: var(--navbar-height);
-	}
-.h-footer-height{
-		 height: var(--footer-height);
-	}
+.h-navbar-height {
+	height: var(--navbar-height);
+}
+.h-footer-height {
+	height: var(--footer-height);
+}
 .h-screen-height {
-  height: calc(100vh - var(--footer-height) - var(--navbar-height));
+	height: calc(100vh - var(--navbar-height));
 }
 @layer base {
 	body {
@@ -114,5 +113,4 @@ body{
 	.btn {
 		@apply rounded-md bg-slate-600 px-4 py-2 text-foreground shadow-md transition-all duration-300 hover:opacity-80;
 	}
-	
 }
