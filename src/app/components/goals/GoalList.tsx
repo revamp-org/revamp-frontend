@@ -26,7 +26,11 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const goals: Goal[] = useAppSelector((state) => state.goal.goals);
 	const dispatch = useDispatch<AppDispatch>();
 
-	const { error, data, refetch } = useQuery(GetGoals, {
+	const {
+		error: _error,
+		data,
+		refetch,
+	} = useQuery(GetGoals, {
 		variables: { userId: user?.id },
 	});
 
@@ -44,17 +48,15 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		refetch({ userId: user?.id });
 	}, [goalChanged, refetch, user?.id]);
 
-	if (loading) {
-		return <p>Loading...</p>;
-	}
+	// if (loading && typeof window !== "undefined" && window.localStorage.getItem("goals") == null) {
+	// 	return <p>Loading...</p>;
+	// }
 
-	if (error) {
-		return <p>Error: {error.message}</p>;
+	if (typeof window !== "undefined") {
+		if (window.localStorage?.getItem("goals") == null && loading) {
+			return <p>Loading...</p>;
+		}
 	}
-
-	const handleOnClick = () => {
-		console.log("clicked", data?.getGoals);
-	};
 
 	const column: Column[] = [
 		{
@@ -72,9 +74,7 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	return (
 		<div className="space-y-2">
 			<div className="flex items-center justify-between">
-				<p className="text-lg" onClick={handleOnClick}>
-					Goals
-				</p>
+				<p className="text-lg">Goals</p>
 				{!isDashboardPage ? <CreateGoalDialog /> : null}
 			</div>
 
@@ -82,7 +82,7 @@ const GoalList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 				<div className="space-y-2">
 					<GoalDndContextProvider>
 						{column.map((column: Column) => (
-							<section key={column.id} className="space-y-2">
+							<section key={column.id} className="space-y-2" suppressHydrationWarning={true}>
 								{column.id === "active" || !isDashboardPage ? (
 									<>
 										{!isDashboardPage && <p className="">{column.title}</p>}

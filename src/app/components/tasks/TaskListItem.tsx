@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Goal, Task } from "@/generated/graphql";
 import { useAppSelector } from "@/redux/store";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
 
 const TaskListItem = ({
 	task,
@@ -29,6 +31,7 @@ const TaskListItem = ({
 
 	const goals = useAppSelector((state) => state.goal.goals);
 	const relevantGoal = goals.find((goal: Goal) => goal.goalId === task.goalId);
+	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(task.isDone);
 
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: task.taskId,
@@ -56,22 +59,30 @@ const TaskListItem = ({
 		);
 	}
 
+	const handleChecked = () => {
+		if (!isCheckboxChecked) {
+			const audio = new Audio("/assets/completion-sound.mp3");
+			audio.play();
+		}
+		// todo.isDone = !isCheckboxChecked;
+		setIsCheckboxChecked(!isCheckboxChecked);
+	};
+
 	return (
 		<div
 			ref={setNodeRef}
 			style={style}
 			className={cn("flex h-16 items-center text-foreground", className)}
 		>
-			<Link
-				href={href || ""}
+			<div
 				className={cn(
-					`relative flex h-full  w-full cursor-pointer  items-center justify-between   pr-4  text-lg transition-all duration-300 ease-in-out hover:bg-[#446288] ${
+					`relative flex h-full  w-full cursor-pointer  items-center justify-between   pr-1  text-lg transition-all duration-300 ease-in-out hover:bg-[#446288] ${
 						selectedTask === task.taskId.toString() ? "bg-[#446288]" : "bg-topbar"
 					}`,
 					linkStyle,
 				)}
 			>
-				<div className="flex h-full items-center gap-4 ">
+				<Link href={href || ""} className="flex h-full w-full items-center gap-4 ">
 					<span className="priority after:bg-white "></span>
 					<div className="">
 						<p>{task.title}</p>
@@ -83,13 +94,9 @@ const TaskListItem = ({
 							</p>
 						)}
 					</div>
-				</div>
+				</Link>
+			</div>
 
-				<span className="flex items-center gap-1  text-xl font-semibold ">
-					<Image src="/assets/fire.png" alt="streak" height={24} width={24} />
-					{task?.streak}
-				</span>
-			</Link>
 			{isDashboard && (
 				<span
 					{...attributes}

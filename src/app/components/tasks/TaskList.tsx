@@ -19,15 +19,17 @@ const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 	const taskChanged = useAppSelector((state) => state.task.taskChange);
 	const dispatch = useDispatch<AppDispatch>();
 
-	const { error, data, refetch } = useQuery(GetTasksOfUser, {
+	const {
+		error: _error,
+		data,
+		refetch,
+	} = useQuery(GetTasksOfUser, {
 		variables: { userId: user?.id },
 	});
 
 	useEffect(() => {
 		if (data) {
-			console.log("Data:", data);
 			const fetchedTasks: Task[] = data.getTasksOfUser;
-
 			dispatch(setTasks(fetchedTasks));
 			setLoading(false);
 		}
@@ -38,13 +40,12 @@ const TaskList = ({ isDashboardPage }: { isDashboardPage: boolean }) => {
 		refetch({ userId: user?.id });
 	}, [taskChanged, refetch, user?.id]);
 
-	if (loading) {
-		return <p>Loading...</p>;
+	if (typeof window !== "undefined") {
+		if (loading && localStorage.getItem("tasks") == null) {
+			return <p>Loading...</p>;
+		}
 	}
 
-	if (error) {
-		return <p>Error: {error.message}</p>;
-	}
 	return (
 		<TaskDndContextProvider>
 			<section className="space-y-2">

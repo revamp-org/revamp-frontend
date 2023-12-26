@@ -10,33 +10,18 @@ const Navbar = () => {
 
 	// Replace javascript:void(0) path with your path
 	const navigation = [
-		{ title: "Why Revamp", path: "" },
-		{ title: "How It Works", path: "" },
-		{ title: "Contact Us", path: "" },
+		{ title: "Why Revamp", path: "/why-revamp" },
+		{ title: "How It Works", path: "/how-it-works" },
+		{ title: "Contact Us", path: "/contact" },
 	];
-
-	useEffect(() => {
-		const body = document.body;
-
-		// Disable scrolling
-		const customBodyStyle = ["overflow-hidden", "lg:overflow-visible"];
-		if (state) body.classList.add(...customBodyStyle);
-		// Enable scrolling
-		else body.classList.remove(...customBodyStyle);
-
-		// Sticky strick
-		const customStyle = ["sticky-nav", "fixed", "border-b"];
-		window.onscroll = () => {
-			if (window.scrollY > 80) navRef?.current?.classList.add(...customStyle);
-			else navRef?.current?.classList.remove(...customStyle);
-		};
-	}, [state]);
-
 	return (
-		<nav ref={navRef} className="top-0 z-20 w-full bg-topbar text-topbar-foreground">
+		<nav
+			ref={navRef}
+			className="h-navbar-height sticky top-0 z-20 w-full bg-topbar text-topbar-foreground"
+		>
 			<div className="items-center px-4 md:px-8 lg:flex">
 				<div className="flex items-center justify-between py-3 lg:block lg:py-4">
-					<a href="javascript:void(0)">
+					<a href="/">
 						<Image src="/assets/logo3-dark.svg" width={120} height={60} alt="Revamp Logo" />
 					</a>
 					<div className="lg:hidden">
@@ -86,7 +71,7 @@ const Navbar = () => {
 							<div className="flex flex-col items-center gap-4 px-4 lg:flex-row">
 								<Link
 									href="/sign-in"
-									className="block rounded-md border px-4 py-3 text-center  hover:opacity-80 lg:inline lg:border-0"
+									className="block rounded-md  px-4 py-3 text-center  hover:opacity-80 lg:inline"
 								>
 									Sign In
 								</Link>

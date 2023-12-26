@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -19,33 +18,57 @@ import { useForm, type FieldValues } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { setGoalChange } from "@/redux/features/goalSlice";
+import { Textarea } from "@/components/ui/textarea";
+import PriorityCombobox from "../PriorityComboBox";
+import { Button } from "@/components/ui/button";
+
+const GoalQuestion = ({ question, questionId }: { question: string; questionId: string }) => {
+	return (
+		<div className="space-y-1">
+			<Label htmlFor="username" className=" text-foreground">
+				{question}
+			</Label>
+			<Textarea placeholder={question} />
+		</div>
+	);
+};
 
 const CreateGoalDialog = () => {
+	const [section, setSection] = useState(1);
+	const [date, setDate] = useState<Date>();
+	const [priority, setPriority] = useState<string>("normal");
+
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isSubmitting },
+		formState: { errors, isSubmitting, isValid },
 		reset,
 	} = useForm();
+
 	const { user } = useUser();
 	const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
 	const [setGoal, { error }] = useMutation(SetGoal);
 	const dispatch = useDispatch<AppDispatch>();
 
-	const onSubmit = (data: FieldValues) => {
-		setGoal({
+	const onSubmit = async (data: FieldValues) => {
+		const deadlineTimestamp = date ? new Date(date).getTime() : null;
+		console.log(deadlineTimestamp);
+		await setGoal({
 			variables: {
 				userId: user?.id,
 				title: data.title,
 				description: data.description,
+				priority: priority,
 			},
 		});
-		if (!isSubmitting) {
-			reset();
-			dispatch(setGoalChange());
-			setDialogOpen(!dialogOpen);
-		}
+		reset();
+		setDate(undefined);
+		setPriority("normal");
+
+		dispatch(setGoalChange());
+		setDialogOpen(!dialogOpen);
+		setSection(1);
 	};
 
 	return (
@@ -54,12 +77,13 @@ const CreateGoalDialog = () => {
 			onOpenChange={() => {
 				setDialogOpen(!dialogOpen);
 				reset();
+				setDate(undefined);
 			}}
 		>
 			<DialogTrigger asChild>
 				<Button variant="outline">Create Goal</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[425px]">
+			<DialogContent className=" sm:max-w-[30rem]">
 				<DialogHeader>
 					<DialogTitle>Create Goal</DialogTitle>
 					<DialogDescription>
@@ -67,65 +91,95 @@ const CreateGoalDialog = () => {
 					</DialogDescription>
 				</DialogHeader>
 				<form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 py-4">
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="name" className="text-right text-foreground">
-							Title
-						</Label>
-						<Input
-							{...register("title", {
-								required: "Please enter a title before submitting",
-								minLength: {
-									value: 3,
-									message: "Please enter a title with at least 3 characters",
-								},
-								maxLength: {
-									value: 100,
-									message: "Please enter a title with fewer than 100 characters",
-								},
-							})}
-							placeholder="goals..."
-							className="col-span-3 placeholder-red-500"
-						/>
-					</div>
-					{errors.title && (
-						<p className="text-center text-xs text-red-500 ">{`${errors.title.message}`}</p>
+					{section === 1 && (
+						<>
+							<div className="space-y-1">
+								<Label htmlFor="name" className="text-right text-foreground">
+									Title
+								</Label>
+								<Input
+									{...register("title", {
+										required: "Please enter a title before submitting",
+										minLength: {
+											value: 3,
+											message: "Please enter a title with at least 3 characters",
+										},
+										maxLength: {
+											value: 100,
+											message: "Please enter a title with fewer than 100 characters",
+										},
+									})}
+									placeholder="goals..."
+									className=" placeholder-red-500"
+								/>
+								{errors.title && (
+									<p className=" text-center text-xs text-red-500">{`${errors.title.message}`}</p>
+								)}
+							</div>
+
+							<div className="space-y-1">
+								<Label htmlFor="username" className="text-right text-foreground">
+									Description
+								</Label>
+								<Textarea
+									{...register("description", {
+										maxLength: {
+											value: 255,
+											message: "Please enter a description with fewer than 255 characters",
+										},
+									})}
+									placeholder="Description..."
+									className="col-span-3"
+								/>
+								{errors.description && (
+									<p className="text-xs text-red-500">{`${errors.description.message}`}</p>
+								)}
+							</div>
+
+							<section className="grid grid-cols-2 items-center gap-2 ">
+								<div className="space-y-1">
+									<Label htmlFor="username" className=" text-foreground">
+										priority
+									</Label>
+									<PriorityCombobox setPriority={setPriority} />
+									{/* <Input {...register("priority")} placeholder="priority..." className="col-span-3" /> */}
+								</div>
+
+								<div className=" space-y-1">
+									<Label htmlFor="username" className=" text-foreground">
+										deadline
+									</Label>
+									<DatePicker date={date} setDate={setDate} />
+								</div>
+							</section>
+						</>
 					)}
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="username" className="text-right text-foreground">
-							Description
-						</Label>
-						<Input
-							{...register("description", {
-								maxLength: {
-									value: 255,
-									message: "Please enter a description with fewer than 255 characters",
-								},
-							})}
-							placeholder="Description..."
-							className="col-span-3"
-						/>
-						{errors.description && (
-							<p className="text-xs text-red-500">{`${errors.description.message}`}</p>
-						)}
-					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="username" className="text-right text-foreground">
-							priority
-						</Label>
-						<Input {...register("priority")} placeholder="priority..." className="col-span-3" />
-					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="username" className="text-right text-foreground">
-							deadline
-						</Label>
-						<DatePicker />
-					</div>{" "}
-					<DialogFooter>
-						{error && <p className="text-foreground">Error: {error.message}</p>}
-						<Button disabled={isSubmitting} type="submit">
-							Save changes
-						</Button>
-					</DialogFooter>
+
+					{section === 2 && (
+						<>
+							<GoalQuestion question="What is your goal?" questionId="goal1" />
+							<GoalQuestion question="What is your goal?" questionId="goal1" />
+							<GoalQuestion question="What is your goal?" questionId="goal1" />
+						</>
+					)}
+
+					{section == 2 ? (
+						<DialogFooter>
+							{error && <p className="text-foreground">Error: {error.message}</p>}
+							<Button type="button" onClick={() => setSection(section - 1)}>
+								Prev
+							</Button>
+							<Button disabled={isSubmitting || !isValid || section != 2} type="submit">
+								Save changes
+							</Button>
+						</DialogFooter>
+					) : (
+						<DialogFooter>
+							<Button type="button" onClick={() => setSection(section + 1)}>
+								Next
+							</Button>
+						</DialogFooter>
+					)}
 				</form>
 			</DialogContent>
 		</Dialog>

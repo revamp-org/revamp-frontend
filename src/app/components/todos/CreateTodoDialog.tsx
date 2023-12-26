@@ -36,18 +36,16 @@ const CreateTodoDialog = () => {
 	const [setTodo, { error }] = useMutation(SetTodo);
 	const dispatch = useDispatch<AppDispatch>();
 
-	const onSubmit = (data: FieldValues) => {
-		setTodo({
+	const onSubmit = async (data: FieldValues) => {
+		await setTodo({
 			variables: {
 				taskId: +selectedTask!,
 				todo: data.todo,
 			},
 		});
-		if (!isSubmitting) {
-			reset();
-			dispatch(setTodoChange());
-			setDialogOpen(!dialogOpen);
-		}
+		reset();
+		dispatch(setTodoChange());
+		setDialogOpen(!dialogOpen);
 	};
 	return (
 		<Dialog
