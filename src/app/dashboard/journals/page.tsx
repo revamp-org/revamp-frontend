@@ -1,8 +1,5 @@
 "use client";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
-import type EditorJS from "@editorjs/editorjs";
-//@ts-ignore
-import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
@@ -77,13 +74,13 @@ const CreatePost = () => {
 
 		if (enabled) {
 			init();
-			return () => {};
+			return () => { };
 		}
 	}, [enabled, intializedEditor]);
 
 	const addPost = async () => {
 		try {
-			console.log("editorContent", editorContent);
+			document.write(JSON.stringify(editorContent));
 			notify();
 		} catch (error) {
 			console.log(error);

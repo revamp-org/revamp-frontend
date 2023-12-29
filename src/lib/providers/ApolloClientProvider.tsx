@@ -5,7 +5,6 @@ import { useSession } from "@clerk/nextjs";
 
 const ApolloClientProvider = ({ children }: { children: React.ReactNode }) => {
 	const { session } = useSession();
-	console.log("session", session?.id);
 	const httpLink = createHttpLink({
 		uri: process.env.NEXT_PUBLIC_GRAPHQL_API_URI,
 	});

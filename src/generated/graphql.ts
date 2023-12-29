@@ -91,7 +91,7 @@ export type Aspect = {
 
 export type Comment = {
   __typename?: 'Comment';
-  authorId: Scalars['ID']['output'];
+  author: UserWithLessDetails;
   comment: Scalars['String']['output'];
   commentId: Scalars['Int']['output'];
   createdAt: Scalars['Timestamp']['output'];
@@ -108,6 +108,20 @@ export type Community = {
   privacy: Scalars['String']['output'];
   updatedAt: Scalars['Timestamp']['output'];
   users: Array<Maybe<UserWithRole>>;
+};
+
+export type CreateCommunityInput = {
+  description: Scalars['String']['input'];
+  members: Array<Scalars['ID']['input']>;
+  name: Scalars['String']['input'];
+  nametag: Scalars['String']['input'];
+  privacy?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type EditCommunityInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  privacy?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Goal = {
@@ -170,17 +184,56 @@ export type Milestone = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  acceptCommunityInvite: Scalars['String']['output'];
+  addUserToCommunity: Scalars['String']['output'];
+  blockUserFromCommunity: Scalars['String']['output'];
+  createCommunity: Scalars['String']['output'];
+  declineCommunityInvite: Scalars['String']['output'];
   deleteGoal: Scalars['String']['output'];
   deleteTask: Scalars['String']['output'];
   deleteTodo: Scalars['String']['output'];
   deleteUser: Scalars['String']['output'];
+  editCommunity: Scalars['String']['output'];
   editGoal: Scalars['String']['output'];
   editTask: Scalars['String']['output'];
   editTodo: Scalars['String']['output'];
+  enterInCommunity: Scalars['String']['output'];
+  inviteUserToCommunity: Scalars['String']['output'];
+  leaveCommunity: Scalars['String']['output'];
+  makeUserAdminOfCommunity: Scalars['String']['output'];
+  removeUserFromCommunity: Scalars['String']['output'];
   setGoal: Scalars['String']['output'];
   setTask: Scalars['String']['output'];
   setTodo: Scalars['String']['output'];
   setUser: Scalars['String']['output'];
+  unBlockUserFromCommunity: Scalars['String']['output'];
+};
+
+
+export type MutationAcceptCommunityInviteArgs = {
+  communityId: Scalars['Int']['input'];
+};
+
+
+export type MutationAddUserToCommunityArgs = {
+  communityId: Scalars['Int']['input'];
+  userId: Scalars['ID']['input'];
+};
+
+
+export type MutationBlockUserFromCommunityArgs = {
+  communityId: Scalars['Int']['input'];
+  userId: Scalars['ID']['input'];
+};
+
+
+export type MutationCreateCommunityArgs = {
+  input: CreateCommunityInput;
+};
+
+
+export type MutationDeclineCommunityInviteArgs = {
+  communityId: Scalars['Int']['input'];
 };
 
 
@@ -201,6 +254,12 @@ export type MutationDeleteTodoArgs = {
 
 export type MutationDeleteUserArgs = {
   userId: Scalars['ID']['input'];
+};
+
+
+export type MutationEditCommunityArgs = {
+  communityId: Scalars['Int']['input'];
+  input: EditCommunityInput;
 };
 
 
@@ -237,6 +296,34 @@ export type MutationEditTodoArgs = {
 };
 
 
+export type MutationEnterInCommunityArgs = {
+  communityId: Scalars['Int']['input'];
+};
+
+
+export type MutationInviteUserToCommunityArgs = {
+  communityId: Scalars['Int']['input'];
+  userId: Scalars['ID']['input'];
+};
+
+
+export type MutationLeaveCommunityArgs = {
+  communityId: Scalars['Int']['input'];
+};
+
+
+export type MutationMakeUserAdminOfCommunityArgs = {
+  communityId: Scalars['Int']['input'];
+  userId: Scalars['ID']['input'];
+};
+
+
+export type MutationRemoveUserFromCommunityArgs = {
+  communityId: Scalars['Int']['input'];
+  userId: Scalars['ID']['input'];
+};
+
+
 export type MutationSetGoalArgs = {
   deadline?: InputMaybe<Scalars['Timestamp']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -266,6 +353,12 @@ export type MutationSetUserArgs = {
   userId: Scalars['ID']['input'];
 };
 
+
+export type MutationUnBlockUserFromCommunityArgs = {
+  communityId: Scalars['Int']['input'];
+  userId: Scalars['ID']['input'];
+};
+
 export type Pausetime = {
   __typename?: 'Pausetime';
   pauseTime: Scalars['Timestamp']['output'];
@@ -274,11 +367,15 @@ export type Pausetime = {
 
 export type Query = {
   __typename?: 'Query';
+  communities: Array<Community>;
+  community: Community;
   getAllAspects: Array<Aspect>;
   getAllQuestions: Array<Question>;
-  getAllUsers: Array<User>;
+  getAllUsers: Array<UserWithLessDetails>;
   getGoals: Array<Goal>;
+  getJournalsOfUser: Array<Journal>;
   getSingleGoal: Goal;
+  getSingleJournal: Journal;
   getSingleTask: Task;
   getSingleTodo: Todo;
   getSingleUser: User;
@@ -286,6 +383,12 @@ export type Query = {
   getTasksOfUser: Array<Task>;
   getTodosOfTask: Array<Todo>;
   getTodosOfUser: Array<Todo>;
+  searchCommunities: Array<Community>;
+};
+
+
+export type QueryCommunityArgs = {
+  communityId: Scalars['Int']['input'];
 };
 
 
@@ -294,8 +397,18 @@ export type QueryGetGoalsArgs = {
 };
 
 
+export type QueryGetJournalsOfUserArgs = {
+  userId: Scalars['ID']['input'];
+};
+
+
 export type QueryGetSingleGoalArgs = {
   goalId: Scalars['Int']['input'];
+};
+
+
+export type QueryGetSingleJournalArgs = {
+  journalId: Scalars['Int']['input'];
 };
 
 
@@ -333,6 +446,11 @@ export type QueryGetTodosOfUserArgs = {
   userId: Scalars['ID']['input'];
 };
 
+
+export type QuerySearchCommunitiesArgs = {
+  searchString: Scalars['String']['input'];
+};
+
 export type Question = {
   __typename?: 'Question';
   options: Array<Scalars['String']['output']>;
@@ -362,7 +480,6 @@ export type Task = {
   milestones?: Maybe<Array<Maybe<Milestone>>>;
   order: Scalars['Int']['output'];
   priority: Scalars['String']['output'];
-  streak: Scalars['Int']['output'];
   taskId: Scalars['Int']['output'];
   timelapsed?: Maybe<Timelapse>;
   title: Scalars['String']['output'];
@@ -424,10 +541,20 @@ export type UserEmailAddress = {
   verified: Scalars['Boolean']['output'];
 };
 
+export type UserWithLessDetails = {
+  __typename?: 'UserWithLessDetails';
+  banned: Scalars['Boolean']['output'];
+  firstName: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  imageUrl: Scalars['URL']['output'];
+  lastName: Scalars['String']['output'];
+  username: Scalars['String']['output'];
+};
+
 export type UserWithRole = {
   __typename?: 'UserWithRole';
   role: Scalars['String']['output'];
-  user: User;
+  user: UserWithLessDetails;
 };
 
 
@@ -509,6 +636,7 @@ export type ResolversTypes = {
   Comment: ResolverTypeWrapper<Comment>;
   Community: ResolverTypeWrapper<Community>;
   CountryCode: ResolverTypeWrapper<Scalars['CountryCode']['output']>;
+  CreateCommunityInput: CreateCommunityInput;
   Cuid: ResolverTypeWrapper<Scalars['Cuid']['output']>;
   Currency: ResolverTypeWrapper<Scalars['Currency']['output']>;
   DID: ResolverTypeWrapper<Scalars['DID']['output']>;
@@ -517,6 +645,7 @@ export type ResolversTypes = {
   DateTimeISO: ResolverTypeWrapper<Scalars['DateTimeISO']['output']>;
   DeweyDecimal: ResolverTypeWrapper<Scalars['DeweyDecimal']['output']>;
   Duration: ResolverTypeWrapper<Scalars['Duration']['output']>;
+  EditCommunityInput: EditCommunityInput;
   EmailAddress: ResolverTypeWrapper<Scalars['EmailAddress']['output']>;
   GUID: ResolverTypeWrapper<Scalars['GUID']['output']>;
   Goal: ResolverTypeWrapper<Goal>;
@@ -590,6 +719,7 @@ export type ResolversTypes = {
   UnsignedInt: ResolverTypeWrapper<Scalars['UnsignedInt']['output']>;
   User: ResolverTypeWrapper<User>;
   UserEmailAddress: ResolverTypeWrapper<UserEmailAddress>;
+  UserWithLessDetails: ResolverTypeWrapper<UserWithLessDetails>;
   UserWithRole: ResolverTypeWrapper<UserWithRole>;
   UtcOffset: ResolverTypeWrapper<Scalars['UtcOffset']['output']>;
   Void: ResolverTypeWrapper<Scalars['Void']['output']>;
@@ -605,6 +735,7 @@ export type ResolversParentTypes = {
   Comment: Comment;
   Community: Community;
   CountryCode: Scalars['CountryCode']['output'];
+  CreateCommunityInput: CreateCommunityInput;
   Cuid: Scalars['Cuid']['output'];
   Currency: Scalars['Currency']['output'];
   DID: Scalars['DID']['output'];
@@ -613,6 +744,7 @@ export type ResolversParentTypes = {
   DateTimeISO: Scalars['DateTimeISO']['output'];
   DeweyDecimal: Scalars['DeweyDecimal']['output'];
   Duration: Scalars['Duration']['output'];
+  EditCommunityInput: EditCommunityInput;
   EmailAddress: Scalars['EmailAddress']['output'];
   GUID: Scalars['GUID']['output'];
   Goal: Goal;
@@ -686,6 +818,7 @@ export type ResolversParentTypes = {
   UnsignedInt: Scalars['UnsignedInt']['output'];
   User: User;
   UserEmailAddress: UserEmailAddress;
+  UserWithLessDetails: UserWithLessDetails;
   UserWithRole: UserWithRole;
   UtcOffset: Scalars['UtcOffset']['output'];
   Void: Scalars['Void']['output'];
@@ -711,7 +844,7 @@ export interface ByteScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
-  authorId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  author?: Resolver<ResolversTypes['UserWithLessDetails'], ParentType, ContextType>;
   comment?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   commentId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
@@ -930,17 +1063,29 @@ export type MilestoneResolvers<ContextType = any, ParentType extends ResolversPa
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  acceptCommunityInvite?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationAcceptCommunityInviteArgs, 'communityId'>>;
+  addUserToCommunity?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationAddUserToCommunityArgs, 'communityId' | 'userId'>>;
+  blockUserFromCommunity?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationBlockUserFromCommunityArgs, 'communityId' | 'userId'>>;
+  createCommunity?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationCreateCommunityArgs, 'input'>>;
+  declineCommunityInvite?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationDeclineCommunityInviteArgs, 'communityId'>>;
   deleteGoal?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationDeleteGoalArgs, 'goalId'>>;
   deleteTask?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationDeleteTaskArgs, 'taskId'>>;
   deleteTodo?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationDeleteTodoArgs, 'todoId'>>;
   deleteUser?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'userId'>>;
+  editCommunity?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationEditCommunityArgs, 'communityId' | 'input'>>;
   editGoal?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationEditGoalArgs, 'goalId'>>;
   editTask?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationEditTaskArgs, 'taskId'>>;
   editTodo?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationEditTodoArgs, 'todoId'>>;
+  enterInCommunity?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationEnterInCommunityArgs, 'communityId'>>;
+  inviteUserToCommunity?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationInviteUserToCommunityArgs, 'communityId' | 'userId'>>;
+  leaveCommunity?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationLeaveCommunityArgs, 'communityId'>>;
+  makeUserAdminOfCommunity?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationMakeUserAdminOfCommunityArgs, 'communityId' | 'userId'>>;
+  removeUserFromCommunity?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationRemoveUserFromCommunityArgs, 'communityId' | 'userId'>>;
   setGoal?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationSetGoalArgs, 'title' | 'userId'>>;
   setTask?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationSetTaskArgs, 'goalId' | 'title'>>;
   setTodo?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationSetTodoArgs, 'taskId' | 'todo'>>;
   setUser?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationSetUserArgs, 'userId'>>;
+  unBlockUserFromCommunity?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationUnBlockUserFromCommunityArgs, 'communityId' | 'userId'>>;
 };
 
 export interface NegativeFloatScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['NegativeFloat'], any> {
@@ -1002,11 +1147,15 @@ export interface PostalCodeScalarConfig extends GraphQLScalarTypeConfig<Resolver
 }
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  communities?: Resolver<Array<ResolversTypes['Community']>, ParentType, ContextType>;
+  community?: Resolver<ResolversTypes['Community'], ParentType, ContextType, RequireFields<QueryCommunityArgs, 'communityId'>>;
   getAllAspects?: Resolver<Array<ResolversTypes['Aspect']>, ParentType, ContextType>;
   getAllQuestions?: Resolver<Array<ResolversTypes['Question']>, ParentType, ContextType>;
-  getAllUsers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  getAllUsers?: Resolver<Array<ResolversTypes['UserWithLessDetails']>, ParentType, ContextType>;
   getGoals?: Resolver<Array<ResolversTypes['Goal']>, ParentType, ContextType, RequireFields<QueryGetGoalsArgs, 'userId'>>;
+  getJournalsOfUser?: Resolver<Array<ResolversTypes['Journal']>, ParentType, ContextType, RequireFields<QueryGetJournalsOfUserArgs, 'userId'>>;
   getSingleGoal?: Resolver<ResolversTypes['Goal'], ParentType, ContextType, RequireFields<QueryGetSingleGoalArgs, 'goalId'>>;
+  getSingleJournal?: Resolver<ResolversTypes['Journal'], ParentType, ContextType, RequireFields<QueryGetSingleJournalArgs, 'journalId'>>;
   getSingleTask?: Resolver<ResolversTypes['Task'], ParentType, ContextType, RequireFields<QueryGetSingleTaskArgs, 'taskId'>>;
   getSingleTodo?: Resolver<ResolversTypes['Todo'], ParentType, ContextType, RequireFields<QueryGetSingleTodoArgs, 'todoId'>>;
   getSingleUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryGetSingleUserArgs, 'userId'>>;
@@ -1014,6 +1163,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getTasksOfUser?: Resolver<Array<ResolversTypes['Task']>, ParentType, ContextType, RequireFields<QueryGetTasksOfUserArgs, 'userId'>>;
   getTodosOfTask?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryGetTodosOfTaskArgs, 'taskId'>>;
   getTodosOfUser?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryGetTodosOfUserArgs, 'userId'>>;
+  searchCommunities?: Resolver<Array<ResolversTypes['Community']>, ParentType, ContextType, RequireFields<QuerySearchCommunitiesArgs, 'searchString'>>;
 };
 
 export type QuestionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Question'] = ResolversParentTypes['Question']> = {
@@ -1064,7 +1214,6 @@ export type TaskResolvers<ContextType = any, ParentType extends ResolversParentT
   milestones?: Resolver<Maybe<Array<Maybe<ResolversTypes['Milestone']>>>, ParentType, ContextType>;
   order?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   priority?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  streak?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   taskId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   timelapsed?: Resolver<Maybe<ResolversTypes['Timelapse']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -1159,9 +1308,19 @@ export type UserEmailAddressResolvers<ContextType = any, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserWithLessDetailsResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserWithLessDetails'] = ResolversParentTypes['UserWithLessDetails']> = {
+  banned?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  imageUrl?: Resolver<ResolversTypes['URL'], ParentType, ContextType>;
+  lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserWithRoleResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserWithRole'] = ResolversParentTypes['UserWithRole']> = {
   role?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['UserWithLessDetails'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1259,6 +1418,7 @@ export type Resolvers<ContextType = any> = {
   UnsignedInt?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
   UserEmailAddress?: UserEmailAddressResolvers<ContextType>;
+  UserWithLessDetails?: UserWithLessDetailsResolvers<ContextType>;
   UserWithRole?: UserWithRoleResolvers<ContextType>;
   UtcOffset?: GraphQLScalarType;
   Void?: GraphQLScalarType;

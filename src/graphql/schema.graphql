@@ -1,6 +1,6 @@
 schema {
-	query: Query
-	mutation: Mutation
+  query: Query
+  mutation: Mutation
 }
 scalar Date
 scalar Time
@@ -69,248 +69,228 @@ scalar DeweyDecimal
 scalar LCCSubclass
 scalar IPCPatent
 type Pausetime {
-	pausetimeId: Int!
-	pauseTime: Timestamp!
+  pausetimeId: Int!
+  pauseTime: Timestamp!
 }
 type Resumetime {
-	resumetimeId: Int!
-	resumeTime: Timestamp!
+  resumetimeId: Int!
+  resumeTime: Timestamp!
 }
 type TimeDuration {
-	days: Int!
-	hours: Int!
-	minutes: Int!
-	seconds: Int!
+  days: Int!
+  hours: Int!
+  minutes: Int!
+  seconds: Int!
 }
 type Timelapse {
-	timelapseId: Int!
-	startTime: Timestamp!
-	endTime: Timestamp
-	duration: TimeDuration
-	pausetimes: [Pausetime]
-	resumetimes: [Resumetime]
+  timelapseId: Int!
+  startTime: Timestamp!
+  endTime: Timestamp
+  duration: TimeDuration
+  pausetimes: [Pausetime]
+  resumetimes: [Resumetime]
 }
 type Todo {
-	todoId: Int!
-	todo: String!
-	order: Int!
-	isDone: Boolean!
-	createdAt: Timestamp!
-	updatedAt: Timestamp
-	timelapsed: Timelapse
+  todoId: Int!
+  todo: String!
+  order: Int!
+  isDone: Boolean!
+  createdAt: Timestamp!
+  updatedAt: Timestamp
+  timelapsed: Timelapse
 }
 type Milestone {
-	milestoneId: Int!
-	milestone: String!
-	createdAt: Timestamp!
+  milestoneId: Int!
+  milestone: String!
+  createdAt: Timestamp!
 }
 type Task {
-	taskId: Int!
-	goalId: Int!
-	title: String!
-	description: String
-	priority: String!
-	order: Int!
-	deadline: Timestamp
-	isDone: Boolean!
-	createdAt: Timestamp!
-	updatedAt: Timestamp
-	todos: [Todo]
-	milestones: [Milestone]
-	timelapsed: Timelapse
+  taskId: Int!
+  goalId: Int!
+  title: String!
+  description: String
+  priority: String!
+  order: Int!
+  deadline: Timestamp
+  isDone: Boolean!
+  createdAt: Timestamp!
+  updatedAt: Timestamp
+  todos: [Todo]
+  milestones: [Milestone]
+  timelapsed: Timelapse
 }
 type GoalQna {
-	goalQnaId: Int!
-	question: String!
-	answer: String!
+  goalQnaId: Int!
+  question: String!
+  answer: String!
 }
 type Goal {
-	goalId: Int!
-	title: String!
-	description: String
-	priority: String
-	relatedArea: String
-	order: Int!
-	streak: Int!
-	isActive: Boolean!
-	deadline: Timestamp
-	isDone: Boolean!
-	createdAt: Timestamp!
-	updatedAt: Timestamp
-	tasks: [Task!]!
-	goalQnas: [GoalQna]
+  goalId: Int!
+  title: String!
+  description: String
+  priority: String
+  relatedArea: String
+  order: Int!
+  streak: Int!
+  isActive: Boolean!
+  deadline: Timestamp
+  isDone: Boolean!
+  createdAt: Timestamp!
+  updatedAt: Timestamp
+  tasks: [Task!]!
+  goalQnas: [GoalQna]
 }
 type Tag {
-	tagId: Int!
-	tag: String!
+  tagId: Int!
+  tag: String!
 }
 type Aspect {
-	aspectId: Int!
-	aspect: String!
-	tags: [Tag!]!
+  aspectId: Int!
+  aspect: String!
+  tags: [Tag!]!
 }
 type Question {
-	questionId: Int!
-	question: String!
-	options: [String!]!
+  questionId: Int!
+  question: String!
+  options: [String!]!
 }
 type UserEmailAddress {
-	emailAddress: EmailAddress!
-	verified: Boolean!
-	isPrimary: Boolean!
+  emailAddress: EmailAddress!
+  verified: Boolean!
+  isPrimary: Boolean!
 }
 type Comment {
-	commentId: Int!
-	comment: String!
-	createdAt: Timestamp!
-	updatedAt: Timestamp
-	author: UserWithLessDetails!
+  commentId: Int!
+  comment: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp
+  author: UserWithLessDetails!
 }
 type JournalLike {
-	likedBy: User!
-	likedAt: Timestamp!
+  likedBy: UserWithLessDetails!
+  likedAt: Timestamp!
 }
 type JournalShare {
-	sharedBy: User!
-	sharedAt: Timestamp!
-	sharedIn: Community!
+  sharedBy: UserWithLessDetails!
+  sharedAt: Timestamp!
+  sharedIn: Community!
 }
 type Journal {
-	journalId: Int!
-	title: String!
-	content: String!
-	type: String!
-	access: String!
-	date: Timestamp!
-	comments: [Comment!]!
-	likedBy: [JournalLike!]!
-	sharedBy: [JournalShare!]!
+  journalId: Int!
+  title: String!
+  content: String!
+  type: String!
+  access: String!
+  date: Timestamp!
+  comments: [Comment!]!
+  likedBy: [JournalLike!]!
+  sharedBy: [JournalShare!]!
 }
 type User {
-	userId: ID!
-	firstName: String!
-	lastName: String!
-	username: String!
-	imageUrl: URL!
-	banned: Boolean!
-	createdAt: Timestamp!
-	updatedAt: Timestamp!
-	aspects: [Aspect!]!
-	journals: [Journal!]!
-	goals: [Goal!]!
-	questions: [Question]
-	emailAddresses: [UserEmailAddress!]!
-	communities: [Community!]!
+  userId: ID!
+  firstName: String!
+  lastName: String!
+  username: String!
+  imageUrl: URL!
+  banned: Boolean!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  aspects: [Aspect!]!
+  journals: [Journal!]!
+  goals: [Goal!]!
+  questions: [Question]
+  emailAddresses: [UserEmailAddress!]!
+  communities: [Community!]!
 }
 type UserWithLessDetails {
-	id: ID!
-	firstName: String!
-	lastName: String!
-	username: String!
-	imageUrl: URL!
-	banned: Boolean!
+  id: ID!
+  firstName: String!
+  lastName: String!
+  username: String!
+  imageUrl: URL!
+  banned: Boolean!
 }
 type UserWithRole {
-	user: UserWithLessDetails!
-	role: String!
+  user: UserWithLessDetails!
+  role: String!
 }
 type Community {
-	communityId: Int!
-	community: String!
-	description: String!
-	nametag: String!
-	privacy: String!
-	createdAt: Timestamp!
-	updatedAt: Timestamp!
-	users: [UserWithRole]!
+  communityId: Int!
+  community: String!
+  description: String!
+  nametag: String!
+  privacy: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  users: [UserWithRole]!
+  goals: [Goal!]!
+  journals: [Journal!]!
 }
 type Query {
-	getTodosOfTask(taskId: Int!): [Todo!]!
-	getTodosOfUser(userId: ID!): [Todo!]!
-	getTasksOfGoal(goalId: Int!): [Task!]!
-	getTasksOfUser(userId: ID!): [Task!]!
-	getGoals(userId: ID!): [Goal!]!
-	getAllUsers: [UserWithLessDetails!]!
-	getAllQuestions: [Question!]!
-	getAllAspects: [Aspect!]!
-	getJournalsOfUser(userId: ID!): [Journal!]!
-	getSingleGoal(goalId: Int!): Goal!
-	getSingleTask(taskId: Int!): Task!
-	getSingleTodo(todoId: Int!): Todo!
-	getSingleUser(userId: ID!): User!
-	getSingleJournal(journalId: Int!): Journal!
-	community(communityId: Int!): Community!
-	communities: [Community!]!
-	searchCommunities(searchString: String!): [Community!]!
+  getTodosOfTask(taskId: Int!): [Todo!]!
+  getTodosOfUser(userId: ID!): [Todo!]!
+  getTasksOfGoal(goalId: Int!): [Task!]!
+  getTasksOfUser(userId: ID!): [Task!]!
+  getGoals(userId: ID!): [Goal!]!
+  getAllUsers: [UserWithLessDetails!]!
+  getAllQuestions: [Question!]!
+  getAllAspects: [Aspect!]!
+  getJournalsOfUser(userId: ID!): [Journal!]!
+  todayJournalDaily: Journal!
+  getSingleGoal(goalId: Int!): Goal!
+  getSingleTask(taskId: Int!): Task!
+  getSingleTodo(todoId: Int!): Todo!
+  getSingleUser(userId: ID!): User!
+  getSingleJournal(journalId: Int!): Journal!
+  community(communityId: Int!): Community!
+  communities: [Community!]!
+  myCommunities: [Community!]!
+  searchCommunities(searchString: String!): [Community!]!
 }
 type Mutation {
-	setUser(userId: ID!): String!
-	setGoal(
-		userId: ID!
-		title: String!
-		description: String
-		priority: String
-		relatedArea: String
-		deadline: Timestamp
-	): String!
-	setTask(
-		goalId: Int!
-		title: String!
-		description: String
-		priority: String
-		deadline: Timestamp
-	): String!
-	setTodo(taskId: Int!, todo: String!): String!
-	deleteUser(userId: ID!): String!
-	deleteGoal(goalId: Int!): String!
-	deleteTask(taskId: Int!): String!
-	deleteTodo(todoId: Int!): String!
-	editGoal(
-		goalId: Int!
-		title: String
-		description: String
-		priority: String
-		relatedArea: String
-		deadline: Timestamp
-		order: Int
-		isDone: Boolean
-		isActive: Boolean
-	): String!
-	editTask(
-		taskId: Int!
-		title: String
-		description: String
-		priority: String
-		isDone: Boolean
-		deadline: Timestamp
-		order: Int
-		streak: Int
-	): String!
-	editTodo(todoId: Int!, todo: String, isDone: Boolean, order: Int): String!
-	createCommunity(input: CreateCommunityInput!): String!
-	acceptCommunityInvite(communityId: Int!): String!
-	declineCommunityInvite(communityId: Int!): String!
-	leaveCommunity(communityId: Int!): String!
-	inviteUserToCommunity(communityId: Int!, userId: ID!): String!
-	blockUserFromCommunity(communityId: Int!, userId: ID!): String!
-	removeUserFromCommunity(communityId: Int!, userId: ID!): String!
-	unBlockUserFromCommunity(communityId: Int!, userId: ID!): String!
-	editCommunity(communityId: Int!, input: EditCommunityInput!): String!
-	addUserToCommunity(communityId: Int!, userId: ID!): String!
-	makeUserAdminOfCommunity(communityId: Int!, userId: ID!): String!
-	enterInCommunity(communityId: Int!): String!
+  setUser(userId: ID!): String!
+  setGoal(userId: ID!, title: String!, description: String, priority: String, relatedArea: String, deadline: Timestamp): String!
+  setTask(goalId: Int!, title: String!, description: String, priority: String, deadline: Timestamp): String!
+  setTodo(taskId: Int!, todo: String!): String!
+  deleteUser(userId: ID!): String!
+  deleteGoal(goalId: Int!): String!
+  deleteTask(taskId: Int!): String!
+  deleteTodo(todoId: Int!): String!
+  editGoal(goalId: Int!, title: String, description: String, priority: String, relatedArea: String, deadline: Timestamp, order: Int, isDone: Boolean, isActive: Boolean): String!
+  shareGoal(goalId: Int!, communityId: Int!): String!
+  publishGoal(goalId: Int!): String!
+  editTask(taskId: Int!, title: String, description: String, priority: String, isDone: Boolean, deadline: Timestamp, order: Int, streak: Int): String!
+  editTodo(todoId: Int!, todo: String, isDone: Boolean, order: Int): String!
+  createCommunity(input: CreateCommunityInput!): String!
+  acceptCommunityInvite(communityId: Int!): String!
+  declineCommunityInvite(communityId: Int!): String!
+  leaveCommunity(communityId: Int!): String!
+  inviteUserToCommunity(communityId: Int!, userId: ID!): String!
+  blockUserFromCommunity(communityId: Int!, userId: ID!): String!
+  removeUserFromCommunity(communityId: Int!, userId: ID!): String!
+  unBlockUserFromCommunity(communityId: Int!, userId: ID!): String!
+  editCommunity(communityId: Int!, input: EditCommunityInput!): String!
+  addUserToCommunity(communityId: Int!, userId: ID!): String!
+  makeUserAdminOfCommunity(communityId: Int!, userId: ID!): String!
+  enterInCommunity(communityId: Int!): String!
+  updateJournal(journalId: Int!, title: String, content: String): String!
+  shareJournal(journalId: Int!, communityId: Int!): String!
+  publishJournal(journalId: Int!): String!
 }
 input CreateCommunityInput {
-	name: String!
-	nametag: String!
-	description: String!
-	privacy: String
-	members: [ID!]!
+  name: String!
+  nametag: String!
+  description: String!
+  privacy: String
+  members: [ID!]!
 }
 input EditCommunityInput {
-	name: String
-	description: String
-	privacy: String
+  name: String
+  description: String
+  privacy: String
 }
 "Exposes a URL that specifies the behavior of this scalar."
-directive @specifiedBy("The URL that specifies the behavior of this scalar." url: String!) on SCALAR
+directive @specifiedBy(
+    "The URL that specifies the behavior of this scalar."
+    url: String!
+  ) on SCALAR

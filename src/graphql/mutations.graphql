@@ -39,3 +39,25 @@ mutation DeleteTask($taskId: Int!) {
 mutation SetTodo($taskId: Int!, $todo: String!) {
 	setTodo(taskId: $taskId, todo: $todo)
 }
+
+mutation EditTask(
+	$taskId: Int!
+	$title: String
+	$description: String
+	$order: Int
+	$priority: String
+	$isDone: Boolean
+) {
+	editTask(
+		taskId: $taskId
+		title: $title
+		description: $description
+		order: $order
+		priority: $priority
+		isDone: $isDone
+	)
+}
+
+mutation EditTodo($todoId: Int!, $todo: String, $isDone: Boolean, $order: Int) {
+	editTodo(todoId: $todoId, todo: $todo, isDone: $isDone, order: $order)
+}
