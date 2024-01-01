@@ -13,7 +13,7 @@ const letsGetStarted = () => {
 	const totalPages = 6; // Total number of pages
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const handlePage = (pageNumber) => {
+	const handlePage = (pageNumber: number) => {
 		setCurrentPage((prevPage) => {
 			// Implement circular navigation
 			if (pageNumber > totalPages) {
@@ -44,37 +44,39 @@ const letsGetStarted = () => {
 				</Link>
 			</div>
 
-			<div className=" relative py-3 pb-8 lg:py-4">
-				<div className="absolute top-1/2 h-0.5 w-full  bg-black" />
-				<ul role="tablist" className=" mx-auto flex w-4/5 items-center justify-between text-center">
+			<div className=" relative ">
+				<div
+					className={`absolute left-1/2 top-1/2 h-0.5 w-[80%] -translate-x-1/2  transform items-center justify-center  bg-black `}
+				/>
+
+				<ul className=" mx-auto flex h-full max-w-[80%] items-center justify-between py-2 text-center">
 					{[1, 2, 3, 4, 5, 6].map((step) => (
 						<li
-							key={step}
-							className={`rounded-full bg-[#22394A] px-3 py-2 
-							${currentPage === step ? "bg-black" : "bg-[#22394A]"} ${currentPage === step ? "active" : ""}`}
+							className={`z-10 h-8 w-8 rounded-full bg-[#22394A] lg:h-12 lg:w-12 ${
+								currentPage === step ? "bg-black" : "bg-[#22394A]"
+							}`}
 						>
-							<button onClick={() => handlePage(step)}>
-								<div role="tab" id={`step-${step}`} aria-controls={step} className="relative">
-									<p className="text-2xl font-semibold text-white">{step}</p>
-								</div>
+							<button onClick={() => handlePage(step)} className="h-full w-full">
+								<p className="text-sm font-semibold text-white md:text-xl lg:text-2xl">{step}</p>
 							</button>
 						</li>
 					))}
 				</ul>
 			</div>
-			{currentPage === 1 && <Landing />}
-			{currentPage === 2 && <Introduction />}
-			{currentPage === 3 && <AreasToImprove />}
-			{currentPage === 4 && <Questionnaire />}
-			{currentPage === 5 && <MajorGoals />}
-			{currentPage === 6 && <FinalPage />}
-
-			<div className="mx-auto flex w-4/5 ">
-				<section className=" w-full flex-1 justify-start pl-8">
+			<div className="lg:h-[70dvh]">
+				{currentPage === 1 && <Landing />}
+				{currentPage === 2 && <Introduction />}
+				{currentPage === 3 && <AreasToImprove />}
+				{currentPage === 4 && <Questionnaire />}
+				{currentPage === 5 && <MajorGoals />}
+				{currentPage === 6 && <FinalPage />}
+			</div>
+			<div className="mx-auto mb-4 mt-4 flex w-4/5 justify-end gap-2">
+				<section className="  ">
 					{currentPage > 1 && (
-						<div className="left-5 mr-auto ">
+						<div className=" ">
 							<button
-								className="absolute rounded-md bg-[#22394A] px-2 py-1 text-lg tracking-wide text-white hover:bg-blue-300 hover:text-black"
+								className=" btn bg-accent hover:bg-blue-300 hover:text-black"
 								onClick={handleGoBack}
 							>
 								Go Back
@@ -82,11 +84,11 @@ const letsGetStarted = () => {
 						</div>
 					)}
 				</section>
-				<section className="w-1/2 flex-1 justify-end ">
+				<section className=" ">
 					<div className="">
 						<button
 							onClick={() => handlePage(currentPage + 1)}
-							className="absolute rounded-md bg-[#22394A] px-2 py-1 text-lg tracking-wide text-white hover:bg-blue-300 hover:text-black"
+							className="btn bg-accent  hover:bg-blue-300 hover:text-black"
 						>
 							{currentPage >= 1 && currentPage < 6 ? "Continue" : "Get Started"}
 						</button>

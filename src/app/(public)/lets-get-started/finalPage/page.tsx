@@ -17,15 +17,15 @@ const FinalPage = () => {
 						</div>
 						<div className="flex flex-col flex-wrap content-center gap-3 text-left md:w-1/2 md:text-left">
 							<div className="mb-1 md:mb-3">
-								<span className=" mb-2 text-4xl text-white sm:text-2xl md:text-5xl lg:text-6xl ">
+								<span className=" mb-2 text-2xl text-white sm:text-2xl md:text-5xl lg:text-6xl ">
 									March forward
 									<span className="ml-2 font-semibold text-white">And Rise</span>
 								</span>
 							</div>
-							<div className="text-start text-xl font-normal  text-white md:text-2xl">
+							<div className="text-start text-xl font-light  text-white md:text-2xl">
 								<p>Remember, it's not about one day, it's about DAY 01.</p>
 							</div>
-							<div className="text-start text-sm font-semibold text-white md:text-xl">
+							<div className="text-md text-start font-normal text-white md:text-xl">
 								<p>Sail your ship to the destiny of success.</p>
 							</div>
 						</div>
