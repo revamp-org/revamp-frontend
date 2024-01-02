@@ -1,69 +1,75 @@
 "use client";
-import React, { ChangeEventHandler } from 'react'
-import { useState } from 'react'
+import Link from "next/link";
+import React, { ChangeEventHandler } from "react";
+import { useState } from "react";
+import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { tr } from "date-fns/locale";
 const Contact = () => {
-	const [formData, setFormData] = useState({
-		name: '',
-		email: '',
-		message: '',
-	});
+	const { register, handleSubmit } = useForm();
+	// const handleChange = (e: any) => {
+	// 	const { name, value } = e?.target;
+	// 	setFormData({ ...formData, [name]: value });
+	// };
 
-	const handleChange = (e: any) => {
-		const { name, value } = e?.target;
-		setFormData({ ...formData, [name]: value });
-	};
-
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>
-	) => {
-		e.preventDefault();
-		console.log('Form submitted:', formData);
-	};
+	// const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	// 	e.preventDefault();
+	// 	console.log("Form submitted:", formData);
+	// };
 
 	return (
-		<div className="h-screen-height flex items-center justify-center ">
-			<div className=" flex-row justify-center items-center container mx-auto p-8">
-				<h2 className="text-6xl text-primary-foreground font-semibold text-center mb-4">Contact Us</h2>
-				<form onSubmit={handleSubmit} className="max-w-md mx-auto">
+		<div className="h-screen-height ">
+			<div className=" flex items-center justify-center py-3 text-center  lg:py-4">
+				<Link href="/">
+					<Image src="/assets/logo3-dark.svg" width={120} height={60} alt="Revamp Logo" />
+				</Link>
+			</div>
+			<div className=" container mx-auto flex-col items-center justify-center p-8">
+				<h2 className="mb-4 text-center text-6xl font-semibold text-primary-foreground">
+					Contact Us
+				</h2>
+				<form
+					className="mx-auto max-w-md"
+					onSubmit={handleSubmit((data) => {
+						console.log(data);
+					})}
+				>
 					<div className="mb-4">
-						<label className="block text-white text-sm font-bold mb-2">Name:</label>
+						<label htmlFor="name" className="mb-2 block text-sm font-bold text-white">
+							Name:
+						</label>
 						<input
-							type="text"
-							name="name"
-							value={formData.name}
-							onChange={handleChange}
-							className="w-full px-3 py-2 border rounded bg-[#D9D9D9] shadow appearance-none"
-							required
+							{...register("yourName", { required: true })}
+							placeholder="Name"
+							className="w-full appearance-none rounded border bg-[#D9D9D9] px-3 py-2 shadow"
 						/>
 					</div>
 					<div className="mb-4">
-						<label className="block text-white text-sm font-bold mb-2">Email:</label>
+						<label htmlFor="email" className="mb-2 block text-sm font-bold text-white">
+							Email:
+						</label>
 						<input
-							type="email"
-							name="email"
-							value={formData.email}
-							onChange={handleChange}
-							className="w-full px-3 py-2 border bg-[#D9D9D9] rounded shadow appearance-none"
-							required
+							{...register("email", { required: true })}
+							placeholder="Email"
+							className="w-full appearance-none rounded border bg-[#D9D9D9] px-3 py-2 shadow"
 						/>
 					</div>
 					<div className="mb-6">
-						<label className="block text-white text-sm font-bold mb-2">Message:</label>
+						<label htmlFor="message" className="mb-2 block text-sm font-bold text-white">
+							Message:
+						</label>
 						<textarea
-							name="message"
-							value={formData.message}
-							onChange={handleChange}
-							className="w-full px-3 py-2 border bg-[#D9D9D9] rounded shadow appearance-none"
+							{...register("message", { required: true })}
+							placeholder="Message for us"
+							className="w-full appearance-none rounded border bg-[#D9D9D9] px-3 py-2 shadow"
 							rows={5}
-							required
 						></textarea>
 					</div>
 					<div>
-						<button
-							type="submit"
-							className="w-full px-4 py-2 bg-secondary text-white rounded hover:bg-[#D0E9E9] hover:text-black focus:outline-none focus:shadow-outline-blue "
-						>
-							Submit
-						</button>
+						<input
+							type="Submit"
+							className="btn w-full bg-accent hover:bg-blue-300 hover:text-black "
+						/>
 					</div>
 				</form>
 			</div>
@@ -71,4 +77,4 @@ const Contact = () => {
 	);
 };
 
-export default Contact
+export default Contact;
