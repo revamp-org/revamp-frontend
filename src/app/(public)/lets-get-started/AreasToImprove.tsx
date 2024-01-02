@@ -13,7 +13,7 @@ const improveAreas: string[] = [
 	"Safety",
 	"Career Satisfaction",
 ];
-const AreasToImprove = () => {
+const AreasToImprove = ({ page }: { page: number }) => {
 	const params = useSearchParams();
 	const [selectedAreas, setSelectedAreas] = useState<Set<string>>(
 		new Set(params.get("selectedAreas")?.split(",")),
@@ -22,9 +22,10 @@ const AreasToImprove = () => {
 	useEffect(() => {
 		const urlSearchParams = new URLSearchParams(params);
 		const stringSelectedAreas = Array.from(selectedAreas).join(",");
+		urlSearchParams.set("currentPage", page.toString());
 		urlSearchParams.set("selectedAreas", stringSelectedAreas);
 		router.replace(`?${urlSearchParams.toString()}`);
-	}, [selectedAreas, params, router]);
+	}, [selectedAreas, params, router, page]);
 	return (
 		<>
 			<section className="pb-2 pt-10 md:pb-10">

@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 const ages: string[] = ["<18", "18-24", "25-34", "35-44", "45-54", "55+"];
 const statuses: string[] = ["student", "employee", "employer", "self-employeed", "other"];
 
-const Introduction = () => {
+const Introduction = ({ page }: { page: number }) => {
 	const params = useSearchParams();
 	const [selectedAge, setSelectedAge] = useState<string | null>(params.get("selectedAge"));
 	const [selectedStatus, setSelectedStatus] = useState<string | null>(params.get("selectedStatus"));
@@ -30,10 +30,11 @@ const Introduction = () => {
 
 	useEffect(() => {
 		const urlSearchParams = new URLSearchParams(params);
+		urlSearchParams.set("currentPage", page.toString());
 		urlSearchParams.set("selectedAge", selectedAge || "");
 		urlSearchParams.set("selectedStatus", selectedStatus || "");
 		router.replace(`?${urlSearchParams.toString()}`);
-	}, [selectedAge, selectedStatus, router, params]);
+	}, [selectedAge, selectedStatus, router, params, page]);
 	return (
 		<>
 			<section className="pt-10">

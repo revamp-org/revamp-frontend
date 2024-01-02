@@ -19,7 +19,7 @@ const majorGoals: string[] = [
 	"emotional control",
 	"time management",
 ];
-const MajorGoals = () => {
+const MajorGoals = ({ page }: { page: number }) => {
 	const params = useSearchParams();
 	const [majorGoal, setMajorGoals] = useState<Set<string>>(
 		new Set(params.get("majorGoal")?.split(",")),
@@ -29,9 +29,10 @@ const MajorGoals = () => {
 	useEffect(() => {
 		const urlSearchParams = new URLSearchParams(params);
 		const stringMajorGoal = Array.from(majorGoal).join(",");
+		urlSearchParams.set("currentPage", page.toString());
 		urlSearchParams.set("majorGoal", stringMajorGoal);
 		router.replace(`?${urlSearchParams.toString()}`);
-	}, [majorGoal, params, router]);
+	}, [majorGoal, params, router, page]);
 	return (
 		<>
 			<section className="pb-2 pt-10 md:pb-10">

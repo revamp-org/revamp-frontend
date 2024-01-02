@@ -26,7 +26,7 @@ const negativeFeelings: string[] = [
 	"poor work-life balance",
 	"socaially inactive",
 ];
-const Questionnaire = () => {
+const Questionnaire = ({ page }: { page: number }) => {
 	const params = useSearchParams();
 	const [positveFeeling, setPositiveFeelings] = useState<Set<string>>(
 		new Set(params.get("positiveFeeling")?.split(",")),
@@ -40,10 +40,11 @@ const Questionnaire = () => {
 		const urlSearchParams = new URLSearchParams(params);
 		const stringSelectedPosiveFeelings = Array.from(positveFeeling).join(",");
 		const stringSelectedNegativeFeelings = Array.from(negativeFeeling).join(",");
+		urlSearchParams.set("currentPage", page.toString());
 		urlSearchParams.set("positiveFeeling", stringSelectedPosiveFeelings);
 		urlSearchParams.set("negativeFeeling", stringSelectedNegativeFeelings);
 		router.replace(`?${urlSearchParams.toString()}`);
-	}, [positveFeeling, negativeFeeling, router, params]);
+	}, [positveFeeling, negativeFeeling, router, params, page]);
 	return (
 		<>
 			<section className="pb-2 pt-10 md:pb-10">

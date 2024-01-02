@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Landing from "./landing/page";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,33 +14,44 @@ const LetsGetStarted = () => {
 	const totalPages = 6; // Total number of pages
 	// use Params
 	const params = useSearchParams();
-	const [currentPage, setCurrentPage] = useState(1);
+	const currentPageUrlParam = params.get("currentPage")
+		? parseInt(params.get("currentPage") as string)
+		: 1;
+	const [currentPage, setCurrentPage] = useState(currentPageUrlParam);
 
 	const router = useRouter();
 
-	const handlePage = (pageNumber: number) => {
+	const handleNext = () => {
 		setCurrentPage((prevPage) => {
-			// Implement circular navigation
-			if (pageNumber > totalPages) {
-				return 1;
-			} else if (pageNumber < 1) {
+			if (prevPage === totalPages) {
 				return totalPages;
 			} else {
-				return pageNumber;
+				return prevPage + 1;
 			}
 		});
 	};
 
+	const handlePageChange = (page: number) => {
+		setCurrentPage(page);
+	};
+
 	const handleGoBack = () => {
 		setCurrentPage((prevPage) => {
-			// Implement circular navigation for going back
 			if (prevPage === 1) {
-				return totalPages;
+				return 1;
 			} else {
 				return prevPage - 1;
 			}
 		});
 	};
+
+	useEffect(() => {
+		const urlSearchParams = new URLSearchParams(params);
+		urlSearchParams.set("currentPage", currentPage.toString());
+
+		router.replace(`?${urlSearchParams.toString()}`);
+	}, [currentPage, params, router]);
+
 	return (
 		<div className="h-screen overflow-auto bg-primary">
 			<div className=" flex items-center justify-center py-3 text-center  lg:py-4">
@@ -62,7 +73,7 @@ const LetsGetStarted = () => {
 								currentPage === step ? "bg-black" : "bg-[#22394A]"
 							}`}
 						>
-							<button onClick={() => handlePage(step)} className="h-full w-full" key={step}>
+							<button onClick={() => handlePageChange(step)} className="h-full w-full" key={step}>
 								<p className="text-sm font-semibold text-white md:text-xl lg:text-2xl">{step}</p>
 							</button>
 						</li>
@@ -71,10 +82,10 @@ const LetsGetStarted = () => {
 			</div>
 			<div className="lg:h-[70dvh]">
 				{currentPage === 1 && <Landing />}
-				{currentPage === 2 && <Introduction />}
-				{currentPage === 3 && <AreasToImprove />}
-				{currentPage === 4 && <Questionnaire />}
-				{currentPage === 5 && <MajorGoals />}
+				{currentPage === 2 && <Introduction page={currentPage} />}
+				{currentPage === 3 && <AreasToImprove page={currentPage} />}
+				{currentPage === 4 && <Questionnaire page={currentPage} />}
+				{currentPage === 5 && <MajorGoals page={currentPage} />}
 				{currentPage === 6 && <FinalPage />}
 			</div>
 			<div className="mx-auto mb-4 mt-4 flex w-4/5 justify-end gap-2">
@@ -93,7 +104,7 @@ const LetsGetStarted = () => {
 				<section className=" ">
 					<div className="">
 						<button
-							onClick={() => handlePage(currentPage + 1)}
+							onClick={handleNext}
 							className="btn bg-accent  hover:bg-blue-300 hover:text-black"
 						>
 							{currentPage >= 1 && currentPage < 6 ? "Continue" : "Get Started"}
