@@ -8,6 +8,8 @@ import "swiper/css/pagination";
 import Time from "./TimeManagement";
 import SetPriority from "./SetPriority";
 import CommunityEngagement from "./CommunityEngagement";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const WhyRevamp = () => {
 	const [activeSlideIndex, setActiveSlideIndex] = useState(0);
@@ -16,27 +18,31 @@ const WhyRevamp = () => {
 		setActiveSlideIndex(swiper.activeIndex);
 	};
 	return (
-		<div className="h-screen-height border-collapse">
-			<Swiper
-				modules={[Navigation, Pagination, Scrollbar, A11y]}
-				navigation
-				pagination={{ clickable: true }}
-				onSlideChange={handleSlideChange}
-				// scrollbar={{ draggable: true }}
-				slidesPerView={1}
-			>
-				<SwiperSlide>
-					<Time />
-				</SwiperSlide>
-				<SwiperSlide>
-					<SetPriority />
-				</SwiperSlide>
-				<SwiperSlide>
-					<CommunityEngagement />
-				</SwiperSlide>
-				...
-			</Swiper>
-		</div>
+		<>
+			<Navbar />
+			<div className="h-screen-height border-collapse">
+				<Swiper
+					modules={[Navigation, Pagination, Scrollbar, A11y]}
+					navigation
+					pagination={{ clickable: true }}
+					onSlideChange={handleSlideChange}
+					// scrollbar={{ draggable: true }}
+					slidesPerView={1}
+				>
+					<SwiperSlide>
+						<Time />
+					</SwiperSlide>
+					<SwiperSlide>
+						<SetPriority />
+					</SwiperSlide>
+					<SwiperSlide>
+						<CommunityEngagement />
+					</SwiperSlide>
+					...
+				</Swiper>
+			</div>
+			<Footer />
+		</>
 	);
 };
 
