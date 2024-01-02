@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import Landing from "./landing/page";
 import Link from "next/link";
 import Image from "next/image";
-import Introduction from "./introduction/page";
-import Questionnaire from "./questionnaire/page";
-import MajorGoals from "./majorGoals/page";
-import AreasToImprove from "./areasToImprove/page";
-import FinalPage from "./finalPage/page";
+import Introduction from "./Introduction";
+import Questionnaire from "./Questionnaire";
+import MajorGoals from "./MajorGoals";
+import AreasToImprove from "./AreasToImprove";
+import FinalPage from "./FinalPage";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const letsGetStarted = () => {

@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Tag from "@/app/components/KeyTag";
@@ -30,7 +31,7 @@ const MajorGoals = () => {
 		const stringMajorGoal = Array.from(majorGoal).join(",");
 		urlSearchParams.set("majorGoal", stringMajorGoal);
 		router.replace(`?${urlSearchParams.toString()}`);
-	}, [majorGoal]);
+	}, [majorGoal, params, router]);
 	return (
 		<>
 			<section className="pb-2 pt-10 md:pb-10">
@@ -52,8 +53,13 @@ const MajorGoals = () => {
 									What are your goals ?
 								</h1>
 								<div className="flex flex-wrap gap-2 ">
-									{majorGoals.map((mGoal) => (
-										<Tag text={mGoal} setSelectedList={setMajorGoals} selectedList={majorGoal} />
+									{majorGoals.map((mGoal, index) => (
+										<Tag
+											text={mGoal}
+											setSelectedList={setMajorGoals}
+											selectedList={majorGoal}
+											key={index}
+										/>
 									))}
 								</div>
 							</div>
