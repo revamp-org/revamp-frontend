@@ -1,23 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Tag from "@/app/components/KeyTag";
+import { useSearchParams, useRouter } from "next/navigation";
+const majorGoals: string[] = [
+	"fit",
+	"gealthy diet",
+	"reducing Stress",
+	"better financial planning",
+	"finding work-life balance",
+	"skill development",
+	"career growth",
+	"social participaion",
+	"positive self-talks",
+	"quality sleep",
+	"mindfulness",
+	"being punctual",
+	"emotional control",
+	"time management",
+];
 const MajorGoals = () => {
-	const majorGoals: string[] = [
-		"fit",
-		"gealthy diet",
-		"reducing Stress",
-		"better financial planning",
-		"finding work-life balance",
-		"skill development",
-		"career growth",
-		"social participaion",
-		"positive self-talks",
-		"quality sleep",
-		"mindfulness",
-		"being punctual",
-		"emotional control",
-		"time management",
-	];
+	const params = useSearchParams();
+	const [majorGoal, setMajorGoals] = useState<Set<string>>(
+		new Set(params.get("majorGoal")?.split(",")),
+	);
+
+	const router = useRouter();
+	useEffect(() => {
+		const urlSearchParams = new URLSearchParams(params);
+		const stringMajorGoal = Array.from(majorGoal).join(",");
+		urlSearchParams.set("majorGoal", stringMajorGoal);
+		router.replace(`?${urlSearchParams.toString()}`);
+	}, [majorGoal]);
 	return (
 		<>
 			<section className="pb-2 pt-10 md:pb-10">
@@ -39,8 +52,8 @@ const MajorGoals = () => {
 									What are your goals ?
 								</h1>
 								<div className="flex flex-wrap gap-2 ">
-									{majorGoals.map((majorGoal) => (
-										<Tag text={majorGoal} />
+									{majorGoals.map((mGoal) => (
+										<Tag text={mGoal} setSelectedList={setMajorGoals} selectedList={majorGoal} />
 									))}
 								</div>
 							</div>

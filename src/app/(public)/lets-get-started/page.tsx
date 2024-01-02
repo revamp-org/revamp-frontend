@@ -8,10 +8,15 @@ import Questionnaire from "./questionnaire/page";
 import MajorGoals from "./majorGoals/page";
 import AreasToImprove from "./areasToImprove/page";
 import FinalPage from "./finalPage/page";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const letsGetStarted = () => {
 	const totalPages = 6; // Total number of pages
+	// use Params
+	const params = useSearchParams();
 	const [currentPage, setCurrentPage] = useState(1);
+
+	const router = useRouter();
 
 	const handlePage = (pageNumber: number) => {
 		setCurrentPage((prevPage) => {

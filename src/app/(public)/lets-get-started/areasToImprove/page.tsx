@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Tag from "@/app/components/KeyTag";
+import { useRouter, useSearchParams } from "next/navigation";
+const improveAreas: string[] = [
+	"Physical Health",
+	"Mental Wellbeing",
+	"Emotional Wellbeing",
+	"Financial Planning",
+	"Environmental Awareness",
+	"Social Participation",
+	"Safety",
+	"Career Satisfaction",
+];
 const AreasToImprove = () => {
-	const improveAreas: string[] = [
-		"Physical Health",
-		"Mental Wellbeing",
-		"Emotional Wellbeing",
-		"Financial Planning",
-		"Environmental Awareness",
-		"Social Participation",
-		"Safety",
-		"Career Satisfaction",
-	];
+	const params = useSearchParams();
+	const [selectedAreas, setSelectedAreas] = useState<Set<string>>(
+		new Set(params.get("selectedAreas")?.split(",")),
+	);
+	const router = useRouter();
+	useEffect(() => {
+		const urlSearchParams = new URLSearchParams(params);
+		const stringSelectedAreas = Array.from(selectedAreas).join(",");
+		urlSearchParams.set("selectedAreas", stringSelectedAreas);
+		router.replace(`?${urlSearchParams.toString()}`);
+	}, [selectedAreas]);
 	return (
 		<>
 			<section className="pb-2 pt-10 md:pb-10">
@@ -38,7 +50,11 @@ const AreasToImprove = () => {
 								<div className="items-left mb-4 flex flex-col">
 									<div className="flex flex-wrap gap-2">
 										{improveAreas.map((improveArea) => (
-											<Tag text={improveArea} />
+											<Tag
+												text={improveArea}
+												setSelectedList={setSelectedAreas}
+												selectedList={selectedAreas}
+											/>
 										))}
 									</div>
 								</div>

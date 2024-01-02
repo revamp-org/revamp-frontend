@@ -1,31 +1,48 @@
-import React from "react";
-
-import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Tag from "@/app/components/KeyTag";
+import { useSearchParams, useRouter } from "next/navigation";
+
+const postiveFeeligs: string[] = [
+	"productive",
+	"energized",
+	"calm",
+	"motivated",
+	"healthy",
+	"sleeping well",
+	"eating properly",
+	"self aware",
+	"community engagement",
+];
+const negativeFeelings: string[] = [
+	"lazy",
+	"stressed",
+	"poor sleep",
+	"drained",
+	"emotionally unwell",
+	"angry",
+	"procastinating",
+	"poor work-life balance",
+	"socaially inactive",
+];
 const Questionnaire = () => {
-	const postiveFeeligs: string[] = [
-		"productive",
-		"energized",
-		"calm",
-		"motivated",
-		"healthy",
-		"sleeping well",
-		"eating properly",
-		"self aware",
-		"community engagement",
-	];
-	const negativeFeelings: string[] = [
-		"lazy",
-		"stressed",
-		"poor sleep",
-		"drained",
-		"emotionally unwell",
-		"angry",
-		"procastinating",
-		"poor work-life balance",
-		"socaially inactive",
-	];
+	const params = useSearchParams();
+	const [positveFeeling, setPositiveFeelings] = useState<Set<string>>(
+		new Set(params.get("positiveFeeling")?.split(",")),
+	);
+	const [negativeFeeling, setNegativeFeelings] = useState<Set<string>>(
+		new Set(params.get("negativeFeeling")?.split(",")),
+	);
+
+	const router = useRouter();
+	useEffect(() => {
+		const urlSearchParams = new URLSearchParams(params);
+		const stringSelectedPosiveFeelings = Array.from(positveFeeling).join(",");
+		const stringSelectedNegativeFeelings = Array.from(negativeFeeling).join(",");
+		urlSearchParams.set("positiveFeeling", stringSelectedPosiveFeelings);
+		urlSearchParams.set("negativeFeeling", stringSelectedNegativeFeelings);
+		router.replace(`?${urlSearchParams.toString()}`);
+	}, [positveFeeling, negativeFeeling]);
 	return (
 		<>
 			<section className="pb-2 pt-10 md:pb-10">
@@ -52,16 +69,24 @@ const Questionnaire = () => {
 								<div className="items-left mb-4 flex flex-col">
 									<h2 className="mb-2 text-lg font-semibold text-white">Positiveness</h2>
 									<div className="flex flex-wrap gap-2">
-										{postiveFeeligs.map((positveFeeling) => (
-											<Tag text={positveFeeling} />
+										{postiveFeeligs.map((feeling) => (
+											<Tag
+												text={feeling}
+												setSelectedList={setPositiveFeelings}
+												selectedList={positveFeeling}
+											/>
 										))}
 									</div>
 								</div>
 								<div className="items-left flex flex-col">
 									<h2 className="mb-2 text-lg font-semibold text-white">Negativeness</h2>
 									<div className="flex flex-wrap gap-2">
-										{negativeFeelings.map((negativeFeeling) => (
-											<Tag text={negativeFeeling} />
+										{negativeFeelings.map((feeling) => (
+											<Tag
+												text={feeling}
+												setSelectedList={setNegativeFeelings}
+												selectedList={negativeFeeling}
+											/>
 										))}
 									</div>
 								</div>

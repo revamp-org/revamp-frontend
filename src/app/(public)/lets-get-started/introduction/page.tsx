@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+const ages: string[] = ["<18", "18-24", "25-34", "35-44", "45-54", "55+"];
+const statuses: string[] = ["student", "employee", "employer", "self-employeed", "other"];
 
 const Introduction = () => {
-	const ages: string[] = ["<18", "18-24", "25-34", "35-44", "45-54", "55+"];
-	const statuses: string[] = ["student", "employee", "employer", "self-employeed", "other"];
-
-	const [selectedAge, setSelectedAge] = useState<string | null>(null);
-	const [selecctedStatus, setSelectedStatus] = useState<string | null>(null);
+	const params = useSearchParams();
+	const [selectedAge, setSelectedAge] = useState<string | null>(params.get("selectedAge"));
+	const [selectedStatus, setSelectedStatus] = useState<string | null>(params.get("selectedStatus"));
+	const router = useRouter();
+	const pathname = usePathname();
 
 	const handleSelectedAge = (inputValue: string) => {
 		if (selectedAge === inputValue) {
@@ -18,12 +22,19 @@ const Introduction = () => {
 	};
 
 	const handleSelectedStatus = (inputValue: string) => {
-		if (selecctedStatus === inputValue) {
+		if (selectedStatus === inputValue) {
 			setSelectedStatus(null);
 		} else {
 			setSelectedStatus(inputValue);
 		}
 	};
+
+	useEffect(() => {
+		const urlSearchParams = new URLSearchParams(params);
+		urlSearchParams.set("selectedAge", selectedAge || "");
+		urlSearchParams.set("selectedStatus", selectedStatus || "");
+		router.replace(`${pathname}?${urlSearchParams.toString()}`);
+	}, [selectedAge, selectedStatus]);
 	return (
 		<>
 			<section className="pt-10">
@@ -71,7 +82,7 @@ const Introduction = () => {
 											<button
 												key={status}
 												className={`btn  md:text-md text-sm hover:bg-gray-400 lg:text-lg ${
-													selecctedStatus === status ? "bg-gray-400 text-black" : "bg-accent"
+													selectedStatus === status ? "bg-gray-400 text-black" : "bg-accent"
 												}`}
 												onClick={() => handleSelectedStatus(status)}
 											>
