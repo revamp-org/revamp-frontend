@@ -10,7 +10,7 @@ import AreasToImprove from "./AreasToImprove";
 import FinalPage from "./FinalPage";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const letsGetStarted = () => {
+const LetsGetStarted = () => {
 	const totalPages = 6; // Total number of pages
 	// use Params
 	const params = useSearchParams();
@@ -104,4 +104,4 @@ const letsGetStarted = () => {
 	);
 };
 
-export default letsGetStarted;
+export default LetsGetStarted;
