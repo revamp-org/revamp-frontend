@@ -88,7 +88,7 @@ const TaskListItem = ({
 				className={cn(
 					`relative flex h-full  w-full cursor-pointer  items-center justify-between   pr-1  text-lg transition-all duration-300 ease-in-out hover:bg-[#446288] ${
 						selectedTask === task.taskId.toString() ? "bg-[#446288]" : "bg-topbar"
-					} ${task.isDone ? "opacity-20" : "opacity-100"}`,
+					} ${isCheckboxChecked ? "opacity-20" : "opacity-100"}`,
 					linkStyle,
 				)}
 			>

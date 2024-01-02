@@ -36,9 +36,11 @@ const MenuItem = ({
 };
 
 export function MenuPopover({
+	itemName,
 	editItem,
 	deleteItem,
 }: {
+	itemName: string;
 	editItem?: () => void;
 	deleteItem?: () => void;
 }) {
@@ -58,7 +60,7 @@ export function MenuPopover({
 			<PopoverContent className="w-40">
 				<MenuItem
 					icon="mingcute:edit-line"
-					title="Edit Goal"
+					title={`Edit ${itemName}`}
 					handleClick={() => {
 						editItem?.();
 						setIsMenuOpen(false);
@@ -67,7 +69,7 @@ export function MenuPopover({
 				<AlertDialog>
 					<AlertDialogTrigger asChild>
 						<button>
-							<MenuItem icon="fluent:delete-32-regular" title="Delete Goal" />
+							<MenuItem icon="fluent:delete-32-regular" title={`Delete ${itemName}`} />
 						</button>
 					</AlertDialogTrigger>
 					<AlertDialogContent>

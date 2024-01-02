@@ -1,7 +1,7 @@
 import { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-	schema: "https://revamp-backend.onrender.com/graphql",
+	schema: "https://api.revampgoal.co/graphql",
 	documents: "src/graphql/*",
 	generates: {
 		"src/generated/graphql.ts": {

@@ -40,6 +40,10 @@ mutation SetTodo($taskId: Int!, $todo: String!) {
 	setTodo(taskId: $taskId, todo: $todo)
 }
 
+mutation DeleteTodo($todoId: Int!) {
+	deleteTodo(todoId: $todoId)
+}
+
 mutation EditTask(
 	$taskId: Int!
 	$title: String
