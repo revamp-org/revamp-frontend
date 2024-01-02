@@ -24,6 +24,7 @@ const LetsGetStarted = () => {
 	const handleNext = () => {
 		setCurrentPage((prevPage) => {
 			if (prevPage === totalPages) {
+				router.push("/dashboard");
 				return totalPages;
 			} else {
 				return prevPage + 1;
@@ -104,7 +105,7 @@ const LetsGetStarted = () => {
 				<section className=" ">
 					<div className="">
 						<button
-							onClick={handleNext}
+							onClick={currentPage < 6 ? handleNext : () => router.push("/dashboard")}
 							className="btn bg-accent  hover:bg-blue-300 hover:text-black"
 						>
 							{currentPage >= 1 && currentPage < 6 ? "Continue" : "Get Started"}
