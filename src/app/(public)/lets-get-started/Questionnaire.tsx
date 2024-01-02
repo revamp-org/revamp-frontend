@@ -43,7 +43,7 @@ const Questionnaire = () => {
 		urlSearchParams.set("positiveFeeling", stringSelectedPosiveFeelings);
 		urlSearchParams.set("negativeFeeling", stringSelectedNegativeFeelings);
 		router.replace(`?${urlSearchParams.toString()}`);
-	}, [positveFeeling, negativeFeeling]);
+	}, [positveFeeling, negativeFeeling, router, params]);
 	return (
 		<>
 			<section className="pb-2 pt-10 md:pb-10">

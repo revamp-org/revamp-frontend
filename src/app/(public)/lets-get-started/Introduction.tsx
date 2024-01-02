@@ -12,7 +12,6 @@ const Introduction = () => {
 	const [selectedAge, setSelectedAge] = useState<string | null>(params.get("selectedAge"));
 	const [selectedStatus, setSelectedStatus] = useState<string | null>(params.get("selectedStatus"));
 	const router = useRouter();
-	const pathname = usePathname();
 
 	const handleSelectedAge = (inputValue: string) => {
 		if (selectedAge === inputValue) {
@@ -34,8 +33,8 @@ const Introduction = () => {
 		const urlSearchParams = new URLSearchParams(params);
 		urlSearchParams.set("selectedAge", selectedAge || "");
 		urlSearchParams.set("selectedStatus", selectedStatus || "");
-		router.replace(`${pathname}?${urlSearchParams.toString()}`);
-	}, [selectedAge, selectedStatus]);
+		router.replace(`?${urlSearchParams.toString()}`);
+	}, [selectedAge, selectedStatus, router, params]);
 	return (
 		<>
 			<section className="pt-10">

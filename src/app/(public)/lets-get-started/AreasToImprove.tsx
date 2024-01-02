@@ -24,7 +24,7 @@ const AreasToImprove = () => {
 		const stringSelectedAreas = Array.from(selectedAreas).join(",");
 		urlSearchParams.set("selectedAreas", stringSelectedAreas);
 		router.replace(`?${urlSearchParams.toString()}`);
-	}, [selectedAreas]);
+	}, [selectedAreas, params, router]);
 	return (
 		<>
 			<section className="pb-2 pt-10 md:pb-10">
