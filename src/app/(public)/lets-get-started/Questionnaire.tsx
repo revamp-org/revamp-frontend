@@ -70,9 +70,10 @@ const Questionnaire = () => {
 								<div className="items-left mb-4 flex flex-col">
 									<h2 className="mb-2 text-lg font-semibold text-white">Positiveness</h2>
 									<div className="flex flex-wrap gap-2">
-										{postiveFeeligs.map((feeling) => (
+										{postiveFeeligs.map((feeling, index) => (
 											<Tag
 												text={feeling}
+												key={index}
 												setSelectedList={setPositiveFeelings}
 												selectedList={positveFeeling}
 											/>

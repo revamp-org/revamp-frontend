@@ -50,8 +50,9 @@ const AreasToImprove = () => {
 								</span>
 								<div className="items-left mb-4 flex flex-col">
 									<div className="flex flex-wrap gap-2">
-										{improveAreas.map((improveArea) => (
+										{improveAreas.map((improveArea, index) => (
 											<Tag
+												key={index}
 												text={improveArea}
 												setSelectedList={setSelectedAreas}
 												selectedList={selectedAreas}
