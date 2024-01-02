@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const ages: string[] = ["<18", "18-24", "25-34", "35-44", "45-54", "55+"];
 const statuses: string[] = ["student", "employee", "employer", "self-employeed", "other"];
