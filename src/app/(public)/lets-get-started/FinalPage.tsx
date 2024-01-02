@@ -23,7 +23,7 @@ const FinalPage = () => {
 								</span>
 							</div>
 							<div className="text-start text-xl font-light  text-white md:text-2xl">
-								<p>Remember, it's not about one day, it's about DAY 01.</p>
+								<p>Remember, it&apos;s not about one day, it&apos;s about DAY 01.</p>
 							</div>
 							<div className="text-md text-start font-normal text-white md:text-xl">
 								<p>Sail your ship to the destiny of success.</p>
