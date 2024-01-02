@@ -85,6 +85,7 @@ const Questionnaire = () => {
 									<div className="flex flex-wrap gap-2">
 										{negativeFeelings.map((feeling) => (
 											<Tag
+												key={feeling}
 												text={feeling}
 												setSelectedList={setNegativeFeelings}
 												selectedList={negativeFeeling}

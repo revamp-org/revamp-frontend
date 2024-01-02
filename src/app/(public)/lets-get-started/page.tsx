@@ -57,11 +57,12 @@ const LetsGetStarted = () => {
 				<ul className=" mx-auto flex h-full max-w-[80%] items-center justify-between py-2 text-center">
 					{[1, 2, 3, 4, 5, 6].map((step) => (
 						<li
+							key={step}
 							className={`z-10 h-8 w-8 rounded-full bg-[#22394A] lg:h-12 lg:w-12 ${
 								currentPage === step ? "bg-black" : "bg-[#22394A]"
 							}`}
 						>
-							<button onClick={() => handlePage(step)} className="h-full w-full">
+							<button onClick={() => handlePage(step)} className="h-full w-full" key={step}>
 								<p className="text-sm font-semibold text-white md:text-xl lg:text-2xl">{step}</p>
 							</button>
 						</li>
