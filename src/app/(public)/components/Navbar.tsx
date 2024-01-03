@@ -99,7 +99,7 @@ const Navbar = () => {
 							{navigation.map((item, idx) => {
 								return (
 									<li key={idx} className="  hover:opacity-80">
-										<a href={item.path}>{item.title}</a>
+										<Link href={item.path}>{item.title}</Link>
 									</li>
 								);
 							})}
