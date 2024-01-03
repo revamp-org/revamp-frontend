@@ -57,6 +57,7 @@ const LineChart = () => {
 				position: "top" as const,
 			},
 			title: {
+				color: "#ddd",
 				display: true,
 				text: "Completed Task (daily)",
 			},
@@ -123,6 +124,7 @@ const BarChart = () => {
 			},
 			title: {
 				display: true,
+				color: "#ddd",
 				text: "Tasks Worked On VS Completed (daily)",
 			},
 		},
@@ -134,12 +136,12 @@ const BarChart = () => {
 			{
 				label: "Task Worked On",
 				data: firstBarData,
-				backgroundColor: "rgba(255, 99, 132, 0.5)",
+				backgroundColor: "rgba(255, 99, 132)",
 			},
 			{
 				label: "Task Completed",
 				data: secondBarData,
-				backgroundColor: "rgba(53, 162, 235, 0.5)",
+				backgroundColor: "rgba(53, 162, 235)",
 			},
 		],
 	};
@@ -148,15 +150,17 @@ const BarChart = () => {
 
 const Analytics = () => {
 	return (
-		<div className="h-full w-full ">
+		<>
 			<p className="text-2xl font-semibold">Analytics</p>
-			<div className="grid grid-cols-2 bg-card">
-				<div className="">
+			<div className="mx-auto grid w-[80vh] min-w-[20rem] gap-4 p-4 [&>*]:rounded-lg [&>*]:bg-card">
+				<div>
 					<LineChart />
+				</div>
+				<div>
 					<BarChart />
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
