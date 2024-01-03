@@ -53,7 +53,6 @@ const CreateGoalDialog = () => {
 
 	const onSubmit = async (data: FieldValues) => {
 		const deadlineTimestamp = date ? new Date(date).getTime() : null;
-		console.log(deadlineTimestamp);
 		await setGoal({
 			variables: {
 				userId: user?.id,

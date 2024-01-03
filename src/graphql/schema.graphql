@@ -115,7 +115,6 @@ type Task {
 	isDone: Boolean!
 	createdAt: Timestamp!
 	updatedAt: Timestamp
-	streak: Int!
 	todos: [Todo]
 	milestones: [Milestone]
 	timelapsed: Timelapse
@@ -140,6 +139,9 @@ type Goal {
 	updatedAt: Timestamp
 	tasks: [Task!]!
 	goalQnas: [GoalQna]
+	createdBy: UserWithLessDetails!
+	sharedBy: [Share!]!
+	likedBy: [Like!]!
 }
 type Tag {
 	tagId: Int!
@@ -165,16 +167,16 @@ type Comment {
 	comment: String!
 	createdAt: Timestamp!
 	updatedAt: Timestamp
-	authorId: ID!
+	author: UserWithLessDetails!
 }
-type JournalLike {
-	likedBy: User!
+type Like {
+	likedBy: UserWithLessDetails!
 	likedAt: Timestamp!
 }
-type JournalShare {
-	sharedBy: User!
+type Share {
+	sharedBy: UserWithLessDetails!
 	sharedAt: Timestamp!
-	sharedIn: Community!
+	sharedIn: CommunityWithLessDetails!
 }
 type Journal {
 	journalId: Int!
@@ -184,8 +186,9 @@ type Journal {
 	access: String!
 	date: Timestamp!
 	comments: [Comment!]!
-	likedBy: [JournalLike!]!
-	sharedBy: [JournalShare!]!
+	likedBy: [Like!]!
+	sharedBy: [Share!]!
+	createdBy: UserWithLessDetails!
 }
 type User {
 	userId: ID!
@@ -201,10 +204,18 @@ type User {
 	goals: [Goal!]!
 	questions: [Question]
 	emailAddresses: [UserEmailAddress!]!
-	communities: [Community!]!
+	communities: [CommunityWithLessDetails!]!
+}
+type UserWithLessDetails {
+	id: ID!
+	firstName: String!
+	lastName: String!
+	username: String!
+	imageUrl: URL!
+	banned: Boolean!
 }
 type UserWithRole {
-	user: User!
+	user: UserWithLessDetails!
 	role: String!
 }
 type Community {
@@ -216,6 +227,21 @@ type Community {
 	createdAt: Timestamp!
 	updatedAt: Timestamp!
 	users: [UserWithRole]!
+	goals: [Goal!]!
+	journals: [Journal!]!
+}
+type CommunityWithLessDetails {
+	communityId: Int!
+	community: String!
+	description: String!
+	nametag: String!
+	privacy: String!
+	createdAt: Timestamp!
+	updatedAt: Timestamp!
+}
+type CountResult {
+	date: Timestamp!
+	count: Float!
 }
 type Query {
 	getTodosOfTask(taskId: Int!): [Todo!]!
@@ -223,13 +249,29 @@ type Query {
 	getTasksOfGoal(goalId: Int!): [Task!]!
 	getTasksOfUser(userId: ID!): [Task!]!
 	getGoals(userId: ID!): [Goal!]!
-	getAllUsers: [User!]!
+	getAllUsers: [UserWithLessDetails!]!
 	getAllQuestions: [Question!]!
 	getAllAspects: [Aspect!]!
+	getJournalsOfUser(userId: ID!): [Journal!]!
+	todayJournalDaily: Journal!
 	getSingleGoal(goalId: Int!): Goal!
 	getSingleTask(taskId: Int!): Task!
 	getSingleTodo(todoId: Int!): Todo!
 	getSingleUser(userId: ID!): User!
+	getSingleJournal(journalId: Int!): Journal!
+	community(communityId: Int!): Community!
+	communities: [Community!]!
+	myCommunities: [Community!]!
+	invitedUsersInCommunity(communityNametag: String!): [UserWithLessDetails!]!
+	blockedUsersInCommunity(communityNametag: String!): [UserWithLessDetails!]!
+	communityRequests(communityNametag: String!): [UserWithLessDetails!]!
+	communityInvitations: [Community!]!
+	requestedCommunities: [Community!]!
+	searchCommunities(searchString: String!): [Community!]!
+	tasksCompletedAnalyticsEachDayOfGoal(goalId: Int!): [CountResult!]!
+	tasksWorkedOnAnalyticsEachDayOfGoal(goalId: Int!): [CountResult!]!
+	tasksCompletedAnalyticsEachDayOfUser: [CountResult!]!
+	tasksWorkedOnAnalyticsEachDayOfUser: [CountResult!]!
 }
 type Mutation {
 	setUser(userId: ID!): String!
@@ -264,6 +306,9 @@ type Mutation {
 		isDone: Boolean
 		isActive: Boolean
 	): String!
+	shareGoal(goalId: Int!, communityId: Int!): String!
+	publishGoal(goalId: Int!): String!
+	likeGoal(goalId: Int!): Boolean!
 	editTask(
 		taskId: Int!
 		title: String
@@ -275,6 +320,34 @@ type Mutation {
 		streak: Int
 	): String!
 	editTodo(todoId: Int!, todo: String, isDone: Boolean, order: Int): String!
+	createCommunity(input: CreateCommunityInput!): String!
+	acceptCommunityInvite(communityId: Int!): String!
+	declineCommunityInvite(communityId: Int!): String!
+	leaveCommunity(communityId: Int!): String!
+	inviteUserToCommunity(communityId: Int!, username: String!): String!
+	blockUserFromCommunity(communityId: Int!, username: String!): String!
+	removeUserFromCommunity(communityId: Int!, username: String!): String!
+	unBlockUserFromCommunity(communityId: Int!, username: String!): String!
+	editCommunity(communityId: Int!, input: EditCommunityInput!): String!
+	addUserToCommunity(communityId: Int!, username: String!): String!
+	makeUserAdminOfCommunity(communityId: Int!, username: String!): String!
+	enterInCommunity(communityId: Int!): String!
+	updateJournal(journalId: Int!, title: String, content: String): String!
+	shareJournal(journalId: Int!, communityId: Int!): String!
+	publishJournal(journalId: Int!): String!
+	likeJournal(journalId: Int!): Boolean!
+}
+input CreateCommunityInput {
+	name: String!
+	nametag: String!
+	description: String!
+	privacy: String
+	members: [ID!]!
+}
+input EditCommunityInput {
+	name: String
+	description: String
+	privacy: String
 }
 "Exposes a URL that specifies the behavior of this scalar."
 directive @specifiedBy("The URL that specifies the behavior of this scalar." url: String!) on SCALAR

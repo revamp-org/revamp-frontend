@@ -10,6 +10,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { Todo } from "@/generated/graphql";
+import { EditTodo } from "@/graphql/mutations.graphql";
+import { useMutation } from "@apollo/client";
 
 const TodoListItem = ({
 	todo,
@@ -30,6 +32,7 @@ const TodoListItem = ({
 
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(todo.isDone);
 	const dispatch = useDispatch<AppDispatch>();
+	const [editTodo, { error }] = useMutation(EditTodo);
 
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: todo.todoId,
@@ -57,21 +60,29 @@ const TodoListItem = ({
 		);
 	}
 
-	const handleChecked = () => {
+	const handleChecked = async () => {
 		if (!isCheckboxChecked) {
 			const audio = new Audio("/assets/completion-sound.mp3");
 			audio.play();
 		}
-		// todo.isDone = !isCheckboxChecked;
 		setIsCheckboxChecked(!isCheckboxChecked);
+
+		await editTodo({
+			variables: {
+				todoId: todo.todoId,
+				isDone: !isCheckboxChecked,
+			},
+		});
 	};
 
 	return (
 		<div ref={setNodeRef} style={style} className="flex h-16 items-center">
 			<div
 				className={cn(
-					`flex h-full ${isCheckboxChecked ? "opacity-20" : "opacity-100"
-					} w-full   items-center  justify-between   text-lg text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${selectedTodo === todo.todoId.toString() ? "bg-[#446288]" : "bg-topbar"
+					`flex h-full ${
+						isCheckboxChecked ? "opacity-20" : "opacity-100"
+					} w-full   items-center  justify-between   text-lg text-foreground  transition-all duration-300 ease-in-out hover:bg-[#446288] ${
+						selectedTodo === todo.todoId.toString() ? "bg-[#446288]" : "bg-topbar"
 					}`,
 					className,
 				)}
@@ -83,8 +94,9 @@ const TodoListItem = ({
 					<span className="priority after:bg-white "></span>
 					<div>
 						<p
-							className={` truncate-overflow-1 ${isCheckboxChecked ? "line-through" : "no-underline"
-								}`}
+							className={` truncate-overflow-1 ${
+								isCheckboxChecked ? "line-through" : "no-underline"
+							}`}
 						>
 							{todo.todo}
 						</p>

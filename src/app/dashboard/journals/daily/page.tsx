@@ -1,9 +1,31 @@
+"use client";
 import JournalCard from "@/app/components/JournalCard";
-import { Journal } from "@/generated/graphql";
-import { journalData } from "@/lib/data";
+import { Goal, Journal } from "@/generated/graphql";
+import { useQuery } from "@apollo/client";
+import { GetJournalsOfUser } from "@/graphql/queries.graphql";
+import { useUser } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
 
 const JournalDaily = () => {
-	const dailyJournal: Journal[] = journalData.filter((journal) => journal.type === "daily");
+	const { user } = useUser();
+	const [loading, setLoading] = useState(true);
+	const [dailyJournal, setDailyJournal] = useState<Journal[]>([]);
+	const {
+		error: _error,
+		data,
+		loading: fetchLoading,
+	} = useQuery(GetJournalsOfUser, {
+		variables: { userId: user?.id },
+	});
+
+	// initial data fetch
+	useEffect(() => {
+		if (data) {
+			const fetchedJournals: Journal[] = data.getJournalsOfUser;
+			setDailyJournal(fetchedJournals);
+			setLoading(false);
+		}
+	}, [data]);
 
 	return (
 		<div className="w-full">

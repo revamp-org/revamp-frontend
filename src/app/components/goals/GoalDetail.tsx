@@ -87,7 +87,7 @@ const GoalDetail = () => {
 			<div className="flex items-center justify-between">
 				<p className="text-2xl font-semibold">{singleGoalDetail?.title}</p>
 				<p className="text-sm font-semibold">{`${fullDate(singleGoalDetail?.createdAt)}`}</p>
-				<MenuPopover deleteItem={handleDelete} />
+				<MenuPopover itemName="Goal" deleteItem={handleDelete} />
 			</div>
 
 			<div className="">

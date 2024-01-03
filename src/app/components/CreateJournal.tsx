@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -16,7 +15,6 @@ import { useForm, type FieldValues } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { setGoalChange } from "@/redux/features/goalSlice";
-import Editor from "./Editor";
 import { Icon } from "@iconify/react";
 
 const CreateGoalDialog = () => {
@@ -68,8 +66,6 @@ const CreateGoalDialog = () => {
 					<DialogTitle>Create Journal</DialogTitle>
 					<DialogDescription>Describe your lovely day!</DialogDescription>
 				</DialogHeader>
-
-				<Editor />
 			</DialogContent>
 		</Dialog>
 	);
