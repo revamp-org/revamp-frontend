@@ -12,7 +12,7 @@ export default authMiddleware({
 		}
 	},
 
-	publicRoutes: ["/"],
+	publicRoutes: ["/", "why-revamp", "how-it-works", "contact", "lets-get-started"],
 });
 
 export const config = {

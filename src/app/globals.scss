@@ -45,6 +45,9 @@
 		--ring: 222.2 84% 4.9%;
 
 		--radius: 0.5rem;
+
+		--navbar-height: 4rem;
+		--footer-height: 6rem;
 	}
 
 	.dark {
@@ -88,7 +91,19 @@
 html {
 	scroll-behavior: smooth;
 }
-
+body {
+	margin: 0;
+	padding: 0;
+}
+.h-navbar-height {
+	height: var(--navbar-height);
+}
+.h-footer-height {
+	height: var(--footer-height);
+}
+.h-screen-height {
+	height: calc(100vh - var(--navbar-height));
+}
 @layer base {
 	body {
 		@apply bg-[hsl(var(--bg-primary))];
