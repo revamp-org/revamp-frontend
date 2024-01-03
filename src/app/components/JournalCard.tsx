@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const JournalCard = ({ id, journal: journal }: { id: number; journal: Journal }) => {
 	return (
-		<div className="relative flex w-full items-center justify-between rounded-sm border border-gray-400 p-2 lg:max-h-[20rem] ">
+		<div className="relative flex items-center justify-between rounded-sm border border-gray-400 p-2 lg:max-h-[20rem] ">
 			{/* Post content tile and content */}
 			<div className="grid   cursor-pointer grid-cols-3  py-4 lg:py-0 ">
 				<div className="col-span-2 max-h-[40%]   ">

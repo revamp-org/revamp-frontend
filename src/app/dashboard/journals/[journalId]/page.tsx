@@ -59,7 +59,7 @@ export default function JournalPage({ params }: { params: { journalId: string } 
 	}
 
 	return (
-		<div className="mx-auto flex h-full max-w-[--screen-max]  grid-cols-3 items-start  gap-4 p-4  text-white">
+		<div className="mx-auto flex h-full w-full max-w-[--screen-max]  grid-cols-3 items-start  gap-4 p-4  text-white">
 			{/* blog section */}
 			<div className="h-full w-full ">
 				<div className="mb-6"></div>
