@@ -100,6 +100,20 @@ query GetTodosOfTask($taskId: Int!) {
 	}
 }
 
+query TasksWorkedOnAnalyticsEachDayOfUser {
+	tasksWorkedOnAnalyticsEachDayOfUser {
+		date
+		count
+	}
+}
+
+query TasksCompletedAnalyticsEachDayOfUser {
+	tasksCompletedAnalyticsEachDayOfUser {
+		date
+		count
+	}
+}
+
 # Journal Qeuries
 
 query GetJournalsOfUser($userId: ID!) {

@@ -131,6 +131,9 @@ dependencies:
   axios:
     specifier: ^1.5.0
     version: 1.5.0
+  chart.js:
+    specifier: ^4.4.1
+    version: 4.4.1
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
