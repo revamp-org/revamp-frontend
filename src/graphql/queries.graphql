@@ -99,3 +99,17 @@ query GetTodosOfTask($taskId: Int!) {
 		isDone
 	}
 }
+
+query TasksWorkedOnAnalyticsEachDayOfUser {
+	tasksWorkedOnAnalyticsEachDayOfUser {
+		date
+		count
+	}
+}
+
+query TasksCompletedAnalyticsEachDayOfUser {
+	tasksCompletedAnalyticsEachDayOfUser {
+		date
+		count
+	}
+}
