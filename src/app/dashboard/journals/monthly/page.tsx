@@ -1,9 +1,8 @@
 import JournalCard from "@/app/components/JournalCard";
-import { Journal } from "@/generated/graphql";
 import { journalData } from "@/lib/data";
 
 const JournalDaily = () => {
-	const dailyJournal: Journal[] = journalData.filter((journal) => journal.type === "monthly");
+	const dailyJournal = journalData.filter((journal) => journal.type === "monthly");
 
 	return (
 		<div className="w-full">

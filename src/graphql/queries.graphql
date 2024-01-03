@@ -113,3 +113,41 @@ query TasksCompletedAnalyticsEachDayOfUser {
 		count
 	}
 }
+
+# Journal Qeuries
+
+query GetJournalsOfUser($userId: ID!) {
+	getJournalsOfUser(userId: $userId) {
+		journalId
+		title
+		content
+		type
+		date
+		access
+	}
+}
+
+query GetSingleJournal($journalId: Int!) {
+	getSingleJournal(journalId: $journalId) {
+		journalId
+		title
+		content
+		date
+		createdBy {
+			id
+			firstName
+			lastName
+			username
+			imageUrl
+		}
+		sharedBy {
+			sharedBy {
+				id
+				firstName
+				lastName
+				username
+			}
+			sharedAt
+		}
+	}
+}

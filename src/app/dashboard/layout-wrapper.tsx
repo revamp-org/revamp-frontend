@@ -12,11 +12,13 @@ const Li = ({
 	text,
 	className,
 	path,
+	isExternalPath,
 }: {
 	icon?: string;
 	text: string;
 	path: string;
 	className?: string;
+	isExternalPath?: boolean;
 }) => {
 	return (
 		<li
@@ -25,7 +27,10 @@ const Li = ({
 				className,
 			)}
 		>
-			<Link href={`/dashboard/${path}`} className="flex w-full items-center gap-2">
+			<Link
+				href={isExternalPath ? `${path}` : `/dashboard/${path}`}
+				className="flex w-full items-center gap-2"
+			>
 				{icon ? <Icon icon={icon} className="text-3xl" /> : null}
 				<span className=" ">{text}</span>
 			</Link>
@@ -100,7 +105,12 @@ const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
 							</ul>
 						)}
 						<Li path="/analytics" icon="octicon:graph-24" text="Analytics" />
-						<Li path="/community" icon="bi:people" text="Community" />
+						<Li
+							path={process.env.NEXT_PUBLIC_COMMUNITY_URL || ""}
+							icon="bi:people"
+							text="Community"
+							isExternalPath={true}
+						/>
 					</ul>
 				</aside>
 

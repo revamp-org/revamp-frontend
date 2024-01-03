@@ -10,6 +10,8 @@ import { Goal, Task } from "@/generated/graphql";
 import { useAppSelector } from "@/redux/store";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
+import { EditTask } from "@/graphql/mutations.graphql";
+import { useMutation } from "@apollo/client";
 
 const TaskListItem = ({
 	task,
@@ -32,6 +34,8 @@ const TaskListItem = ({
 	const goals = useAppSelector((state) => state.goal.goals);
 	const relevantGoal = goals.find((goal: Goal) => goal.goalId === task.goalId);
 	const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(task.isDone);
+
+	const [editTask, { error }] = useMutation(EditTask);
 
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: task.taskId,
@@ -59,13 +63,19 @@ const TaskListItem = ({
 		);
 	}
 
-	const handleChecked = () => {
+	const handleChecked = async () => {
 		if (!isCheckboxChecked) {
 			const audio = new Audio("/assets/completion-sound.mp3");
 			audio.play();
 		}
-		// todo.isDone = !isCheckboxChecked;
 		setIsCheckboxChecked(!isCheckboxChecked);
+
+		await editTask({
+			variables: {
+				taskId: task.taskId,
+				isDone: !isCheckboxChecked,
+			},
+		});
 	};
 
 	return (
@@ -78,7 +88,7 @@ const TaskListItem = ({
 				className={cn(
 					`relative flex h-full  w-full cursor-pointer  items-center justify-between   pr-1  text-lg transition-all duration-300 ease-in-out hover:bg-[#446288] ${
 						selectedTask === task.taskId.toString() ? "bg-[#446288]" : "bg-topbar"
-					}`,
+					} ${isCheckboxChecked ? "opacity-20" : "opacity-100"}`,
 					linkStyle,
 				)}
 			>
@@ -95,6 +105,8 @@ const TaskListItem = ({
 						)}
 					</div>
 				</Link>
+
+				<Checkbox checked={isCheckboxChecked} onCheckedChange={handleChecked} className="mr-4" />
 			</div>
 
 			{isDashboard && (
