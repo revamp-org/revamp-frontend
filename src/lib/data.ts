@@ -1,3 +1,5 @@
+import { Journal } from "@/generated/graphql";
+
 export const goalData = [
 	{
 		goalId: 1,
@@ -195,8 +197,16 @@ export const todoData = [
 	},
 ];
 
-export const journalData = [
+export const journalData: Journal[] = [
 	{
+		createdBy: {
+			id: "fsdklj",
+			banned: false,
+			imageUrl: "https://i.pravatar.cc/300",
+			username: "user123",
+			lastName: "Doe",
+			firstName: "John",
+		},
 		journalId: 1,
 		title: "Daily Journal - 2023-12-06",
 		content: "This is the content of daily journal 1.",
@@ -208,6 +218,14 @@ export const journalData = [
 		sharedBy: [],
 	},
 	{
+		createdBy: {
+			id: "fsdklj",
+			banned: false,
+			imageUrl: "https://i.pravatar.cc/300",
+			username: "user123",
+			lastName: "Doe",
+			firstName: "John",
+		},
 		journalId: 2,
 		title: "Weekly Journal - 2023-12-05",
 		content: "This is the content of weekly journal 1.",
@@ -219,6 +237,14 @@ export const journalData = [
 		sharedBy: [],
 	},
 	{
+		createdBy: {
+			id: "fsdklj",
+			banned: false,
+			imageUrl: "https://i.pravatar.cc/300",
+			username: "user123",
+			lastName: "Doe",
+			firstName: "John",
+		},
 		journalId: 3,
 		title: "Monthly Journal - 2023-11-01",
 		content: "This is the content of monthly journal 1.",
@@ -239,8 +265,24 @@ export const journalData = [
 		comments: [],
 		likedBy: [],
 		sharedBy: [],
+		createdBy: {
+			id: "fsdklj",
+			banned: false,
+			imageUrl: "https://i.pravatar.cc/300",
+			username: "user123",
+			lastName: "Doe",
+			firstName: "John",
+		},
 	},
 	{
+		createdBy: {
+			id: "fsdklj",
+			banned: false,
+			imageUrl: "https://i.pravatar.cc/300",
+			username: "user123",
+			lastName: "Doe",
+			firstName: "John",
+		},
 		journalId: 5,
 		title: "Weekly Journal - 2023-12-03",
 		content: "This is the content of weekly journal 2.",
@@ -252,6 +294,14 @@ export const journalData = [
 		sharedBy: [],
 	},
 	{
+		createdBy: {
+			id: "fsdklj",
+			banned: false,
+			imageUrl: "https://i.pravatar.cc/300",
+			username: "user123",
+			lastName: "Doe",
+			firstName: "John",
+		},
 		journalId: 6,
 		title: "Monthly Journal - 2023-10-01",
 		content: "This is the content of monthly journal 2.",
@@ -263,6 +313,14 @@ export const journalData = [
 		sharedBy: [],
 	},
 	{
+		createdBy: {
+			id: "fsdklj",
+			banned: false,
+			imageUrl: "https://i.pravatar.cc/300",
+			username: "user123",
+			lastName: "Doe",
+			firstName: "John",
+		},
 		journalId: 7,
 		title: "Daily Journal - 2023-12-02",
 		content: "This is the content of daily journal 3.",
@@ -274,6 +332,14 @@ export const journalData = [
 		sharedBy: [],
 	},
 	{
+		createdBy: {
+			id: "fsdklj",
+			banned: false,
+			imageUrl: "https://i.pravatar.cc/300",
+			username: "user123",
+			lastName: "Doe",
+			firstName: "John",
+		},
 		journalId: 8,
 		title: "Weekly Journal - 2023-12-01",
 		content: "This is the content of weekly journal 3.",
@@ -285,6 +351,14 @@ export const journalData = [
 		sharedBy: [],
 	},
 	{
+		createdBy: {
+			id: "fsdklj",
+			banned: false,
+			imageUrl: "https://i.pravatar.cc/300",
+			username: "user123",
+			lastName: "Doe",
+			firstName: "John",
+		},
 		journalId: 9,
 		title: "Monthly Journal - 2023-09-01",
 		content: "This is the content of monthly journal 3.",
@@ -296,6 +370,14 @@ export const journalData = [
 		sharedBy: [],
 	},
 	{
+		createdBy: {
+			id: "fsdklj",
+			banned: false,
+			imageUrl: "https://i.pravatar.cc/300",
+			username: "user123",
+			lastName: "Doe",
+			firstName: "John",
+		},
 		journalId: 10,
 		title: "Daily Journal - 2023-11-30",
 		content: "This is the content of daily journal 4.",
